@@ -1,6 +1,11 @@
 #include "moveable.h"
 
 
+
+
+
+
+
 moveableObject::moveableObject(void)
 	: width(0), height(0), x(0), y(0), deltaX(0), deltaY(0), direction(0)
 {
@@ -85,6 +90,27 @@ bool moveableObject::intersectsWithRectangles(const RECT & thisRectangle , const
 }
 
 
+
+
+bool moveableObject::intersectsWithScreenRect(int screenWidth, int screenHeight )
+{
+
+	thisRect.left = x;
+	thisRect.top = y;
+	thisRect.right = x + width;
+	thisRect.bottom = y + height;
+
+
+	//screen Rectangle
+	otherRect.left = 0;
+	otherRect.top = 0;
+	otherRect.right = screenWidth;
+	otherRect.bottom = screenHeight;
+
+	return(intersectsWithRectangles(thisRect, otherRect));
+
+
+}
 
 
 

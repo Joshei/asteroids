@@ -35,7 +35,7 @@ int shoot(void);
 int movebullets(void);
 int checkForBulletOffscreen(int index);
 int checkForAsteroidOffScreen(std::vector<asteroid> & vector, int amount);
-int checkForShipOffScreen(int x, int y);
+int checkForShipOnBorder(int x, int y);
 void shutdown(int exitNum);
 int fillAsteroidVector(int numAsteroids, int theWidth, int theHeight, std::vector<asteroid> & v, asteroidtype whichTyoe, sf::Texture & TextureAsteroid);
 int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAstroid);
@@ -119,7 +119,7 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 
 
 	//is off screen returns -1
-	if (checkForShipOffScreen(x, y) == -1)
+	if (checkForShipOnBorder(x, y) == -1)
 	{
 		drawShip();
 		return (-1);
@@ -461,41 +461,16 @@ int movebullets(void)
 //if the bullet is off the screen it is set as inactive so that it will not be drawn
 //The drawing function will check to see if the bullet is still active.  if the bullet
 //is offscreen than a return of -1 means that the bullet will not be drawn in the movebullets
-//function.  The width and height is used to check if the image is totally off the screen!
+//function.  The screenWidth and screenHeight is used to check if the image is totally off the screen!
 int checkForBulletOffscreen(int index) 
 {
 
-	//left
-	if (bullets[index].getX() < (0 - bullets[index].getWidth()))
+	if (!(bullets[index].intersectsWithScreenRect(gScreenWidth, gScreenHeight)))
 	{
 		bullets[index].setIsactive(false);
-		
 		return(-1);
-			
 	}
-	else if (bullets[index].getX() > (gScreenWidth) ) 
-	{
-		bullets[index].setIsactive(false);
-		
-		return(-1);
-
-	}
-	else if (bullets[index].getY() > (gScreenHeight)) 
-	{
-		bullets[index].setIsactive(false);
-		
-		return(-1);
-
-	}
-	else if ((bullets[index].getY()) < (0 - (bullets[index].getHeight()))) 
-	{
-		bullets[index].setIsactive(false);
-		
-		return(-1);
-
-	}
-
-
+	
 	return(1);
 }
 
@@ -510,40 +485,22 @@ int checkForAsteroidOffScreen(std::vector<asteroid> & v, int maxAsteroids)
 	for (int i = 0; i <= maxAsteroids-1; i++)
 	{
 
-		if (v[i].getX() < (0 - v[i].getWidth()))
+
+		if (!(v[i].intersectsWithScreenRect( gScreenWidth, gScreenHeight)))
 		{
 
 			v[i].setActivate(offscreen);
-
-
 		}
-		else if (v[i].getX() > (gScreenWidth))
-		{
 
-			v[i].setActivate(offscreen);
-
-		}
-		else if (v[i].getY() > (gScreenHeight))
-		{
-
-			v[i].setActivate(offscreen);
-
-		}
-		else if ((v[i].getY()) < (0 - ((v[i].getHeight()))))
-		{
-
-			v[i].setActivate(offscreen);
-
-		}
 	}
-
 	return(1);
 }
 
-//checks if ship is at passed of the four borders.  If it does, sets ship  to be at border's 
+//checks if ship is at passed or on one of the four borders.  If it does, sets ship  to be at border's 
 //edge and returns a negative one which means no movement in the calling function : mopveShip(...)
-int checkForShipOffScreen(int x, int y)
+int checkForShipOnBorder(int x, int y)
 {
+
 
 	//left
 	if (x < 0 )

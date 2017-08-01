@@ -181,71 +181,19 @@ int checkCollisionsShipWithAsteroids(int numOfAsteroidsInVector, std::vector<ast
 		}
 
 
-		//ship above and left of asteroid - looks ok 
 
-		//ship's top is below or equl to asteroid.  ships bottom is above or equal to the asteroids top 
-		//AND ship's left is to the left or equal to the left of asteroid and ship's right is to the right or
-		//equal to the asteroids left side
 		
-		
-		if ((shipObject.getY() <= v[i].getY()) && ((shipObject.getY() + shipObject.getHeight()) >= v[i].getY())
-			&&
-			((shipObject.getX() <= v[i].getX()) && ((shipObject.getX() + shipObject.getWidth()) >= v[i].getX())))
+		if (shipObject.intersects(v[i]))
 		{
-
 			shutdown(-1);
 		}
-		
-		//ship above and right of asteroid -looks ok, comments okay
-		
-		
-		//ship's top is above or equal to asteroids top and ship's bottom is below or equal asteroids top
-		//AND ship's left is to the right or equal to asteroids left and ship's left is to left or equal of asteroids right 
-		if ((shipObject.getY() <= v[i].getY()) && ((shipObject.getY() + shipObject.getHeight()) >= v[i].getY())
-			&&
-			((shipObject.getX() >= v[i].getX()) && (shipObject.getX() <= (v[i].getX() + v[i].getWidth()))))
-		{
-
-			shutdown(-2);
-		}
-
-		
-
-		//ship below and left of asteroid -looks ok : commented ok
-
-		//ships top is below or equal to asteroids top and ships top is above or equal to asteroids bottom
-		//AND ship's right is equal or to right to asteroids left side and ship's left side is to the left
-		//or equal to asteroids left side.
-
-		
-		if ((shipObject.getY() >= v[i].getY()) && ((shipObject.getY()) <= (v[i].getY() + v[i].getHeight()))
-			&&
-		//	(((shipObject.getX()) >= (v[i].getX() + v[i].getWidth())) && ((shipObject.getX() + shipObject.getWidth()) >= (v[i].getX()))))
-		(  (  (shipObject.getX() + shipObject.getWidth()  ) >= (v[i].getX()  ) ) && (shipObject.getX() <= v[i].getX()  )  )  )
-		
-		{
-			shutdown(-3);
-
-		}
 
 
 
 		
-		//ship below and right of asteroid looks ok
-	
-		//ship's top is below or equal to asteroids top and ship's top is above or equal asteroids bottom
-		//AND ship's left is to the right or equal asteroids left side   and ships left side is to the left or equal to 
-		//the asteroids right side
-		if ((shipObject.getY() >= v[i].getY()) && ((shipObject.getY()) <= (v[i].getY() + v[i].getHeight()))
-			&&
-			(((shipObject.getX()) >= (v[i].getX())) && ((shipObject.getX()) <= (v[i].getX() + v[i].getWidth()))))
-		{
-
-
-			shutdown(-4);
-		}
-
 	}
+
+	
 
 	return(1);
 }
@@ -280,19 +228,15 @@ int checkCollisionsaAllBulletsWithAnAsteroids(int numOfAsteroids, std::vector<as
 				continue;
 			}
 
-			
 
-			//bullets top edge is below or equal asteroid's top edge and bullets top edge is above or equal asteroids lower edge
-			//And bullets left edge is right or equal to asteroid's left edge and bullets left edge is to the 
-			//left or equal of asteroid's right edge
-			//
-			//draw out if necessary.
-			//if there is an intersection and images colllide and bullet 
 
-			//asteroid are removed after this function that sets both bullet and asteroid as inactive!
-			if (((bullets[i].getY() >= (v[j].getY())) && (bullets[i].getY() <= ((v[j].getY()) + v[j].getHeight())) &&
-				((bullets[i].getX() >= v[j].getX()) && ((bullets[i].getX() <= (v[j].getX() + v[j].getWidth()))))))
+
+
+			if (bullets[i].intersects(v[j]))
 			{
+				
+
+
 
 				//bullet is used and not active until refired
 				bullets[i].setIsactive(false);

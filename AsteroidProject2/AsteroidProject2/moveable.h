@@ -1,6 +1,6 @@
 #ifndef MOVEABLEOBJECT_H
 #define MOVEABLEOBJECT_H
-
+#include <windows.h>
 
 //class asteroid and class bullet inherit from this
 class moveableObject 
@@ -8,7 +8,16 @@ class moveableObject
 
 public:
 
+	
+
 	moveableObject(void);
+
+
+	bool intersects(const moveableObject & theOtherObject);
+	bool intersectsWithRectangles(const RECT & thisRect , const RECT & otherRect);
+	bool intersectsWithScreenRect(int displayWidth, int displayHeight);
+	
+
 
 	//inlines
 	int getX(void) 
@@ -54,6 +63,9 @@ public:
 
 protected:
 
+	//used for intercept of moveable objects or screen and moveable (not intercept)
+	RECT thisRect;
+	RECT otherRect;
 	int deltaX;
 	int deltaY;
 	int width;
@@ -61,6 +73,9 @@ protected:
 	int direction;
 	int x;
 	int y;
+	
+
+	
 };
 
 

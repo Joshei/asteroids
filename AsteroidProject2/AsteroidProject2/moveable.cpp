@@ -1,12 +1,120 @@
 #include "moveable.h"
 
+
+
+
+
+
+
 moveableObject::moveableObject(void)
 	: width(0), height(0), x(0), y(0), deltaX(0), deltaY(0), direction(0)
 {
 
 
+	//used for collision functions for checking for itersects with moveable objects and 
+	//also screen non intercept
+	thisRect =  {0,0,0,0 };
+	otherRect = { 0,0,0,0};
+
+
+
 
 }
+
+
+//checks for collision of two moveable objects by calling intersectsWithRectangles function
+bool moveableObject::intersects(const moveableObject & other)
+{
+
+	
+	
+	thisRect.left = x;
+	thisRect.top = y;
+	thisRect.right = x + width;
+	thisRect.bottom = y + height;
+
+
+	otherRect.left = other.x;
+	otherRect.top = other.y;
+	otherRect.right = other.x + other.width;
+	otherRect.bottom = other.y + other.height;
+
+
+
+	bool isIntersected = intersectsWithRectangles(thisRect, otherRect);
+
+
+	return(isIntersected);
+
+}
+
+//returns boolean if intersected or not, called from either moveableObject::intersects or 
+//moveableObject::screenIntersects (second function not created yet) 
+bool moveableObject::intersectsWithRectangles(const RECT & thisRectangle , const RECT & otherRectangle)
+{
+
+	
+	int objectOneLeft = thisRectangle.left;
+	int objectOneTop = thisRectangle.top;
+	int objectOneRight = thisRectangle.right;
+	int objectOneBottom = thisRectangle.bottom;
+
+	int objectTwoLeft = otherRectangle.left;
+	int objectTwoTop =  otherRectangle.top;
+	int objectTwoRight = otherRectangle.right;
+	int objectTwoBottom = otherRectangle.bottom;
+
+
+	//clever check for non intersection with rectangles
+	if (objectOneLeft > objectTwoRight)
+	{
+		return(false);
+	}
+	if (objectOneTop > objectTwoBottom)
+	{
+		return(false);
+
+	}
+	if (objectOneRight < objectTwoLeft)
+	{
+		return(false);
+
+	}
+	if (objectOneBottom < objectTwoTop)
+	{
+		return(false);
+	}
+
+
+	return(true);
+}
+
+
+
+
+bool moveableObject::intersectsWithScreenRect(int screenWidth, int screenHeight )
+{
+
+	thisRect.left = x;
+	thisRect.top = y;
+	thisRect.right = x + width;
+	thisRect.bottom = y + height;
+
+
+	//screen Rectangle
+	otherRect.left = 0;
+	otherRect.top = 0;
+	otherRect.right = screenWidth;
+	otherRect.bottom = screenHeight;
+
+	return(intersectsWithRectangles(thisRect, otherRect));
+
+
+}
+
+
+
+
 
 //sets x position for those objects that inherit from moveable
 void moveableObject::setX(int  inX) 

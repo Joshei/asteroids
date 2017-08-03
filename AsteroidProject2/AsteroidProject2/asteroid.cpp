@@ -1,10 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include "asteroid.h"
 #include "windows.h"
-
+#include "assert.h"
 
 asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largerTextureForAsteroid)
 {
+
 	activated = instantiated;
 	height = theHeight;
 	width = theWidth;
@@ -23,196 +24,109 @@ asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largerTextureForAs
 //this function when the asteroid goes off screen and it's activation is
 //set to offscreen.
 
-int asteroid::setInitialAsteroid(int fromThisBorder) {
+bool asteroid::setInitialAsteroid(int fromThisBorder) {
 
 	//technically these asteroids are behind the border by their width or height but they've been
 	//set to onscreen so they are ready to be checked for collisions now.
 	setActivate(onscreen);
 	
-	//whichDirection key of values no clockwise changed : 8:52 PM 6/18/17
+	AsteroidMovement direction = directions[fromThisBorder][std::rand() % 3];
+	switch (direction) {
 
+	case AsteroidMovement::UP:
+	case AsteroidMovement::DOWN:
+		deltaX = 0;
+		break;
+	case AsteroidMovement::LEFT:
+	case AsteroidMovement::UP_LEFT:
+	case AsteroidMovement::DOWN_LEFT:
+		deltaX = -1;
+		break;
+	case AsteroidMovement::RIGHT:
+	case AsteroidMovement::UP_RIGHT:
+	case AsteroidMovement::DOWN_RIGHT:
+		deltaX = 1;
+		break;
+	default:
+		assert(false);
+	}
+
+	switch (direction) {
 	
-	//starting behind top border	   :  0
-	//0.  asteroid moves down and right
-	//1.  asteroid moves down
-	//2.  asteroid moves down and left
-	//starting behind right border     :  1
-	//3.  asteroid moves left and down
-	//4.  asteroid moves left
-	//5.  asteroid moves left and up
-	//starting behind bottom border     : 2
-	//6.  asteroid moves up and left 
-	//7.  asteroid moves up
-	//8.  asteroid moves up and right
-	//starting behind left border      :  3
-	//9.  asteroid moves up and right
-	//10.  asteroid moves right
-	//11.  asteroid moves down and right
+	case AsteroidMovement::LEFT:
+	case AsteroidMovement::RIGHT:
+		deltaY = 0;
+		break;
+	case AsteroidMovement::UP:
+	case AsteroidMovement::UP_LEFT:
+	case AsteroidMovement::UP_RIGHT:
+		deltaY = -1;
+		break;
+	case AsteroidMovement::DOWN:
+	case AsteroidMovement::DOWN_LEFT:
+	case AsteroidMovement::DOWN_RIGHT:
+		deltaY = 1;
+		break;
 
+	default:
+	assert(false);
+	
 
+		}
 
 	//seed called in fillAsteroidVector
 	int i = 0;
-	
 	
 	////////////////////////
 
 	//from top border
 	if (fromThisBorder == 0)
 	{
-
-
-		x = (rand() % (gScreenWidth + width));
-		whichDirection = std::rand() % 3;
-
+		x = (rand() % (gScreenWidth - width));
 		y = 0 - height;
-
-		//asteroid moves form top border to right-down
-		if (whichDirection == 0)
-		{
-			deltaY = 1;
-			deltaX = 1;
-		}
-		//asteroid moves from top border to down
-		if (whichDirection == 1)
-		{
-			deltaY = 1;
-			deltaX = 0;
-		}
-		//asteroid moves from top border to left-down
-		if (whichDirection == 2)
-		{
-			deltaY = 1;
-			deltaX = -1;
-		}
-
-
-		anAsteroid.setPosition(sf::Vector2f(x, y));
 	}
 
 
-//////////////
+	//////////////
 
-//from right border
+	//from right border
 	else if (fromThisBorder == 1)
 	{
-
 		x = gScreenWidth;
-
 		y = (rand() % (gScreenHeight - height));
-		whichDirection = std::rand() % 3 + 3;
-
-		//asteroid moves from right border to left-down
-		if (whichDirection == 3)
-		{
-			deltaY = 1;
-			deltaX = -1;
-		}
-		//asteroid moves from right border to left
-		if (whichDirection == 4)
-		{
-			deltaY = 0;
-			deltaX = -1;
-		}
-		//asteroid moves from right border to left-up
-		if (whichDirection == 5)
-		{
-			deltaY = -1;
-			deltaX = -1;
-		}
-
-
-		anAsteroid.setPosition(sf::Vector2f(x, y));
+		
 	}
 
 
+	////////////
 
-////////////
-
-
-//from bottom border
+	//from bottom border
 	else if (fromThisBorder == 2)
 	{
-		x = (rand() % (gScreenWidth + width));
-		whichDirection = std::rand() % 3 + 6;
-
+		x = (rand() % (gScreenWidth - width));
 		y = gScreenHeight;
 
-		//asteroid moves from bottom border to left-up
-		if (whichDirection == 6)
-		{
-			deltaY = -1;
-			deltaX = -1;
-		}
-		//asteroid moves from bottom border to up
-		if (whichDirection == 7)
-		{
-			deltaY = -1;
-			deltaX = 0;
-		}
-		//asteroid moves form bottom border to right-up
-		if (whichDirection == 8)
-		{
-			deltaY = -1;
-			deltaX = 1;
-		}
-
-
-		//sets the image at the coordin
-		anAsteroid.setPosition(sf::Vector2f(x, y));
 	}
 
 
-////////////
+	////////////
 
 	//from left border
 	else if (fromThisBorder == 3) 
 	{
 
-		
-
 		//makes image just off the screen.
 		x = 0 - width;
-
-		
 		y = std::rand() % (gScreenHeight - height);
-		whichDirection = std::rand() % 3 + 9;
 		
-		//asteroid moves from left border to right-up
-		if (whichDirection == 9)
-		{
-			deltaY = -1;
-			deltaX = 1;
-		}
-		//asteroid moves from left border to right
-		if (whichDirection == 10)
-		{
-			deltaY = 0;
-			deltaX = 1;
-		}
-		//asteroid moves form left border tp right-down
-		if (whichDirection == 11)
-		{
-			deltaY = 1;
-			deltaX = 1;
-		}
-
-		
-		
-		anAsteroid.setPosition(sf::Vector2f(x, y));
-
 	}
 
-	
-
-	
-	
-
+	anAsteroid.setPosition(sf::Vector2f(x, y));
 	return(1);
 }
 
 //takes an enumeration of stateofassteroid
-void asteroid::setActivate(int activateFlag) 
+void asteroid::setActivate(stateOfAsteroid activateFlag) 
 {
 
 	activated = activateFlag;

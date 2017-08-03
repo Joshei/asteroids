@@ -6,7 +6,28 @@
 #include "moveable.h"
 
 //these are the "states" of the asteroids created with the asteroid class
-enum stateofasteroid { instantiated, destroyed, initialized, onscreen, offscreen };
+enum stateOfAsteroid { instantiated, destroyed, initialized, onscreen, offscreen };
+
+enum class AsteroidMovement
+{
+	UP,
+	UP_LEFT,
+	UP_RIGHT,
+	DOWN,
+	DOWN_LEFT,
+	DOWN_RIGHT,
+	LEFT,
+	RIGHT
+
+};
+
+static const AsteroidMovement directions[4][3] =
+{
+	{ AsteroidMovement::DOWN,AsteroidMovement::DOWN_LEFT,AsteroidMovement::DOWN_RIGHT },
+	{ AsteroidMovement::UP_RIGHT,AsteroidMovement::DOWN_RIGHT,AsteroidMovement::RIGHT },
+	{ AsteroidMovement::UP, AsteroidMovement::UP_LEFT, AsteroidMovement::UP_RIGHT },
+	{ AsteroidMovement::UP_LEFT, AsteroidMovement::DOWN_LEFT, AsteroidMovement::LEFT }
+};
 
 const int gScreenWidth = 1000;
 const int gScreenHeight = 700;
@@ -25,7 +46,7 @@ public:
 	asteroid( int theWidth, int theHeight, sf::Texture & largerTextureForAsteroid);
 	
 	int moveAsteroid(void);
-	void setActivate(int activateFlag);
+	void setActivate(stateOfAsteroid activateFlag);
 	void setWhichDirection(int direction);
 	
 	
@@ -48,7 +69,7 @@ public:
 	}
 
 	
-	int setInitialAsteroid(int i);
+	bool setInitialAsteroid(int i);
 
 
 protected:
@@ -57,9 +78,11 @@ protected:
 
 	int whichDirection;
 
-	int activated;
+	stateOfAsteroid activated;
 	
 	int fromThisBorder;
+
+	
 
 
 };

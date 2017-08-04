@@ -606,7 +606,7 @@ return(1);
 
 int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 {
-	
+
 	int flagUnusedAsteroidIndexFound = 0;
 	int indexNextSmallerAsteroid = 0;
 
@@ -617,7 +617,7 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//for each large asteroid.  Small asteroids created in this function will be set to onscreen. 
 	//A small asteroid before this function is set with an activeness of initialized.  
 
-	 
+
 	for (int i = 0; i <= g_NumOfSmallerAsteroids - 1; i++)
 	{
 
@@ -630,15 +630,15 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 
 			//their ready for moving and drawing
 			smallerAsteroidObject[i].setActivate(onscreen);
-			smallerAsteroidObject[i+1].setActivate(onscreen);
-			
+			smallerAsteroidObject[i + 1].setActivate(onscreen);
+
 			//unused asteroid found and breaking out of loop because of this variables amount!
 			i = g_NumOfSmallerAsteroids;
-			
+
 
 		}
 	}
-	
+
 	//somethings wrong, this function was called and there are no new asteroids unused
 	//and set to initialized so we can't make two small asteroids if all the asteroids have
 	//already been started and are no longer the activeness of initialized.
@@ -646,14 +646,14 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	{
 		shutdown(-5);
 	}
-	
-	
-	
+
+
+
 	//little asteroid located at intersection of smaller circle's diameter centered on top of larger circle (asteroid)
 	//diameter of smaller circle is 32
-	
+
 	//center of little asteroid is located with center on the top tangent of larger asteroid
-	
+
 
 	//The small asteroid's center is at the top horizontal tangent of the larger asteroid.
 	//The math here is interesting: the width of the larger asteroid minus the width of the smaller 
@@ -661,13 +661,13 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//We than divide this space by two to get the smaller asteroid positioned at the center horizontally.
 	//easier to draw out on paper
 	smallerAsteroidObject[indexNextSmallerAsteroid].setX((largerAsteroidObject[indexOfAsteroid].getX() +
-	( ( largerAsteroidObject[indexOfAsteroid].getWidth() - (smallerAsteroidObject[indexNextSmallerAsteroid].getWidth() ) / 2 ) ) ) );
+		((largerAsteroidObject[indexOfAsteroid].getWidth() - (smallerAsteroidObject[indexNextSmallerAsteroid].getWidth()) / 2))));
 
 	//The small asteroid's center is at the top horizontal tangent of the larger asteroid.
 	//The small asteroid is simpily above the asteroid by half of its height.
 	//easier to draw out on paper
 	smallerAsteroidObject[indexNextSmallerAsteroid].setY((largerAsteroidObject[indexOfAsteroid].getY() -
-	( smallerAsteroidObject[indexNextSmallerAsteroid].getHeight()  / 2 ) ) ) ;
+		(smallerAsteroidObject[indexNextSmallerAsteroid].getHeight() / 2)));
 
 	//The small asteroid's center is at the top horizontal tangent of the larger asteroid.
 	//The math here is interesting: the width of the larger asteroid minus the width of the smaller 
@@ -675,21 +675,21 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//We than divide this space by two to get the smaller asteroid positioned at the center horizontally.
 	//center of little asteroid is located with center on the top tangent of larger asteroid
 	//Drawing this might help you envision it.
-	smallerAsteroidObject[indexNextSmallerAsteroid+1].setX((largerAsteroidObject[indexOfAsteroid].getX() +
-	( (largerAsteroidObject[indexOfAsteroid].getWidth() - ( smallerAsteroidObject[indexNextSmallerAsteroid+1].getWidth()) / 2 ) ) ) );
+	smallerAsteroidObject[indexNextSmallerAsteroid + 1].setX((largerAsteroidObject[indexOfAsteroid].getX() +
+		((largerAsteroidObject[indexOfAsteroid].getWidth() - (smallerAsteroidObject[indexNextSmallerAsteroid + 1].getWidth()) / 2))));
 
-	
-	
+
+
 	//center of little asteroid is located on bottom of larger asteroid horizontal tangent 
 	//The y location of the small asteroid is the height of the larger asteroid (remember
 	//that the positive direction of the height is downward.)  and subtracted to move up 
 	//negatively the height of the smaller asteroid divided by two.
 	//easier to do if drawn on paper.
-	smallerAsteroidObject[indexNextSmallerAsteroid+1].setY(largerAsteroidObject[indexOfAsteroid].getY() +
-	(  largerAsteroidObject[indexOfAsteroid].getHeight() - (  smallerAsteroidObject[indexNextSmallerAsteroid+1].getHeight()  / 2 ) ) ) ;
+	smallerAsteroidObject[indexNextSmallerAsteroid + 1].setY(largerAsteroidObject[indexOfAsteroid].getY() +
+		(largerAsteroidObject[indexOfAsteroid].getHeight() - (smallerAsteroidObject[indexNextSmallerAsteroid + 1].getHeight() / 2)));
 
 
-	
+
 
 
 
@@ -698,20 +698,20 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//initializations for setposition right below.
 	int x1 = smallerAsteroidObject[indexNextSmallerAsteroid].getX();
 	int y1 = smallerAsteroidObject[indexNextSmallerAsteroid].getY();
-	int x2 = smallerAsteroidObject[indexNextSmallerAsteroid+1].getX();
-	int y2 = smallerAsteroidObject[indexNextSmallerAsteroid+1].getY();
+	int x2 = smallerAsteroidObject[indexNextSmallerAsteroid + 1].getX();
+	int y2 = smallerAsteroidObject[indexNextSmallerAsteroid + 1].getY();
 
 
 	////sets the position of the asteroid with x and y coordinates
 	smallerAsteroidObject[indexNextSmallerAsteroid].anAsteroid.setPosition(sf::Vector2f(x1, y1));
-	smallerAsteroidObject[indexNextSmallerAsteroid+1].anAsteroid.setPosition(sf::Vector2f(x2, y2));
+	smallerAsteroidObject[indexNextSmallerAsteroid + 1].anAsteroid.setPosition(sf::Vector2f(x2, y2));
 
 
-	
+
 
 	//to understand Which directions look here:
 
-	
+
 
 	//starting behind top border	   :  0
 	//0.  asteroid moves down and right
@@ -749,6 +749,118 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 
 
 
+
+	////////////////////////
+
+	AsteroidMovement majorDirection = largerAsteroidObject[indexOfAsteroid].getWhichDirection();
+
+
+	smallerAsteroidObject[indexNextSmallerAsteroid].getNewDirections(majorDirection, newDirection1, newDirection2);
+	
+
+
+	switch (majortDirection) {
+
+	case AsteroidMovement::UP:
+		newDiretion1 = UP_RIGHT
+			newDirection2 = UP_LEFT
+			break;
+	case AsteroidMovement::DOWN:
+		newDiretion1 = DOWN_RIGHT
+			newDirection2 = DOWN_LEFT
+			break;
+	case AsteroidMovement::LEFT:
+		newDiretion1 = DOWN_LEFT
+			newDirection2 = UP_LEFT
+			break;
+	case AsteroidMovement::UP_LEFT:
+		newDiretion1 = UP
+			newDirection2 = LEFT
+			break;
+	case AsteroidMovement::DOWN_LEFT:
+		newDiretion1 = DOWN
+			newDirection2 = LEFT
+			break;
+	case AsteroidMovement::RIGHT:
+		newDiretion1 = UP_RIGHT
+			newDirection2 = DOWN_RIGHT
+			break;
+
+	case AsteroidMovement::UP_RIGHT:
+		newDiretion1 = UP
+			newDirection2 = RIGHT
+			break;
+
+	case AsteroidMovement::DOWN_RIGHT:
+		newDiretion1 = DOWN;
+		newDirection2 = RIGHT;
+		break;
+
+	default:
+		assert(false);
+	}
+
+
+	smallerAsteroidObject[indexNextSmallerAsteroid].SetDeltaXFromDirection(newDirection1);
+	smallerAsteroidObject[indexNextSmallerAsteroid + 1].SetDeltaXFromDirection(newDirection2);
+
+}
+
+	
+	switch (direction) {
+
+	case AsteroidMovement::UP:
+
+	case AsteroidMovement::DOWN:
+		deltaX = 0;
+		break;
+	case AsteroidMovement::LEFT:
+	case AsteroidMovement::UP_LEFT:
+	case AsteroidMovement::DOWN_LEFT:
+		deltaX = -1;
+		break;
+	case AsteroidMovement::RIGHT:
+	case AsteroidMovement::UP_RIGHT:
+	case AsteroidMovement::DOWN_RIGHT:
+		deltaX = 1;
+		break;
+	default:
+		assert(false);
+	}
+
+	switch (direction) {
+
+	case AsteroidMovement::LEFT:
+	case AsteroidMovement::RIGHT:
+		deltaY = 0;
+		break;
+	case AsteroidMovement::UP:
+	case AsteroidMovement::UP_LEFT:
+	case AsteroidMovement::UP_RIGHT:
+		deltaY = -1;
+		break;
+	case AsteroidMovement::DOWN:
+	case AsteroidMovement::DOWN_LEFT:
+	case AsteroidMovement::DOWN_RIGHT:
+		deltaY = 1;
+		break;
+
+	default:
+		assert(false);
+
+
+	}
+
+
+
+
+	////////////////////////
+	
+	
+	
+	
+	
+	
 	//looks good
 	//////////////////////
 

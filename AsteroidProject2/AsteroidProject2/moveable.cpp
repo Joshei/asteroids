@@ -22,7 +22,8 @@ moveableObject::moveableObject(void)
 }
 
 
-//checks for collision of two moveable objects by calling intersectsWithRectangles function
+//checks for collision of two moveable objects by calling intersectsWithRectangles function. Returns
+//bool value for if collides
 bool moveableObject::intersects(const moveableObject & other)
 {
 
@@ -49,7 +50,7 @@ bool moveableObject::intersects(const moveableObject & other)
 }
 
 //returns boolean if intersected or not, called from either moveableObject::intersects or 
-//moveableObject::screenIntersects (second function not created yet) 
+//moveableObject::screenIntersects 
 bool moveableObject::intersectsWithRectangles(const RECT & thisRectangle , const RECT & otherRectangle)
 {
 

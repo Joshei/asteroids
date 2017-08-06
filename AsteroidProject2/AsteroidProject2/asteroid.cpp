@@ -3,7 +3,7 @@
 #include "windows.h"
 
 
-asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largerTextureForAsteroid)
+asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largerTextureForAsteroid, asteroidType theAsteroidType)
 {
 	activated = instantiated;
 	height = theHeight;
@@ -11,6 +11,7 @@ asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largerTextureForAs
 	anAsteroid.setTexture(largerTextureForAsteroid);
 	whichDirection = -1;
 	fromThisBorder = -1;
+	type = theAsteroidType;
 }
 
 //creates an asteroid that is at one of the four sides of the screens

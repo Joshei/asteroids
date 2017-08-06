@@ -12,9 +12,7 @@
 #include "enumeration.h"
 
 
-//enumeration for the asteroid used for passing to function that has different 
-//(and very little) programming dependant upon which type.
-enum asteroidtype { smallerasteroid, largerasteroid };
+
 
 //global variables g_NumOfLargerAsteroids must be two times as many small asteroids: g_NumOfSmallerAsteroids
 //level that game is on : starts at 1, increase in level causes more asteroids
@@ -23,29 +21,32 @@ int g_NumOfLargerAsteroids = 1;
 int g_NumOfSmallerAsteroids = g_NumOfLargerAsteroids * 2;
 //used to break out of while, when is set 
 int g_Shutdownflag = 0;
-
+int g_TotalNumAllAsteroids = 0;
 
 
 //GLOBAL FUNCTION DECLARATIONS
-int drawShip(void);
+int drawShip();
 int moveShip(int amountForMovem, int keyPressed);
 int checkkeyboard();
-int checkCollisionsShipWithAsteroids(int numInVector, std::vector<asteroid> & v);
-int checkCollisionsaAllBulletsWithAnAsteroids(int numAsteroids, std::vector<asteroid> & vector, asteroidtype whichAsteroidSize);
+int checkCollisionsShipWithAsteroids();
+int checkCollisionsaAllBulletsWithAnAsteroids();
 int shoot(void);
 int movebullets(void);
 int checkForBulletOffscreen(int index);
-int checkForAsteroidOffScreen(std::vector<asteroid> & vector, int amount);
+int checkForAsteroidOffScreen();
 int checkForShipOnBorder(int x, int y);
 void shutdown(int exitNum);
-int fillAsteroidVector(int numAsteroids, int theWidth, int theHeight, std::vector<asteroid> & v, asteroidtype whichTyoe, sf::Texture & TextureAsteroid);
+int fillAsteroidVector(int numOfAsteroid , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
 int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAstroid);
-int checkAllAsteroidsDestroyed(int totalNumbOfAsteroids, std::vector<asteroid> & vect);
+int checkAllAsteroidsDestroyed();
 int startNextLevel(void);
-int moveasteroids(int numbOfTotalAsteroids, std::vector<asteroid> & vect);
-int reinitializeOffscreenAsteroids(int numbOfTotalAsteroids, std::vector<asteroid> & vect);
+int moveasteroids();
+int reinitializeOffscreenAsteroids();
 int fillBulletVector(int numberOfBullets, sf::Texture & textureOfBullet);
-int unitializeAsteroids(std::vector<asteroid>  & vector);
+int refillAsteroidVectors(int newNumberOfAsteroids, int lastLevelNumberOfAsteroids , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
+
+
+
 
 /////////!!!!!!!!!!!!!!!!!!
 
@@ -57,6 +58,7 @@ sf::Texture texturebullet;
 sf::Font fontForScore;
 
 //initialized of the vectors for asteroids
+std::vector<asteroid> asteroidCollection;
 std::vector<asteroid> largerAsteroidObject;
 std::vector<asteroid> smallerAsteroidObject;
 std::vector <bullet> bullets;
@@ -71,11 +73,9 @@ ship shipObject(500, 500);
 
 //GLOBAL FUNCTION DEFINITIONS FOLLOW:
 
+int drawShip(void){
 
-int drawShip(void)
-{
-	
-	
+
 	window.draw(shipObject.shipImage);
 	return(1);
 }
@@ -166,37 +166,27 @@ int checkkeyboard(void)
 
 //The idea is to check if the ship is in the y-range and x-range of the asteroid
 //if so there is a collision!
-int checkCollisionsShipWithAsteroids(int numOfAsteroidsInVector, std::vector<asteroid> & v) 
+int checkCollisionsShipWithAsteroids() 
 {
 
 
-	for (int i = 0; i <= numOfAsteroidsInVector - 1; i++)
+	for (int i = 0; i <= g_TotalNumAllAsteroids - 1; i++)
 	{
 
 		//checks if asteroid on screen if so is not initialized, destroyed, instantiated, or offscreen
-		//so if it is enters beneath this if.  Otherwise it continues to the for loop with next value of i.
-		if (v[i].getActivate() != onscreen )
+		//so if it is onscreen enters beneath this if.  Otherwise it continues to the for loop with next value of i.
+		if (asteroidCollection[i].getActivate() != onscreen )
 		{
 			continue;
 
 		}
-
-
-
-		
-		if (shipObject.intersects(v[i]))
+		if (shipObject.intersects(asteroidCollection[i]))
 		{
 			shutdown(-1);
 		}
-
-
-
-		
 	}
 
-	
-
-	return(1);
+		return(1);
 }
 
 
@@ -207,15 +197,15 @@ int checkCollisionsShipWithAsteroids(int numOfAsteroidsInVector, std::vector<ast
 //destroyed and two new smaller asteroids are created.
 //With every for loop that checks bullets the bullet is checked to be inactive and if it is then
 //the loop continues which means the for loop is run again with the next index.
-int checkCollisionsaAllBulletsWithAnAsteroids(int numOfAsteroids, std::vector<asteroid> & v, asteroidtype whichAsteroid )
+int checkCollisionsaAllBulletsWithAnAsteroids( )
 {
 
 
-	for (int j = 0; j <= (numOfAsteroids - 1); j++)
+	for (int j = 0; j <= (g_TotalNumAllAsteroids - 1); j++)
 	{
 		
 
-		if (v[j].getActivate() != onscreen )
+		if (asteroidCollection[j].getActivate() != onscreen )
 		{
 			continue;
 		}
@@ -233,7 +223,7 @@ int checkCollisionsaAllBulletsWithAnAsteroids(int numOfAsteroids, std::vector<as
 
 
 
-			if (bullets[i].intersects(v[j]))
+			if (bullets[i].intersects(asteroidCollection[j]))
 			{
 				
 
@@ -242,15 +232,15 @@ int checkCollisionsaAllBulletsWithAnAsteroids(int numOfAsteroids, std::vector<as
 				//bullet is used and not active until refired
 				bullets[i].setIsactive(false);
 				
-				//asteroid is destroyed and iss used later after level is passed
-				v[j].setActivate(destroyed);
+				//asteroid is destroyed and is used later after level is passed (startNextLevel)
+				asteroidCollection[j].setActivate(destroyed);
 
 
 
 				//This is the diference of the two different sized asteroids when they are hit.  
-				//Remember so far the enumeration difference is just two : smallerasteroid and 
+				//Remember so far the enumeration difference is just two : smaller and 
 				//larger asteroid
-				if (whichAsteroid == largerasteroid)
+				if (asteroidCollection[j].getAsteroidType() == larger)
 				{
 					//passes in next number of small asteroid and than creates two
 					createSmallerAsteroids(j, smallerTextureAsteroid);
@@ -262,7 +252,7 @@ int checkCollisionsaAllBulletsWithAnAsteroids(int numOfAsteroids, std::vector<as
 
 				
 				}
-				else if (whichAsteroid == smallerasteroid)
+				else if (asteroidCollection[j].getAsteroidType() == smaller)
 				{
 					theScore.addToScore(60);
 					theScore.drawScore();
@@ -475,22 +465,20 @@ int checkForBulletOffscreen(int index)
 	return(1);
 }
 
-// maxAsteroids is the number of asteroids to check minus one.  The function checks
-//if the asteroid is totally off the screen using its height or width. If it is the 
-//asteroid is set as offscreen which means it is not being drawn.  Later we look at
-//the activation of offscreen to reinitialize and set back to onscreen so that it 
-//will be drawn.
-int checkForAsteroidOffScreen(std::vector<asteroid> & v, int maxAsteroids)
+//The function checks if the asteroid is totally off the screen. If it is the asteroid 
+//is set as offscreen which means it is not being drawn.  Later we look at the activation of
+//offscreen to reinitialize and set back to onscreen so that it will be drawn.
+int checkForAsteroidOffScreen()
 {
 
-	for (int i = 0; i <= maxAsteroids-1; i++)
+	for (int i = 0; i <= (g_TotalNumAllAsteroids-1); i++)
 	{
 
 
-		if (!(v[i].intersectsWithScreenRect( gScreenWidth, gScreenHeight)))
+		if (!(asteroidCollection[i].intersectsWithScreenRect( gScreenWidth, gScreenHeight)))
 		{
 
-			v[i].setActivate(offscreen);
+			asteroidCollection[i].setActivate(offscreen);
 		}
 
 	}
@@ -549,47 +537,36 @@ void shutdown(int exitNum)
 }
 
 
-//fills the asteroid vectors with initialized asteroids
-int fillAsteroidVector(int numOfAsteroids, int width, int height, std::vector<asteroid> &v, asteroidtype type, sf::Texture  & texture) {
-
-	
-	
+//fills the asteroid vector with initialized asteroids. asterType is the type of the asteroid.
+int fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType asterType,  sf::Texture & texture) {
 
 	int j = 0;
-	
-	for (int i = 0; i <= (numOfAsteroids - 1); i++)
+	//g_TotalAsteroids is the total number of asteroids : already created plus newly added that we are adding
+	//right now
+	int g_TotalAsteroids = g_TotalNumAllAsteroids + numAsteroid;
+
+	for (int i = g_TotalNumAllAsteroids; i < g_TotalAsteroids; i++)
 	{
-		
-		//generated is 0 through three for starting direction on screen : top, right, bottom, left
-		j = (rand() % 4);
-	
-		//asteroid now calls constructor 
-		v.push_back(asteroid(width, height, texture ));
-			
-			
-		//boolean initialize means its largeAsteroidObject so that the large asteroids
-		//are initialized for movement (there behind on of the four sides and ready
-		//for movement.)  Where there activeness is set to onscreen
-		//
-		//if initialze is on than the large asteroids are being set.  Otherwise
-		//the small asteroids have not been created on the main monitor sceen
-		//(two for each large asteroid that is destroyed)
-		
+		g_TotalNumAllAsteroids++;
 
-			 
-		if (type == largerasteroid) 
+		//large asteroids are initialized for movement (there behind on of the four sides and ready
+		//for movement.)  Where there activeness is set to onscreen.  The small asteroids have not 
+		//been created on the main monitor sceen (two for each large asteroid that is destroyed)
+		if (asterType == smaller)
 		{
-			//sets fromThisDirection with j and whichDirection with a randomizer in this function
-			v[i].setInitialAsteroid(j);
-		
+			//readies for onscreen usage in createSmallerAsteroid which sets deltax and deltay and whichdirection
+			asteroidCollection.push_back(asteroid(width, height, texture, smaller));
+			asteroidCollection[i].setActivate(initialized);
 		}
-		else if (type == smallerasteroid)
+		else if (asterType == larger)
 		{
-
-			v[i].setActivate(initialized);
-		
+			//generated is 0 through three for starting direction on screen : top, right, bottom, left
+			j = (rand() % 4);
+			//asteroid now calls constructor 
+			asteroidCollection.push_back(asteroid(width, height, texture, larger));
+			//sets deltax and deltay and maybe which direction
+			asteroidCollection[i].setInitialAsteroid(j);
 		}
-			
 
 	}
 
@@ -930,15 +907,15 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	return(1);
 }
 
-//Checks if all large or small asteroids are destroyed 
-int checkAllAsteroidsDestroyed(int totalNumberOfAsteroids, std::vector<asteroid> & v)
+//Checks if all large and small asteroids are destroyed 
+int checkAllAsteroidsDestroyed()
 {
 
 	int asteroidCount = 0;
-	for (int i = 0; i <= (totalNumberOfAsteroids - 1); i++)
+	for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
 	{
 
-		if (v[i].getActivate() == destroyed)
+		if (asteroidCollection[i].getActivate() == destroyed)
 		{
 			asteroidCount++;
 			
@@ -950,7 +927,7 @@ int checkAllAsteroidsDestroyed(int totalNumberOfAsteroids, std::vector<asteroid>
 		}
 
 	}
-	if (asteroidCount == totalNumberOfAsteroids)
+	if (asteroidCount == g_TotalNumAllAsteroids)
 	{
 		return(1);
 	}
@@ -1015,20 +992,19 @@ int startNextLevel() {
 //It could also be on the screen ..."onscreen"
 //if it is a small asteroid it is onscreen if it has been created with :
 //createsmallasteroids.
-
-int moveasteroids(int numberOfTotalAsteroids, std::vector<asteroid> & v)
+int moveasteroids()
 {
 
-	for (int i = 0; i <= (numberOfTotalAsteroids - 1); i++)
+	for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
 	{
 
-		if (v[i].getActivate() == onscreen)
+		if (asteroidCollection[i].getActivate() == onscreen)
 		{
 
 
 
-			v[i].moveAsteroid();
-			window.draw(v[i].anAsteroid);
+			asteroidCollection[i].moveAsteroid();
+			window.draw(asteroidCollection[i].anAsteroid);
 
 
 		}
@@ -1044,12 +1020,12 @@ int moveasteroids(int numberOfTotalAsteroids, std::vector<asteroid> & v)
 //check for all asteroids offscreen and set them up for moving putting them 
 //their height or their width behind the four screen borders so that there 
 //ready but just unvisable.
-int reinitializeOffscreenAsteroids(int numberOfTotalAsteroids, std::vector<asteroid> & v)
+int reinitializeOffscreenAsteroids()
 {
 	int randNum = 0;
-	for (int i = 0; i <= numberOfTotalAsteroids - 1; i++)
+	for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
 	{
-		if (v[i].getActivate() == offscreen)
+		if (asteroidCollection[i].getActivate() == offscreen)
 		{
 			randNum = std::rand() % (4);
 
@@ -1057,7 +1033,7 @@ int reinitializeOffscreenAsteroids(int numberOfTotalAsteroids, std::vector<aster
 			//this is used for both large and small asteroids and is not the same
 			//as when (two) asteroids are created in the createSmallerAsteroids called
 			//in checkCollisionsAllBullets...
-			v[i].setInitialAsteroid(randNum);
+			asteroidCollection[i].setInitialAsteroid(randNum);
 		}
 
 	}
@@ -1082,20 +1058,6 @@ int fillBulletVector (int numOfBullets, sf::Texture & texture)
 	
 
 	return(1);
-}
-
-
-
-int unitializeAsteroids(std::vector<asteroid>  & v)
-{
-
-	while (!v.empty())
-	{
-		v.pop_back();
-	}
-
-	return(1);
-
 }
 
 
@@ -1144,16 +1106,14 @@ int main(void)
 
 
 	//create vector fills the object with a random entry border (0-3)
-	//uses setInitialAsteroid third and fourth argument is width an than height
-	fillAsteroidVector(g_NumOfLargerAsteroids, 64, 64, largerAsteroidObject, largerasteroid, largerTextureAsteroid);
-	//creates vector with small asteroids
-	fillAsteroidVector(g_NumOfSmallerAsteroids, 32, 32, smallerAsteroidObject, smallerasteroid, smallerTextureAsteroid);
+	//Uses setInitialAsteroid. third and fourth argument is width an than height
 	
+	//creates vector with asteroids
+	fillAsteroidVector(g_NumOfSmallerAsteroids, 32, 32, smaller, smallerTextureAsteroid);
+	fillAsteroidVector(g_NumOfLargerAsteroids, 64, 64, larger, largerTextureAsteroid);
+
 	//this will set the vector to 10 bullets index  of 9 of course
 	fillBulletVector(constInitialNumBullets, texturebullet);
-
-	
-
 	theScore.setFont(fontForScore);
 
 	//initial ship draw
@@ -1191,12 +1151,8 @@ int main(void)
 		window.clear();
 		
 
-
-
 		//if the asteroids are not on the screen they will not be moved.  draws the asteroid too.
-		moveasteroids(g_NumOfLargerAsteroids, largerAsteroidObject);
-		moveasteroids(g_NumOfSmallerAsteroids, smallerAsteroidObject);
-
+		moveasteroids();
 		
 		//checks keyboard and if pressed calls moveship with the deltas otherwise calls moveship
 		//with - 1 which causes sliding effect
@@ -1207,8 +1163,7 @@ int main(void)
 		}
 
 
-		checkCollisionsShipWithAsteroids(g_NumOfLargerAsteroids, largerAsteroidObject);
-		checkCollisionsShipWithAsteroids(g_NumOfSmallerAsteroids, smallerAsteroidObject);
+		checkCollisionsShipWithAsteroids();
 		
 		
 		
@@ -1217,18 +1172,20 @@ int main(void)
 		
 		
 		
-		checkCollisionsaAllBulletsWithAnAsteroids(g_NumOfLargerAsteroids, largerAsteroidObject, largerasteroid);
-	    checkCollisionsaAllBulletsWithAnAsteroids(g_NumOfSmallerAsteroids, smallerAsteroidObject, smallerasteroid);
+		checkCollisionsaAllBulletsWithAnAsteroids();
+	   
 
-
-		//if 1 is returned twice than all those asteroids are destroyed and a new level is started
-		if (checkAllAsteroidsDestroyed(g_NumOfLargerAsteroids, largerAsteroidObject) == 1)
+		//if 1 is returned twice than all those asteroids are destroyed ans reinitializeation and new asteroids are created
+		//and a new level is started
+		if (checkAllAsteroidsDestroyed() == 1)
 		{
-			if (checkAllAsteroidsDestroyed(g_NumOfSmallerAsteroids, smallerAsteroidObject) == 1)
-			{
+			
+			//holds this levels value because they are changed in startNextLevel for RefillAsteroidVector
+			int thisLevelsSmallAsteroidAmt = g_NumOfSmallerAsteroids;
+			int thisLevelsLargeAsteroidAmt = g_NumOfLargerAsteroids;
 
-				//pop all the asteroids of both vectors and than create the new number of asteroids
 				
+				//new amounts of asteroids are set
 				if (startNextLevel())
 				{
 					//break out of first while if set in startNextLevel and end program 
@@ -1237,46 +1194,28 @@ int main(void)
 						continue;
 					}
 
-					//pop all the asteroids off the vector
-					unitializeAsteroids( largerAsteroidObject);
-					unitializeAsteroids( smallerAsteroidObject);
-
-					//Important:  constinitials are used in this main.cpp only.
+					//old asteroids are reinitialized and new asteroids are created (there are new amounts
+					//of asteroids because a new level has been set.)
+					//fills vector with small asteroids
 					//third and fourth argument is width an than height
-					fillAsteroidVector(g_NumOfLargerAsteroids, 64, 64, largerAsteroidObject, largerasteroid, largerTextureAsteroid);
-					//fills vector with 8 small asteroids
-					fillAsteroidVector(g_NumOfSmallerAsteroids, 32, 32, smallerAsteroidObject, smallerasteroid, smallerTextureAsteroid);
+					//first argument is the new amount of asteroids because we are at a new level,
+					//the second argument is the amount of asteroids from the previous level (they have been initialized)
+					refillAsteroidVectors(thisLevelsSmallAsteroidAmt, g_NumOfSmallerAsteroids,   32, 32, smaller, smallerTextureAsteroid  );
+					//fills vector with large asteroids
+					refillAsteroidVectors(thisLevelsLargeAsteroidAmt, g_NumOfLargerAsteroids, 64, 64, larger, largerTextureAsteroid);
 				
-					//these are now the values of the number of current asteroids
-					//g_NumOfLargerAsteroids = g_NewNumOfLargerAsteroids;
-					//g_NumOfSmallerAsteroids = g_NewNumOfSmallerAsteroids;
-
-
 				}
-
-
-
-
 			}
-		}
 
 
-		
-		checkForAsteroidOffScreen(largerAsteroidObject, g_NumOfLargerAsteroids);
-		checkForAsteroidOffScreen(smallerAsteroidObject, g_NumOfSmallerAsteroids);
+		//sets asteroids to offscreen if they are
+		checkForAsteroidOffScreen();
 		
 		
 		//check for all asteroids offscreen and if so set them up for moving behind the four screen borders
-		reinitializeOffscreenAsteroids(g_NumOfLargerAsteroids, largerAsteroidObject);
-		reinitializeOffscreenAsteroids(g_NumOfSmallerAsteroids, smallerAsteroidObject);
+		reinitializeOffscreenAsteroids();
+		
 
-		
-			
-
-			
-			
-		
-		
 		if (theScore.getScore() == 0)
 		{
 			theScore.drawScore(0);
@@ -1293,6 +1232,52 @@ int main(void)
 
 	return 0;
 }
+
+
+//reinitialize the already created used asteroids and create the remaining asteroids to be newly created by
+//finishing the level.
+int refillAsteroidVectors(int newNumAsteroids, int lastNumAsteroids, int width, int height, asteroidType astType, sf::Texture & texture)
+{
+
+	int j = 0; 
+	
+	//New g_NumOfLargerAsteroids and g_NumOfSmallerAsteroids values were set in startNextLevel.
+	//LastNumLargeAsteroids and lastNumSmallAsteroids hold the last level values before starting over.
+	
+	
+		int amtOfNewAsteroids = newNumAsteroids - lastNumAsteroids;
+
+	
+	//reintialize last levels asteroids
+	for (int i = 0; i <= g_TotalNumAllAsteroids; i++)
+	{
+
+		
+		if (asteroidCollection[i].getAsteroidType() == larger)
+		{
+			j = (rand() % 4);
+			//sets fromThisDirection with j and whichDirection with a randomizer in this function
+			asteroidCollection[i].setInitialAsteroid(j);
+
+		}
+		else if (asteroidCollection[i].getAsteroidType() == smaller)
+		{
+			//readies asteroids for onscreen in createSmallerAsteroids to set deltax and deltay and whichdirection
+			asteroidCollection[i].setActivate(initialized);
+
+		}
+	}
+
+	fillAsteroidVector(amtOfNewAsteroids, width, height, astType, texture);
+	
+
+	return(1);
+
+}
+
+
+
+
 
 
 

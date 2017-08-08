@@ -9,6 +9,30 @@
 enum stateofasteroid { instantiated, destroyed, initialized, onscreen, offscreen };
 enum asteroidType {smaller, larger};
 
+enum class asteroidMovement
+{
+	UP,
+	UP_LEFT,
+	UP_RIGHT,
+	DOWN,
+	DOWN_LEFT,
+	DOWN_RIGHT,
+	LEFT,
+	RIGHT
+};
+
+static const asteroidMovement directions[4][3] =
+{
+
+	{ asteroidMovement::DOWN, asteroidMovement::DOWN_LEFT, asteroidMovement::DOWN_RIGHT },
+	{ asteroidMovement::UP_RIGHT, asteroidMovement::DOWN_RIGHT, asteroidMovement::RIGHT },
+	{ asteroidMovement::UP, asteroidMovement::UP_LEFT, asteroidMovement::UP_RIGHT },
+	{ asteroidMovement::UP_LEFT, asteroidMovement::DOWN_LEFT, asteroidMovement::LEFT }
+};
+
+
+
+
 const int gScreenWidth = 1000;
 const int gScreenHeight = 700;
 
@@ -27,7 +51,8 @@ public:
 	
 	int moveAsteroid(void);
 	void setActivate(int activateFlag);
-	void setWhichDirection(int direction);
+	void setWhichDirection(asteroidMovement direction);
+	void setType(asteroidType theType);
 	
 	
 	//inlines
@@ -43,13 +68,13 @@ public:
 		return(fromThisBorder); 
 	}
 
-	int getWhichDirection(void)
+	asteroidMovement getWhichDirection(void)
 	{
 		return(whichDirection);
 
 	}
 
-	int getAsteroidType(void)
+	asteroidType getAsteroidType(void)
 	{
 		return(type);
 	}
@@ -57,18 +82,22 @@ public:
 	
 	int setInitialAsteroid(int i);
 
+	void setDeltaWithDirection(asteroidMovement & Direction);
+	
+	void  setTexture(sf::Texture & theTexture);
+	
 
 protected:
 
 	
 
-	int whichDirection;
+	asteroidMovement whichDirection;
 
 	int activated;
 	
 	int fromThisBorder;
 
-	int type;
+	asteroidType type;
 
 
 };

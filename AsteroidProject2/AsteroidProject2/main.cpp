@@ -24,6 +24,8 @@ int g_Shutdownflag = 0;
 int g_TotalNumAllAsteroids = 0;
 
 
+
+
 //GLOBAL FUNCTION DECLARATIONS
 int drawShip();
 int moveShip(int amountForMovem, int keyPressed);
@@ -43,8 +45,8 @@ int startNextLevel(void);
 int moveasteroids();
 int reinitializeOffscreenAsteroids();
 int fillBulletVector(int numberOfBullets, sf::Texture & textureOfBullet);
-int refillAsteroidVectors(int newNumberOfAsteroids, int lastLevelNumberOfAsteroids , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
-
+int refillAsteroidVectors(int createThisManyAsteroids, int theWidth, int theHeight, asteroidType asteroidType, sf::Texture & theTexture);
+void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, asteroidMovement & smallAsteroidDirection1, asteroidMovement & smallAsteroidDirection2);
 
 
 
@@ -540,11 +542,14 @@ void shutdown(int exitNum)
 //fills the asteroid vector with initialized asteroids. asterType is the type of the asteroid.
 int fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType asterType,  sf::Texture & texture) {
 
+	// for random direction
 	int j = 0;
 	//g_TotalAsteroids is the total number of asteroids : already created plus newly added that we are adding
 	//right now
 	int g_TotalAsteroids = g_TotalNumAllAsteroids + numAsteroid;
 
+	//g_TotalNumAllAsteroids increases whenever ther is a new asteroid creation 
+	//(from push_back)
 	for (int i = g_TotalNumAllAsteroids; i < g_TotalAsteroids; i++)
 	{
 		g_TotalNumAllAsteroids++;
@@ -552,10 +557,12 @@ int fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType ast
 		//large asteroids are initialized for movement (there behind on of the four sides and ready
 		//for movement.)  Where there activeness is set to onscreen.  The small asteroids have not 
 		//been created on the main monitor sceen (two for each large asteroid that is destroyed)
+		//they are initialized with 'initialized' and is changed to 'onscreen' in createSmallAsteroid
+		//function
 		if (asterType == smaller)
 		{
-			//readies for onscreen usage in createSmallerAsteroid which sets deltax and deltay and whichdirection
 			asteroidCollection.push_back(asteroid(width, height, texture, smaller));
+			//readies for onscreen usage in createSmallerAsteroid which sets deltax and deltay and whichdirection
 			asteroidCollection[i].setActivate(initialized);
 		}
 		else if (asterType == larger)
@@ -564,7 +571,7 @@ int fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType ast
 			j = (rand() % 4);
 			//asteroid now calls constructor 
 			asteroidCollection.push_back(asteroid(width, height, texture, larger));
-			//sets deltax and deltay and maybe which direction
+			//sets deltax and deltay and which direction
 			asteroidCollection[i].setInitialAsteroid(j);
 		}
 
@@ -574,18 +581,15 @@ return(1);
 }
 
 // indexOfAsteroid is the index of the large asteroid that has been shot with a bullet and
-// has been replaced on the screen with the two smaller asteroids that are to be created
-// (initialized) here.  Called from checkCollisionsaAllBulletsWithAnAsteroids.
-
-
-
-
-
+// is being replaced on the screen with the two smaller asteroids that are to be activate
+// (onscree) here.  They were set to intialize in fillAsteroidVectors and refillAsteroidVectors.
+// Called from checkCollisionsaAllBulletsWithAnAsteroids.
 int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 {
 	
 	int flagUnusedAsteroidIndexFound = 0;
-	int indexNextSmallerAsteroid = 0;
+	int indexNextSmallerAsteroid1 = 0;
+	int indexNextSmallerAsteroid2 = 0;
 
 	//This fuction finds the first index for the small asteroid.  The assumption is that
 	//the second indexed asteroid created from a collission with a large asteroid and a bullet
@@ -593,33 +597,51 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//smallasteroid available than there should therefore be two, becauser there are two asteroids created
 	//for each large asteroid.  Small asteroids created in this function will be set to onscreen. 
 	//A small asteroid before this function is set with an activeness of initialized.  
-
-	 
-	for (int i = 0; i <= g_NumOfSmallerAsteroids - 1; i++)
+	for (int i = 0 ; i <= (g_TotalNumAllAsteroids - 1); i++)
 	{
+		
 
-		//small asteroids are initialized as onscreen because they start on the screen
-		if (smallerAsteroidObject[i].getActivate() == initialized)
+		//small asteroids are initialized as onscreen because they were initailized - see comment above
+		if (asteroidCollection[i].getActivate() == initialized)
 		{
 
-			flagUnusedAsteroidIndexFound = 1;
-			indexNextSmallerAsteroid = i;
+			//if this is two from these to for loops than two small asteroids have been found for
+			//using.  Because they were set as initalized
+			flagUnusedAsteroidIndexFound++;
+			indexNextSmallerAsteroid1 = i;
+			//their ready for moving and drawing
+			asteroidCollection[i].setActivate(onscreen);
+			//unused asteroid found and breaking out of loop because of this variables amount!
+			i = g_TotalNumAllAsteroids;
+		}
+	}
+
+	for (int j = 0; j <= (g_TotalNumAllAsteroids - 1); j++)
+	{
+
+
+		//small asteroids are initialized as onscreen because they were set as "initialized"
+		//in fillAsteroidVectors() or refillAsteroidVectors()
+		if (asteroidCollection[j].getActivate() == initialized)
+		{
+
+			//if this is two one for each for loop,  both small asteroids ready for movement
+			flagUnusedAsteroidIndexFound++;
+			indexNextSmallerAsteroid2 = j;
 
 			//their ready for moving and drawing
-			smallerAsteroidObject[i].setActivate(onscreen);
-			smallerAsteroidObject[i+1].setActivate(onscreen);
+			asteroidCollection[j].setActivate(onscreen);
 			
 			//unused asteroid found and breaking out of loop because of this variables amount!
-			i = g_NumOfSmallerAsteroids;
-			
+			j = g_TotalNumAllAsteroids;
+
 
 		}
 	}
 	
-	//somethings wrong, this function was called and there are no new asteroids unused
-	//and set to initialized so we can't make two small asteroids if all the asteroids have
-	//already been started and are no longer the activeness of initialized.
-	if (flagUnusedAsteroidIndexFound != 1)
+	//somethings wrong, this function was called and there are no 2 new asteroids readied
+	//as initialized
+	if (flagUnusedAsteroidIndexFound != 2)
 	{
 		shutdown(-5);
 	}
@@ -628,8 +650,10 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	
 	//little asteroid located at intersection of smaller circle's diameter centered on top of larger circle (asteroid)
 	//diameter of smaller circle is 32
+
+	//The larger asteroid in the remaining code is the asteroidCollection with the indes : indexOfAsteoid
 	
-	//center of little asteroid is located with center on the top tangent of larger asteroid
+	//center of little asteroid is located with center on the top horizontal tangent of larger asteroid
 	
 
 	//The small asteroid's center is at the top horizontal tangent of the larger asteroid.
@@ -637,273 +661,47 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//asteroid leaves us with the remaining width space on both the right and left of the small asteroid.
 	//We than divide this space by two to get the smaller asteroid positioned at the center horizontally.
 	//easier to draw out on paper
-	smallerAsteroidObject[indexNextSmallerAsteroid].setX((largerAsteroidObject[indexOfAsteroid].getX() +
-	( ( largerAsteroidObject[indexOfAsteroid].getWidth() - (smallerAsteroidObject[indexNextSmallerAsteroid].getWidth() ) / 2 ) ) ) );
-
+	asteroidCollection[indexNextSmallerAsteroid1].setX((asteroidCollection[indexOfAsteroid].getX() +
+	( ( asteroidCollection[indexOfAsteroid].getWidth() - (asteroidCollection[indexNextSmallerAsteroid1].getWidth() ) / 2 ) ) ) );
 	//The small asteroid's center is at the top horizontal tangent of the larger asteroid.
 	//The small asteroid is simpily above the asteroid by half of its height.
 	//easier to draw out on paper
-	smallerAsteroidObject[indexNextSmallerAsteroid].setY((largerAsteroidObject[indexOfAsteroid].getY() -
-	( smallerAsteroidObject[indexNextSmallerAsteroid].getHeight()  / 2 ) ) ) ;
-
+	asteroidCollection[indexNextSmallerAsteroid1].setY((asteroidCollection[indexOfAsteroid].getY() -
+	( asteroidCollection[indexNextSmallerAsteroid1].getHeight()  / 2 ) ) ) ;
 	//The small asteroid's center is at the top horizontal tangent of the larger asteroid.
 	//The math here is interesting: the width of the larger asteroid minus the width of the smaller 
 	//asteroid leaves us with the remaining width space on both the right and left of the small asteroid.
 	//We than divide this space by two to get the smaller asteroid positioned at the center horizontally.
 	//center of little asteroid is located with center on the top tangent of larger asteroid
 	//Drawing this might help you envision it.
-	smallerAsteroidObject[indexNextSmallerAsteroid+1].setX((largerAsteroidObject[indexOfAsteroid].getX() +
-	( (largerAsteroidObject[indexOfAsteroid].getWidth() - ( smallerAsteroidObject[indexNextSmallerAsteroid+1].getWidth()) / 2 ) ) ) );
-
-	
-	
+	asteroidCollection[indexNextSmallerAsteroid2].setX((asteroidCollection[indexOfAsteroid].getX() +
+	( (asteroidCollection[indexOfAsteroid].getWidth() - ( asteroidCollection[indexNextSmallerAsteroid2].getWidth()) / 2 ) ) ) );
 	//center of little asteroid is located on bottom of larger asteroid horizontal tangent 
 	//The y location of the small asteroid is the height of the larger asteroid (remember
 	//that the positive direction of the height is downward.)  and subtracted to move up 
 	//negatively the height of the smaller asteroid divided by two.
 	//easier to do if drawn on paper.
-	smallerAsteroidObject[indexNextSmallerAsteroid+1].setY(largerAsteroidObject[indexOfAsteroid].getY() +
-	(  largerAsteroidObject[indexOfAsteroid].getHeight() - (  smallerAsteroidObject[indexNextSmallerAsteroid+1].getHeight()  / 2 ) ) ) ;
-
-
-	
-
-
-
-
-
+	asteroidCollection[indexNextSmallerAsteroid2].setY(asteroidCollection[indexOfAsteroid].getY() +
+	(  asteroidCollection[indexOfAsteroid].getHeight() - (  asteroidCollection[indexNextSmallerAsteroid2].getHeight()  / 2 ) ) ) ;
 	//initializations for setposition right below.
-	int x1 = smallerAsteroidObject[indexNextSmallerAsteroid].getX();
-	int y1 = smallerAsteroidObject[indexNextSmallerAsteroid].getY();
-	int x2 = smallerAsteroidObject[indexNextSmallerAsteroid+1].getX();
-	int y2 = smallerAsteroidObject[indexNextSmallerAsteroid+1].getY();
-
-
+	int x1 = asteroidCollection[indexNextSmallerAsteroid1].getX();
+	int y1 = asteroidCollection[indexNextSmallerAsteroid1].getY();
+	int x2 = asteroidCollection[indexNextSmallerAsteroid2].getX();
+	int y2 = asteroidCollection[indexNextSmallerAsteroid2].getY();
 	////sets the position of the asteroid with x and y coordinates
-	smallerAsteroidObject[indexNextSmallerAsteroid].anAsteroid.setPosition(sf::Vector2f(x1, y1));
-	smallerAsteroidObject[indexNextSmallerAsteroid+1].anAsteroid.setPosition(sf::Vector2f(x2, y2));
-
-
+	asteroidCollection[indexNextSmallerAsteroid1].anAsteroid.setPosition(sf::Vector2f(x1, y1));
+	asteroidCollection[indexNextSmallerAsteroid2].anAsteroid.setPosition(sf::Vector2f(x2, y2));
 	
-
-	//to understand Which directions look here:
-
-	
-
-	//starting behind top border	   :  0
-	//0.  asteroid moves down and right
-	//1.  asteroid moves down
-	//2.  asteroid moves down and left
-	//starting behind right border     :  1
-	//3.  asteroid moves left and down
-	//4.  asteroid moves left
-	//5.  asteroid moves left and up
-	//starting behind bottom border     : 2
-	//6.  asteroid moves up and left 
-	//7.  asteroid moves up
-	//8.  asteroid moves up and right
-	//starting behind left border      :  3
-	//9.  asteroid moves up and right
-	//10.  asteroid moves right
-	//11.  asteroid moves down and right
-
-
-
-	////////////////////////////
-
-
-
-	//The deltas below help in relative motion that is if a delta is 3 and a delta
-	//is 2 the object with delta three will change 3 pixels every move and the object
-	//with delta 2 will move two.
-	//set which direction is for future programming for the possibility of non random
-	//wrapping from right border to left, top to bottom, vice versa, etc.
-
-	//the set deltas are the change  for evey cycle of main.  The direction set 
-	//is 45 degrees clockwise and 45 degrees counter clockwise from the 
-	//angle of the direction of the large asteroid that was destroyed and caused the
-	//two small asteroids to be created.
-
-
-
-	//looks good
-	//////////////////////
-
-	//behind border 0 : top
-	//large asteroid direction is : down and right
-	 if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 0)
-	{
-
-
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(4);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(1);
-	}
-
-
-
-	//behind border 0 : top
-	//large asteroid direction is :down
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 1)
-	{
-
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(3);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(11);
-	}
-	//behind border 0 : top
-	//large asteroid direction is :left down
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 2)
-	{
-
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(10);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(1);
-	}
-
-
-
-
-	/////////////////////
-
-	//behind border 1 : right
-	//large asteroid direction is :left down
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 3)
-	{
-
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(4);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(1);
-
-	}
-
-
-	 //behind border 1 : right
-	 //large asteroid direction is :left
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 4)
-	{
-
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(5);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(3);
-	}
-	 //behind border 1 : right
-	 //large asteroid direction is :left up
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 5)
-	{
-
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(4);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(7);
-	}
-
-
-
-	 /////////////////////
-
-
-	 //behind border 2 : down
-	 //large asteroid direction is :up and left
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 6)
-	{
-
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(7);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(4);
-	}
-	 //behind border 2 : down
-	 //large asteroid direction is :up
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 7)
-	{
-
-
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(8);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(6);
-	}
-	 //behind border 2 : down
-	 //large asteroid direction is :up and right
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 8)
-	{
-
-
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(7);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(10);
-	}
-
-
-
-	 ////////////////////
-
-	//behind border 3 : left
-	//large asteroid direction is : right-up
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 9)
-	{
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(7);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX (0);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY (-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid+1].setDeltaX(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid+1].setDeltaY (0);
-		smallerAsteroidObject[indexNextSmallerAsteroid+1].setWhichDirection(10);
-
-		
-		
-	
-	}
-	//behind border 3 : left
-	//large asteroid direction is :  right
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 10)
-	{
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(9);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX( 2);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY(-2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY(2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(0);
-		
-	}
-	//behind border 3 : left
-	//large asteroid direction is :right-down
-	else if (largerAsteroidObject[indexOfAsteroid].getWhichDirection() == 11)
-	{
-
-		
-		smallerAsteroidObject[indexNextSmallerAsteroid].setWhichDirection(10);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaX ( 2);
-		smallerAsteroidObject[indexNextSmallerAsteroid].setDeltaY ( 0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaX ( 0);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setDeltaY ( 2);
-		smallerAsteroidObject[indexNextSmallerAsteroid + 1].setWhichDirection(1);
-	}
-
+	//get direction of large asteroid for use in determining small asteroids deltaX and deltaY
+	asteroidMovement majorDirection = asteroidCollection[indexOfAsteroid].getWhichDirection();
+	//local objects for use of passing in below by reference
+	asteroidMovement newDirection1 = directions[0][0];
+	asteroidMovement newDirection2 = directions[0][0];
+	//calls with refernce si we can use the obtained direction in the following two functions
+	getTwoDirectionsFromMajorDirection(majorDirection, newDirection1, newDirection2);
+	//sets deltas inside for these small asteroid objects
+	asteroidCollection[indexNextSmallerAsteroid1].setDeltaWithDirection(newDirection1);
+	asteroidCollection[indexNextSmallerAsteroid2].setDeltaWithDirection(newDirection2);	
 	return(1);
 }
 
@@ -1108,10 +906,11 @@ int main(void)
 	//create vector fills the object with a random entry border (0-3)
 	//Uses setInitialAsteroid. third and fourth argument is width an than height
 	
-	//creates vector with asteroids
-	fillAsteroidVector(g_NumOfSmallerAsteroids, 32, 32, smaller, smallerTextureAsteroid);
+	//creates vector with asteroids - order is not important
 	fillAsteroidVector(g_NumOfLargerAsteroids, 64, 64, larger, largerTextureAsteroid);
-
+	fillAsteroidVector(g_NumOfSmallerAsteroids, 32, 32, smaller, smallerTextureAsteroid);
+	
+	
 	//this will set the vector to 10 bullets index  of 9 of course
 	fillBulletVector(constInitialNumBullets, texturebullet);
 	theScore.setFont(fontForScore);
@@ -1175,17 +974,17 @@ int main(void)
 		checkCollisionsaAllBulletsWithAnAsteroids();
 	   
 
-		//if 1 is returned twice than all those asteroids are destroyed ans reinitializeation and new asteroids are created
+		//if 1 is returned than all those asteroids are destroyed and reinitializeation and new asteroids are created
 		//and a new level is started
 		if (checkAllAsteroidsDestroyed() == 1)
 		{
 			
 			//holds this levels value because they are changed in startNextLevel for RefillAsteroidVector
-			int thisLevelsSmallAsteroidAmt = g_NumOfSmallerAsteroids;
-			int thisLevelsLargeAsteroidAmt = g_NumOfLargerAsteroids;
+			int oldLevelsSmallAsteroidAmt = g_NumOfSmallerAsteroids;
+			int oldLevelsLargeAsteroidAmt = g_NumOfLargerAsteroids;
 
 				
-				//new amounts of asteroids are set
+				//new amounts of new asteroids are set in g_NumOfSmallAsteroids and g_NumOfLargerAsteroids
 				if (startNextLevel())
 				{
 					//break out of first while if set in startNextLevel and end program 
@@ -1194,16 +993,18 @@ int main(void)
 						continue;
 					}
 
-					//old asteroids are reinitialized and new asteroids are created (there are new amounts
-					//of asteroids because a new level has been set.)
-					//fills vector with small asteroids
-					//third and fourth argument is width an than height
-					//first argument is the new amount of asteroids because we are at a new level,
-					//the second argument is the amount of asteroids from the previous level (they have been initialized)
-					refillAsteroidVectors(thisLevelsSmallAsteroidAmt, g_NumOfSmallerAsteroids,   32, 32, smaller, smallerTextureAsteroid  );
-					//fills vector with large asteroids
-					refillAsteroidVectors(thisLevelsLargeAsteroidAmt, g_NumOfLargerAsteroids, 64, 64, larger, largerTextureAsteroid);
-				
+					//fills one asteroid collection with two statements.
+					//oldLevels... are g_NumOfSmallAsteroids and g_NumOfLargerAsteroids and are last levels values
+					//the new levels minus the old levels gives us the new asteroids to create
+					int createThisAmtAsteroids = (g_NumOfLargerAsteroids - oldLevelsLargeAsteroidAmt); 
+		 			//creates the newly created asteroids with push_back and reinitializes the older asteroids
+					//with a new active setting
+ 					refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, largerTextureAsteroid);
+					//see right above
+					createThisAmtAsteroids = (g_NumOfSmallerAsteroids - oldLevelsSmallAsteroidAmt);
+					//same as above : just a smaller asteroid group for the collection
+					refillAsteroidVectors(createThisAmtAsteroids, 32, 32, smaller, smallerTextureAsteroid);
+					
 				}
 			}
 
@@ -1234,50 +1035,99 @@ int main(void)
 }
 
 
-//reinitialize the already created used asteroids and create the remaining asteroids to be newly created by
-//finishing the level.
-int refillAsteroidVectors(int newNumAsteroids, int lastNumAsteroids, int width, int height, asteroidType astType, sf::Texture & texture)
+//pushes the new asteroids for the new level if either small or large
+//than reinitializes their deltax and deltay and their direction and x and y
+//in setInitialAsteroid
+int refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, asteroidType type , sf::Texture & texture)
 {
-
-	int j = 0; 
-	
-	//New g_NumOfLargerAsteroids and g_NumOfSmallerAsteroids values were set in startNextLevel.
-	//LastNumLargeAsteroids and lastNumSmallAsteroids hold the last level values before starting over.
-	
-	
-		int amtOfNewAsteroids = newNumAsteroids - lastNumAsteroids;
-
-	
-	//reintialize last levels asteroids
-	for (int i = 0; i <= g_TotalNumAllAsteroids; i++)
+	int j = 0;
+	if (type == larger)
 	{
-
-		
-		if (asteroidCollection[i].getAsteroidType() == larger)
+		for (int i = 0; i <= (numAsteroidsToCreate - 1); i++)
 		{
-			j = (rand() % 4);
-			//sets fromThisDirection with j and whichDirection with a randomizer in this function
-			asteroidCollection[i].setInitialAsteroid(j);
-
+			//create the new additional asteroids 
+			asteroidCollection.push_back(asteroid(Width, Height, texture, larger));
+			g_TotalNumAllAsteroids++;
 		}
-		else if (asteroidCollection[i].getAsteroidType() == smaller)
+		for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
 		{
-			//readies asteroids for onscreen in createSmallerAsteroids to set deltax and deltay and whichdirection
-			asteroidCollection[i].setActivate(initialized);
+			if (asteroidCollection[i].getAsteroidType() == larger)
+			{
+				j = (rand() % 4);
+				//sets deltax and deltay, x and y, direction
+				asteroidCollection[i].setInitialAsteroid(j);
+			}
+		}
 
+	}
+	else if (type == smaller)
+	{
+		for (int i = 0; i <= (numAsteroidsToCreate - 1); i++)
+		{
+				//creates extra small asteroids
+				asteroidCollection.push_back(asteroid(Width, Height, texture, smaller));
+				g_TotalNumAllAsteroids++;
+		}
+		//reinitalizes the old and new asteroids with the new activation so that they
+		//can be moved after their changed from initialized to onscreen in createsmallasteroids
+		for (int i = 0; i <= (g_TotalNumAllAsteroids-1); i++)
+		{
+
+			if (asteroidCollection[i].getAsteroidType() == smaller)
+			{
+				
+				asteroidCollection[i].setActivate(initialized);
+			}
 		}
 	}
 
-	fillAsteroidVector(amtOfNewAsteroids, width, height, astType, texture);
-	
-
 	return(1);
-
 }
 
+	
 
 
+//Takes one direction from a large asteroid and returns the two new directions of small asteroid by reference
+void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, asteroidMovement & smallAsteroidDirection1, asteroidMovement & smallAsteroidDirection2)
+{
+	switch (theMajorDirection) {
 
 
+	case asteroidMovement::UP:
+		smallAsteroidDirection1 = asteroidMovement::UP_RIGHT;
+		smallAsteroidDirection2 = asteroidMovement::UP_LEFT;
+		break;
+	case asteroidMovement::DOWN:
+		smallAsteroidDirection1 = asteroidMovement::DOWN_RIGHT;
+		smallAsteroidDirection2 = asteroidMovement::DOWN_LEFT;
+		break;
+	case asteroidMovement::LEFT:
+		smallAsteroidDirection1 = asteroidMovement::DOWN_LEFT;
+		smallAsteroidDirection2 = asteroidMovement::UP_LEFT;
+		break;
+	case asteroidMovement::UP_LEFT:
+		smallAsteroidDirection1 = asteroidMovement::UP;
+		smallAsteroidDirection2 = asteroidMovement::LEFT;
+		break;
+	case asteroidMovement::DOWN_LEFT:
+		smallAsteroidDirection1 = asteroidMovement::DOWN;
+		smallAsteroidDirection2 = asteroidMovement::LEFT;
+		break;
+	case asteroidMovement::RIGHT:
+		smallAsteroidDirection1 = asteroidMovement::UP_RIGHT;
+		smallAsteroidDirection2 = asteroidMovement::DOWN_RIGHT;
+		break;
+	case asteroidMovement::UP_RIGHT:
+		smallAsteroidDirection1 = asteroidMovement::UP;
+		smallAsteroidDirection2 = asteroidMovement::RIGHT;
+		break;
+	case asteroidMovement::DOWN_RIGHT:
+		smallAsteroidDirection1 = asteroidMovement::DOWN;
+		smallAsteroidDirection2 = asteroidMovement::RIGHT;
+		break;
 
+	default:
+		break;
+	}
+}
 

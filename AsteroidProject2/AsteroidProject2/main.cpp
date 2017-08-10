@@ -203,7 +203,7 @@ int checkCollisionsaAllBulletsWithAnAsteroids( )
 {
 
 
-	for (int j = 0; j <= (g_TotalNumAllAsteroids - 1); j++)
+	for (int j = 0; j < g_TotalNumAllAsteroids ; j++)
 	{
 		
 

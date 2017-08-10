@@ -286,10 +286,7 @@ int shoot(void)
 	int i = 0;
 	
 	
-		int numOfBulletIndex = 0;
-
-		
-		int madeAnActiveBullet = -1;
+		int numOfBulletIndex = -1;
 
 		//static function
  		for (int i = 0; i <= (bullet::getMaxNumBullets()-1) ; i++) 
@@ -303,14 +300,13 @@ int shoot(void)
 
 			numOfBulletIndex = i;
 
-			madeAnActiveBullet = 1;
 			//bullet was inactive now is active (was off screen)
 			bullets[i].setIsactive(true);
 			break;
 
 		}
 
-		if (madeAnActiveBullet < 0)
+		if (numOfBulletIndex < 0)
 		{
 			return(-1);
 		}

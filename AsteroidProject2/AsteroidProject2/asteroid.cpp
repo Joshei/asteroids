@@ -93,8 +93,8 @@ int asteroid::moveAsteroid(void)
 
 	
 	anAsteroid.move(sf::Vector2f(deltaX, deltaY));
-	x = (x + deltaX);
-	y = (y + deltaY);
+	x = x + deltaX;
+	y = y + deltaY;
 	
 
 	return(1);

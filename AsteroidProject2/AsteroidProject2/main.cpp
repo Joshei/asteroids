@@ -15,8 +15,8 @@
 
 
 //global variables g_NumOfLargerAsteroids must be two times as many small asteroids: g_NumOfSmallerAsteroids
-//level that game is on : starts at 1, increase in level causes more asteroids
-int g_Level = 1;
+//level that game is on : starts at 0, increase in level causes more asteroids
+int g_Level = 0;
 int g_NumOfLargerAsteroids = 1;
 int g_NumOfSmallerAsteroids = g_NumOfLargerAsteroids * 2;
 //used to break out of while, when is set 
@@ -741,10 +741,16 @@ int startNextLevel() {
 
 	
 
-	//g_Level was initialized as 1
+	//g_Level was initialized as 0
 	g_Level++;
 
 	switch (g_Level) {
+
+	case 1:
+
+		g_NumOfLargerAsteroids = 1;
+		g_NumOfSmallerAsteroids = g_NumOfLargerAsteroids * 2;
+
 
 	case 2:
 		
@@ -1073,7 +1079,8 @@ int refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aster
 		for (int i = 0; i <= (g_TotalNumAllAsteroids-1); i++)
 		{
 
-			if (asteroidCollection[i].getAsteroidType() == smaller)
+			if (asteroidCollection[i].getAsteroidType() == 
+				smaller)
 			{
 				
 				asteroidCollection[i].setActivate(initialized);

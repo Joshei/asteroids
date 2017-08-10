@@ -289,7 +289,7 @@ int shoot(void)
 		int numOfBullet = 0;
 
 		
-		int madeAnActiveBullet = 0;
+		int madeAnActiveBullet = -1;
 
 		//static function
  		for (int i = 0; i <= (bullet::getMaxNumBullets()-1) ; i++) 
@@ -310,7 +310,7 @@ int shoot(void)
 
 		}
 
-		if (madeAnActiveBullet == 0)
+		if (madeAnActiveBullet < 0)
 		{
 			return(-1);
 		}

@@ -286,7 +286,7 @@ int shoot(void)
 	int i = 0;
 	
 	
-		int numOfBullet = 0;
+		int numOfBulletIndex = 0;
 
 		
 		int madeAnActiveBullet = -1;
@@ -301,7 +301,7 @@ int shoot(void)
 				continue;
 			}
 
-			numOfBullet = i;
+			numOfBulletIndex = i;
 
 			madeAnActiveBullet = 1;
 			//bullet was inactive now is active (was off screen)
@@ -324,22 +324,22 @@ int shoot(void)
 			{
 
 				//bullet center of ship
-				bullets[numOfBullet].setX(shipObject.getX() + (.5* shipObject.getWidth()) -( .5* (bullets[numOfBullet].getWidth())   ));
+				bullets[numOfBulletIndex].setX(shipObject.getX() + (.5* shipObject.getWidth()) -( .5* (bullets[numOfBulletIndex].getWidth())   ));
 				//bullet a bit above ship
-				bullets[numOfBullet].setY(-100 + shipObject.getY() + shipObject.getHeight());
+				bullets[numOfBulletIndex].setY(-100 + shipObject.getY() + shipObject.getHeight());
 
 			
-				bullets[numOfBullet].setDirection(up);
+				bullets[numOfBulletIndex].setDirection(up);
 				//sets the position of the bullet with x and y coordinates
-				bullets[numOfBullet].bulletImage.setPosition(sf::Vector2f(bullets[numOfBullet].getX(), bullets[numOfBullet].getY()));
+				bullets[numOfBulletIndex].bulletImage.setPosition(sf::Vector2f(bullets[numOfBulletIndex].getX(), bullets[numOfBulletIndex].getY()));
 
-				window.draw(bullets[numOfBullet].bulletImage);
+				window.draw(bullets[numOfBulletIndex].bulletImage);
 
 				//bullet has been set here as -5, different speeds of objects make them relativly
 				//faster or slower, there are three speeds so far: bullet, ship, and asteroids
-				bullets[numOfBullet].setDeltaX(0);
-				bullets[numOfBullet].setDeltaY(-5);
-				bullets[numOfBullet].setIsactive(true);
+				bullets[numOfBulletIndex].setDeltaX(0);
+				bullets[numOfBulletIndex].setDeltaY(-5);
+				bullets[numOfBulletIndex].setIsactive(true);
 				
 
 			}
@@ -349,21 +349,21 @@ int shoot(void)
 			{
 
 				//bullet right of ships left value by 100. remember the ship has a width of 64.
-				bullets[numOfBullet].setX(shipObject.getX() + 100);
+				bullets[numOfBulletIndex].setX(shipObject.getX() + 100);
 				//bullet a bit above ship
-				bullets[numOfBullet].setY((shipObject.getY() + .5*(shipObject.getHeight() - (.5*(bullets[numOfBullet].getHeight())))));
+				bullets[numOfBulletIndex].setY((shipObject.getY() + .5*(shipObject.getHeight() - (.5*(bullets[numOfBulletIndex].getHeight())))));
 
 			
-				bullets[numOfBullet].setDirection(right);
+				bullets[numOfBulletIndex].setDirection(right);
 				//sets the position of the bullet with x and y coordinates
-				bullets[numOfBullet].bulletImage.setPosition(sf::Vector2f(bullets[numOfBullet].getX(), bullets[numOfBullet].getY()));
+				bullets[numOfBulletIndex].bulletImage.setPosition(sf::Vector2f(bullets[numOfBulletIndex].getX(), bullets[numOfBulletIndex].getY()));
 
-				window.draw(bullets[numOfBullet].bulletImage);
+				window.draw(bullets[numOfBulletIndex].bulletImage);
 
 				//sets bullet x speed at a change of 5.
-				bullets[numOfBullet].setDeltaX(5);
-				bullets[numOfBullet].setDeltaY(0);
-				bullets[numOfBullet].setIsactive(true);
+				bullets[numOfBulletIndex].setDeltaX(5);
+				bullets[numOfBulletIndex].setDeltaY(0);
+				bullets[numOfBulletIndex].setIsactive(true);
 				
 
 			}
@@ -371,19 +371,19 @@ int shoot(void)
 			else if (shipObject.getDirection() == down) 
 			{
 				//bullet is centered according to ship
-				bullets[numOfBullet].setX(shipObject.getX() + .5*(shipObject.getWidth() - (.5* (bullets[numOfBullet].getWidth()))));
+				bullets[numOfBulletIndex].setX(shipObject.getX() + .5*(shipObject.getWidth() - (.5* (bullets[numOfBulletIndex].getWidth()))));
 				//bullet a bit above ship
-				bullets[numOfBullet].setY(100 + shipObject.getY());
+				bullets[numOfBulletIndex].setY(100 + shipObject.getY());
 				//direction for move bullet
-				bullets[numOfBullet].setDirection(down);
+				bullets[numOfBulletIndex].setDirection(down);
 				//sets the position of the bullet with x and y coordinates
-				bullets[numOfBullet].bulletImage.setPosition(sf::Vector2f(bullets[numOfBullet].getX(), bullets[numOfBullet].getY()));
+				bullets[numOfBulletIndex].bulletImage.setPosition(sf::Vector2f(bullets[numOfBulletIndex].getX(), bullets[numOfBulletIndex].getY()));
 				//bullet image is part of SFML basic instructions on website tutorial questions
-				window.draw(bullets[numOfBullet].bulletImage);
-				bullets[numOfBullet].setDeltaX(0);
+				window.draw(bullets[numOfBulletIndex].bulletImage);
+				bullets[numOfBulletIndex].setDeltaX(0);
 				//sets change of speed to 5 for each cycle through
-				bullets[numOfBullet].setDeltaY(5);
-				bullets[numOfBullet].setIsactive(true);
+				bullets[numOfBulletIndex].setDeltaY(5);
+				bullets[numOfBulletIndex].setIsactive(true);
 				
 
 			}
@@ -392,20 +392,20 @@ int shoot(void)
 			{
 
 				//ships midpoint is used to center bullet
-				bullets[numOfBullet].setX(shipObject.getX() - 100 + (shipObject.getWidth()));
+				bullets[numOfBulletIndex].setX(shipObject.getX() - 100 + (shipObject.getWidth()));
 				//bullet a bit above ship
-				bullets[numOfBullet].setY((.5 * shipObject.getHeight()) + shipObject.getY() - (.5*( bullets[numOfBullet].getHeight())) );
+				bullets[numOfBulletIndex].setY((.5 * shipObject.getHeight()) + shipObject.getY() - (.5*( bullets[numOfBulletIndex].getHeight())) );
 
 				//direction set to left for moving/drawing bullet
-				bullets[numOfBullet].setDirection(left);
+				bullets[numOfBulletIndex].setDirection(left);
 				//sets the position of the bullet with x and y coordinates
-				bullets[numOfBullet].bulletImage.setPosition(sf::Vector2f(bullets[numOfBullet].getX(), bullets[numOfBullet].getY()));
+				bullets[numOfBulletIndex].bulletImage.setPosition(sf::Vector2f(bullets[numOfBulletIndex].getX(), bullets[numOfBulletIndex].getY()));
 
-				window.draw(bullets[numOfBullet].bulletImage);
+				window.draw(bullets[numOfBulletIndex].bulletImage);
 				//change is 5 per cycle of main
-				bullets[numOfBullet].setDeltaX(-5);
-				bullets[numOfBullet].setDeltaY(0);
-				bullets[numOfBullet].setIsactive(true);
+				bullets[numOfBulletIndex].setDeltaX(-5);
+				bullets[numOfBulletIndex].setDeltaY(0);
+				bullets[numOfBulletIndex].setIsactive(true);
 				
 
 

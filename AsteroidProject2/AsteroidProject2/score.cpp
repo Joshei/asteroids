@@ -45,8 +45,6 @@ int  score::drawScore(int score)
 	std::string scoreString("Score :  ");
 	std::string thisString = std::to_string(score);
 	scoreString = scoreString + thisString;
-
-	textMessage.setString(scoreString);
 	textMessage.setCharacterSize(24);
 	textMessage.setFillColor(sf::Color::Red);
 	textMessage.setStyle(sf::Text::Bold);

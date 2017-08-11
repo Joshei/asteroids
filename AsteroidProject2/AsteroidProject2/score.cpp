@@ -7,11 +7,10 @@
 
 //x = 10 and y = 10 is good for starters
 score::score(int xpos, int ypos )
-:xPositionOfScore(xpos), yPositionOfScore(ypos), scoreAmount(0)
+:scoreAmount(0)
 {
-	
-	
-
+	scorePosition.x = xpos;
+	scorePosition.y = ypos;
 }
 
 
@@ -30,12 +29,12 @@ void score::setScore(int score)
 
 void score::setXForScore(int x)
 {
-	xPositionOfScore = x;
+	scorePosition.x = x;
 
 }
 void score::setYForScore(int y)
 {
-	yPositionOfScore = y;
+	scorePosition.y = y;
 }
 
 

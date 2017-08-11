@@ -17,8 +17,8 @@ public:
 	void setXForScore(int xDimension);
 	void setYForScore(int yDimension);
 	int getScore() { return scoreAmount; }
-	int getXForScore() { return xPositionOfScore; }
-	int getYforScore() { return yPositionOfScore; }
+	int getXForScore() { return scorePosition.x; }
+	int getYforScore() { return scorePosition.y; }
 	
 	int resetScore(void);
 	int drawScore(int score);
@@ -35,9 +35,10 @@ private:
 	
 	int scoreAmount;
 	//these two positions are for the upper left hand corner of the text
-	int xPositionOfScore;
-	int yPositionOfScore;
-
+	struct {
+		int x;
+		int y;
+	}scorePosition;
 	
 	
 

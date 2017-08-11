@@ -42,7 +42,7 @@ int fillAsteroidVector(int numOfAsteroid , int theWidth, int theHeight, asteroid
 int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAstroid);
 int checkAllAsteroidsDestroyed();
 int startNextLevel(void);
-int moveasteroids();
+void moveasteroids();
 int reinitializeOffscreenAsteroids();
 int fillBulletVector(int numberOfBullets, sf::Texture & textureOfBullet);
 int refillAsteroidVectors(int createThisManyAsteroids, int theWidth, int theHeight, asteroidType asteroidType, sf::Texture & theTexture);
@@ -796,7 +796,7 @@ int startNextLevel() {
 //It could also be on the screen ..."onscreen"
 //if it is a small asteroid it is onscreen if it has been created with :
 //createsmallasteroids.
-int moveasteroids()
+void moveasteroids()
 {
 
 	for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
@@ -817,7 +817,7 @@ int moveasteroids()
 	}
 
 
-	return(1);
+	
 }
 
 

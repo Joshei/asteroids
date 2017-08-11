@@ -59,20 +59,7 @@ int  score::drawScore(int score)
 //draws the current score (used after addToScore)
 int  score::drawScore(void)
 {
-	
-
-	
-	std::string scoreString("Score :  ");
-	std::string thisString = std::to_string(scoreAmount);
-	scoreString = scoreString + thisString;
-
-	textMessage.setCharacterSize(24);
-	textMessage.setFillColor(sf::Color::Red);
-	textMessage.setStyle(sf::Text::Bold);
-	textMessage.setPosition(10, 50);
-	textMessage.setString(scoreString);
-	
-	
+	drawScore(scoreAmount);
 	return(1);
 
 }

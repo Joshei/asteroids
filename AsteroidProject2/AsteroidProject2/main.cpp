@@ -826,12 +826,12 @@ void moveasteroids()
 //ready but just unvisable.
 int reinitializeOffscreenAsteroids()
 {
-	int randNum = 0;
+	
 	for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
 	{
 		if (asteroidCollection[i].getActivate() == offscreen)
 		{
-			randNum = std::rand() % (4);
+			int randNum = std::rand() % (4);
 
 			//resets asteroid to onscreen for draw and move.
 			//this is used for both large and small asteroids and is not the same

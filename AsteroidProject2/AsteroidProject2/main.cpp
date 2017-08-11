@@ -36,7 +36,7 @@ int shoot(void);
 int movebullets(void);
 int checkForBulletOffscreen(int index);
 int checkForAsteroidOffScreen();
-int checkForShipOnBorder(int x, int y);
+bool checkForShipOnBorder(int x, int y);
 void shutdown(int exitNum);
 int fillAsteroidVector(int numOfAsteroid , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
 int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAstroid);
@@ -121,8 +121,8 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 	y = y + deltaY;
 
 
-	//is off screen returns -1
-	if (checkForShipOnBorder(x, y) == -1)
+	//is off screen returns false
+	if (checkForShipOnBorder(x, y) == false)
 	{
 		drawShip();
 		return (-1);
@@ -489,7 +489,7 @@ int checkForAsteroidOffScreen()
 
 //checks if ship is at passed or on one of the four borders.  If it does, sets ship  to be at border's 
 //edge and returns a negative one which means no movement in the calling function : mopveShip(...)
-int checkForShipOnBorder(int x, int y)
+bool checkForShipOnBorder(int x, int y)
 {
 
 
@@ -498,33 +498,33 @@ int checkForShipOnBorder(int x, int y)
 	{
 		shipObject.setX(0);
 		
-		return(-1);
+		return(false);
 
 	}
 	//right
 	else if (x  > (gScreenWidth - shipObject.getWidth())) 
 	{
 		shipObject.setX(gScreenWidth - shipObject.getWidth());
-		return(-1);
+		return(false);
 
 	}
 	//bottom
 	else if (y > (gScreenHeight - shipObject.getHeight()))
 	{
 		shipObject.setY(gScreenHeight - shipObject.getHeight());
-		return(-1);
+		return(false);
 
 	}
 	//top
 	else if (y < 0 ) 
 	{
 		shipObject.setY(0);
-		return(-1);
+		return(false);
 
 	}
 
 
-	return(1);
+	return(true);
 }
 
 

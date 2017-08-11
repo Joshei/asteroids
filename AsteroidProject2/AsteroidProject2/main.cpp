@@ -502,21 +502,21 @@ bool checkForShipOnBorder(int x, int y)
 
 	}
 	//right
-	else if (x  > (gScreenWidth - shipObject.getWidth())) 
+	if (x  > (gScreenWidth - shipObject.getWidth())) 
 	{
 		shipObject.setX(gScreenWidth - shipObject.getWidth());
 		return(false);
 
 	}
 	//bottom
-	else if (y > (gScreenHeight - shipObject.getHeight()))
+	if (y > (gScreenHeight - shipObject.getHeight()))
 	{
 		shipObject.setY(gScreenHeight - shipObject.getHeight());
 		return(false);
 
 	}
 	//top
-	else if (y < 0 ) 
+	if (y < 0 ) 
 	{
 		shipObject.setY(0);
 		return(false);

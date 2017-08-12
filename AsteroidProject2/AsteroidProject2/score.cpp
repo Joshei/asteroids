@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 
-//x = 10 and y = 10 is good for starters
+
 score::score(int xpos, int ypos )
 :scoreAmount(0)
 {

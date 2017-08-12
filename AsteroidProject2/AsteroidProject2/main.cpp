@@ -1,6 +1,9 @@
 //headers
 //comment for learning push changes
 
+
+
+
 #include "windows.h"
 #include <SFML/Graphics.hpp>
 #include "bullet.h"
@@ -10,17 +13,13 @@
 #include <vector>
 #include <ctime>
 #include "enumeration.h"
+#include "level.h"
 
-
-
-
-//global variables g_NumOfLargerAsteroids must be two times as many small asteroids: g_NumOfSmallerAsteroids
-//level that game is on : starts at 0, increase in level causes more asteroids
-int g_Level = 0;
-int g_NumOfLargerAsteroids = 1;
-int g_NumOfSmallerAsteroids = g_NumOfLargerAsteroids * 2;
-//used to break out of while, when is set 
 int g_Shutdownflag = 0;
+
+int g_Level = 0;
+//g_NumOfSmallerAsteroids  g_NumOfLargerAsteroids
+//used to break out of while, when is set 
 int g_TotalNumAllAsteroids = 0;
 
 
@@ -41,7 +40,6 @@ void shutdown(int exitNum);
 int fillAsteroidVector(int numOfAsteroid , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
 int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAstroid);
 int checkAllAsteroidsDestroyed();
-int startNextLevel(void);
 void moveasteroids();
 int reinitializeOffscreenAsteroids();
 int fillBulletVector(int numberOfBullets, sf::Texture & textureOfBullet);
@@ -68,8 +66,11 @@ score theScore(10, 10);
 sf::Event event;
 sf::RenderWindow window(sf::VideoMode(gScreenWidth, gScreenHeight), "Asteroids!");
 
+
 //global ship pbject
 ship shipObject(500, 500, up);
+levelObj levelObject;
+
 
 
 
@@ -234,7 +235,7 @@ int checkCollisionsaAllBulletsWithAnAsteroids( )
 				//bullet is used and not active until refired
 				bullets[i].setIsactive(false);
 				
-				//asteroid is destroyed and is used later after level is passed (startNextLevel)
+				//asteroid is destroyed and is used later after level is passed in advanceLevelByOne 
 				asteroidCollection[j].setActivate(destroyed);
 
 
@@ -736,60 +737,7 @@ int checkAllAsteroidsDestroyed()
 
 	
 
-//Important : make sure there are twice as many small asteroids as there are large asteroids
-int startNextLevel() {
 
-	
-
-	//g_Level was initialized as 0
-	g_Level++;
-
-	switch (g_Level) {
-
-	case 1:
-
-		g_NumOfLargerAsteroids = 1;
-		g_NumOfSmallerAsteroids = g_NumOfLargerAsteroids * 2;
-
-
-	case 2:
-		
-		g_NumOfLargerAsteroids = 2;
-		g_NumOfSmallerAsteroids = g_NumOfLargerAsteroids * 2;
-		
-		break;
-	case 3:
-		g_NumOfLargerAsteroids = 3;
-		g_NumOfSmallerAsteroids = g_NumOfLargerAsteroids * 2;
-
-
-		break;
-	case 4:
-		g_NumOfLargerAsteroids = 4;
-		g_NumOfSmallerAsteroids = g_NumOfLargerAsteroids * 2;
-
-
-		break;
-
-	case 5:
-		
-		//will break out of while loop in main and end program
-		g_Shutdownflag = 1;
-
-
-		break;
-
-	default:
-
-		break;
-
-	}
-
-	
-	return(1);
-	
-
-}
 
 //if the asteroid is onscreen it is either a large asteroid that is initialized 
 //or reinitialized which means its waiting behind the border to be drawn and moved.
@@ -908,13 +856,14 @@ int main(void)
 		shutdown(-9);
 	}
 
-
+	
+	
 	//create vector fills the object with a random entry border (0-3)
 	//Uses setInitialAsteroid. third and fourth argument is width an than height
 	
 	//creates vector with asteroids - order is not important
-	fillAsteroidVector(g_NumOfLargerAsteroids, 64, 64, larger, largerTextureAsteroid);
-	fillAsteroidVector(g_NumOfSmallerAsteroids, 32, 32, smaller, smallerTextureAsteroid);
+	fillAsteroidVector(levelObject.getNumLargeAsteroids(), 64, 64, larger, largerTextureAsteroid);
+	fillAsteroidVector(levelObject.getNumSmallAsteroids(), 32, 32, smaller, smallerTextureAsteroid);
 	
 	
 	//this will set the vector to 10 bullets index  of 9 of course
@@ -985,29 +934,34 @@ int main(void)
 		if (checkAllAsteroidsDestroyed() == 1)
 		{
 			
-			//holds this levels value because they are changed in startNextLevel for RefillAsteroidVector
-			int oldLevelsSmallAsteroidAmt = g_NumOfSmallerAsteroids;
-			int oldLevelsLargeAsteroidAmt = g_NumOfLargerAsteroids;
+			//holds this levels value because they are changed in advanceLevelByOne for RefillAsteroidVector
+			int oldLevelsSmallAsteroidAmt = levelObject.getNumSmallAsteroids();
+			int oldLevelsLargeAsteroidAmt = levelObject.getNumLargeAsteroids();
 
 				
-				//new amounts of new asteroids are set in g_NumOfSmallAsteroids and g_NumOfLargerAsteroids
-				if (startNextLevel())
+				//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
+				if (levelObject.advanceLevelByOne())
 				{
-					//break out of first while if set in startNextLevel and end program 
+
+
+
+
+
+					//break out of first while if set in level::advancelevelbyone and end program 
 					if (g_Shutdownflag == 1)
 					{
 						continue;
 					}
 
 					//fills one asteroid collection with two statements.
-					//oldLevels... are g_NumOfSmallAsteroids and g_NumOfLargerAsteroids and are last levels values
+					//oldLevels... getNumSmallAsteroids() and .getNumLargeAsteroids() are new levels values
 					//the new levels minus the old levels gives us the new asteroids to create
-					int createThisAmtAsteroids = (g_NumOfLargerAsteroids - oldLevelsLargeAsteroidAmt); 
+					int createThisAmtAsteroids = (levelObject.getNumLargeAsteroids() - oldLevelsLargeAsteroidAmt);
 		 			//creates the newly created asteroids with push_back and reinitializes the older asteroids
 					//with a new active setting
  					refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, largerTextureAsteroid);
 					//see right above
-					createThisAmtAsteroids = (g_NumOfSmallerAsteroids - oldLevelsSmallAsteroidAmt);
+					createThisAmtAsteroids = levelObject.getNumSmallAsteroids() - oldLevelsSmallAsteroidAmt;
 					//same as above : just a smaller asteroid group for the collection
 					refillAsteroidVectors(createThisAmtAsteroids, 32, 32, smaller, smallerTextureAsteroid);
 					

@@ -3,7 +3,7 @@
 
 
 
-void bullet::setMaxNumBullets(int maxNumBullets) { maxBullets = maxNumBullets; }
+
 void bullet::setIsactive(bool activateFlag) { isactive = activateFlag; }
 
 //statics	

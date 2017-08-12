@@ -2,6 +2,8 @@
 #include "level.h"
 
 
+int levelObj::maxBullets = 10;
+
 levelObj::levelObj(void)
 {
 	levelNumber = 1;
@@ -74,6 +76,4 @@ int levelObj::advanceLevelByOne()
 
 
 }
-
-
 

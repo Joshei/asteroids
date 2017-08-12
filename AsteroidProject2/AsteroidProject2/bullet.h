@@ -17,13 +17,11 @@ public:
 		
 		bullet( sf::Texture & textureBullet, int bulletHeight, int bulletWidth );
 		
-		static void setMaxNumBullets(int maxNumBullets);
-		void setIsactive(bool activateFlag);
+		void setIsactive(bool activateFlag); 
+
+		
 	
-		static int getMaxNumBullets(void)
-		{ 
-			return maxBullets; 
-		}
+		
 		
 		int getIsactive(void) 
 		{

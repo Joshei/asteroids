@@ -69,7 +69,7 @@ sf::Event event;
 sf::RenderWindow window(sf::VideoMode(gScreenWidth, gScreenHeight), "Asteroids!");
 
 //global ship pbject
-ship shipObject(500, 500);
+ship shipObject(500, 500, up);
 
 
 

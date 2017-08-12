@@ -7,7 +7,7 @@
 
 
 moveableObject::moveableObject(void)
-	: width(0), height(0), x(0), y(0), deltaX(0), deltaY(0), direction(0)
+	: width(0), height(0), x(0), y(0), deltaX(0), deltaY(0), direction(up)
 {
 
 
@@ -152,7 +152,7 @@ void moveableObject::setDeltaY(int inDeltaY)
 //also could be used later if a "wrapping effect" is needed for the asteroids from
 //border to border
 
-void moveableObject::setDirection(int inDirection)
+void moveableObject::setDirection(theDirection inDirection)
 {
 	direction = inDirection;
 

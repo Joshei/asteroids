@@ -1,6 +1,7 @@
 #ifndef MOVEABLEOBJECT_H
 #define MOVEABLEOBJECT_H
 #include <windows.h>
+#include "enumeration.h"
 
 //class asteroid and class bullet inherit from this
 class moveableObject 
@@ -40,7 +41,7 @@ public:
 		return(deltaX); 
 	}
 
-	int getDirection(void)
+	theDirection getDirection(void)
 	{
 		return(direction);
 	}
@@ -57,7 +58,7 @@ public:
 	void setY(int inY);
 	void setDeltaX(int  inDeltaX);
 	void setDeltaY(int inDeltaY);
-	void setDirection(int inDirection);
+	void setDirection(theDirection inDirection);
 	void setWidth(int inWidth);
 	void setHeight(int inHeight);
 
@@ -70,7 +71,7 @@ protected:
 	int deltaY;
 	int width;
 	int height;
-	int direction;
+	theDirection direction;
 	int x;
 	int y;
 	

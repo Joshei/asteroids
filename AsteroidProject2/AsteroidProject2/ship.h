@@ -3,7 +3,10 @@
 
 #include <SFML/Graphics.hpp>
 
+
 #include "moveable.h"
+//#include "enumeration.h"
+
 
 class ship : public moveableObject
 {
@@ -17,10 +20,11 @@ public:
 	sf::Texture textureShipWest;
 	sf::Sprite shipImage;
 
-	ship(int positionx, int positiony);
+	ship(int positionx, int positiony, theDirection direction);
 
 	int rotateShipClock(void);
 	int rotateShipCClock(void);
+	int selectTexture(theDirection direction);
 };
 
 

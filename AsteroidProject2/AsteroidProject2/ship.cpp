@@ -1,6 +1,5 @@
 #include "ship.h"
 #include <SFML/Graphics.hpp>
-#include "enumeration.h"
 
 
 extern void shutdown(int exitValue);
@@ -11,14 +10,14 @@ extern void shutdown(int exitValue);
 //this function is a bit different from : asteroid.cpp, bullet.cpp
 //the loadFromFile  is in the constructor.  Ship.cpp uses the passed in Font as a reference.
 //the other mentioned cpps have the texture passed in as a refernce
-ship::ship(int positionx, int positiony) 
+ship::ship(int positionx, int positiony, theDirection  shipDirection) 
 {
 	x = positionx;
 	y = positiony;
 	//these are the dimensions for all of the images of ther ship in different facing directions
 	height = 64;
 	width = 64;
-	direction = up;
+	direction = shipDirection;
 
 	if (!textureShipNorth.loadFromFile("shipNorth.png"))
 	{
@@ -36,12 +35,8 @@ ship::ship(int positionx, int positiony)
 	{
 		shutdown(-13);
 	}
-
-
-	///sf::Sprite shipImage;
-	shipImage.setTexture(textureShipNorth);
-
-
+	selectTexture(shipDirection);
+	
 	//sets the position of the ship with x and y coordinates
 	shipImage.setPosition(sf::Vector2f(positionx, positiony));
 
@@ -52,26 +47,51 @@ ship::ship(int positionx, int positiony)
 int ship::rotateShipClock(void) 
 {
 
+	//add one to the direction to rotate clockwise
+	theDirection NewDirection = static_cast<theDirection>((1 + getDirection()) % 4);
+	setDirection(NewDirection);
+	selectTexture(NewDirection);
 	
-	
-
-	if (getDirection() == up) { setDirection(right); shipImage.setTexture(textureShipEast); }
-	else if (getDirection() == down) { setDirection(left); shipImage.setTexture(textureShipWest); }
-	else if (getDirection() == right) { setDirection(down); shipImage.setTexture(textureShipSouth); }
-	else if (getDirection() == left) { setDirection(up);  shipImage.setTexture(textureShipNorth); }
-
 	return(1);
 }
 //press n - rotates ship counter clockwise.
 int ship::rotateShipCClock(void) 
 {
-
-	
-	if (getDirection() == up) { setDirection(left); shipImage.setTexture(textureShipWest); }
-	else if (getDirection() == down) { setDirection(right); shipImage.setTexture(textureShipEast); }
-	else if (getDirection() == right) { setDirection(up); shipImage.setTexture(textureShipNorth); }
-	else if (getDirection() == left) { setDirection(down);  shipImage.setTexture(textureShipSouth); }
+	//add a full rotation (4) before subtracting one to avoid negative numbers and use modulus
+	theDirection NewDirection = static_cast<theDirection>((3 + getDirection()) % 4);
+	setDirection(NewDirection);
+	selectTexture(NewDirection);
 
 	return(1);
 
 }
+
+int ship::selectTexture(theDirection direction)
+{
+	if (direction == up)
+	{
+		shipImage.setTexture(textureShipNorth);
+	}
+	if (direction == right)
+	{
+		shipImage.setTexture(textureShipEast);
+	}
+	if (direction == down)
+	{
+		shipImage.setTexture(textureShipSouth);
+	}
+	if (direction == left)
+	{
+		shipImage.setTexture(textureShipWest);
+	}
+
+
+	return(1);
+}
+
+
+
+
+
+
+

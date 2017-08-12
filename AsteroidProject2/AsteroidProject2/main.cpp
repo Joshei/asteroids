@@ -336,8 +336,8 @@ int shoot(void)
 
 				window.draw(bulletIndex.bulletImage);
 
-				//bullet has been set here as -5, different speeds of objects make them relativly
-				//faster or slower, there are three speeds so far: bullet, ship, and asteroids
+				//there are three speeds so far: bullet, ship, and asteroids
+				//sets bullet speed to downward 5 per cycle.
 				bulletIndex.setDeltaX(0);
 				bulletIndex.setDeltaY(-5);
 				bulletIndex.setIsactive(true);

@@ -26,24 +26,27 @@ int g_TotalNumAllAsteroids = 0;
 
 
 //GLOBAL FUNCTION DECLARATIONS
-int drawShip();
-int moveShip(int amountForMovem, int keyPressed);
-int checkkeyboard();
-int checkCollisionsShipWithAsteroids();
-int checkCollisionsaAllBulletsWithAnAsteroids();
-int shoot(void);
-int movebullets(void);
-int checkForBulletOffscreen(int index);
-int checkForAsteroidOffScreen();
+
 bool checkForShipOnBorder(int x, int y);
-void shutdown(int exitNum);
-int fillAsteroidVector(int numOfAsteroid , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
-int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAstroid);
+int checkkeyboard();
 int checkAllAsteroidsDestroyed();
+int  moveShip(int amountForMovem, int keyPressed);
+int shoot(void);
+int checkForBulletOffscreen(int index);
+
+
+void drawShip();
+void checkCollisionsShipWithAsteroids();
+void checkCollisionsaAllBulletsWithAnAsteroids();
+void movebullets(void);
+void checkForAsteroidOffScreen();
+void shutdown(int exitNum);
+void fillAsteroidVector(int numOfAsteroid , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
+void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAstroid);
 void moveasteroids();
-int reinitializeOffscreenAsteroids();
-int fillBulletVector(int numberOfBullets, sf::Texture & textureOfBullet);
-int refillAsteroidVectors(int createThisManyAsteroids, int theWidth, int theHeight, asteroidType asteroidType, sf::Texture & theTexture);
+void reinitializeOffscreenAsteroids();
+void fillBulletVector(int numberOfBullets, sf::Texture & textureOfBullet);
+void refillAsteroidVectors(int createThisManyAsteroids, int theWidth, int theHeight, asteroidType asteroidType, sf::Texture & theTexture);
 void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, asteroidMovement & smallAsteroidDirection1, asteroidMovement & smallAsteroidDirection2);
 
 
@@ -74,11 +77,11 @@ levelObj levelObject;
 
 //GLOBAL FUNCTION DEFINITIONS FOLLOW:
 
-int drawShip(void){
+void drawShip(void){
 
 
 	window.draw(shipObject.shipImage);
-	return(1);
+	
 }
 
 
@@ -138,7 +141,7 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 
 	drawShip();
 
-	return(1);
+	
 }
 
 
@@ -167,7 +170,7 @@ int checkkeyboard(void)
 
 //The idea is to check if the ship is in the y-range and x-range of the asteroid
 //if so there is a collision!
-int checkCollisionsShipWithAsteroids() 
+void checkCollisionsShipWithAsteroids() 
 {
 
 
@@ -187,7 +190,7 @@ int checkCollisionsShipWithAsteroids()
 		}
 	}
 
-		return(1);
+		
 }
 
 
@@ -198,7 +201,7 @@ int checkCollisionsShipWithAsteroids()
 //destroyed and two new smaller asteroids are created.
 //With every for loop that checks bullets the bullet is checked to be inactive and if it is then
 //the loop continues which means the for loop is run again with the next index.
-int checkCollisionsaAllBulletsWithAnAsteroids( )
+void checkCollisionsaAllBulletsWithAnAsteroids( )
 {
 
 
@@ -271,7 +274,6 @@ int checkCollisionsaAllBulletsWithAnAsteroids( )
 	}
 
 		
-return(1);
 }
 
 
@@ -436,7 +438,7 @@ int shoot(void)
 }
 
 //move the bullets and if still on screen draw them
-int movebullets(void) 
+void movebullets(void) 
 {
 
 	int returnValue = 0;
@@ -467,7 +469,7 @@ int movebullets(void)
 	}
 
 
-	return(1);
+	
 }
 
 //if the bullet is off the screen it is set as inactive so that it will not be drawn
@@ -489,7 +491,7 @@ int checkForBulletOffscreen(int index)
 //The function checks if the asteroid is totally off the screen. If it is the asteroid 
 //is set as offscreen which means it is not being drawn.  Later we look at the activation of
 //offscreen to reinitialize and set back to onscreen so that it will be drawn.
-int checkForAsteroidOffScreen()
+void checkForAsteroidOffScreen()
 {
 
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
@@ -503,7 +505,7 @@ int checkForAsteroidOffScreen()
 		}
 
 	}
-	return(1);
+	
 }
 
 //checks if ship is at passed or on one of the four borders.  If it does, sets ship  to be at border's 
@@ -559,7 +561,7 @@ void shutdown(int exitNum)
 
 
 //fills the asteroid vector with initialized asteroids. asterType is the type of the asteroid.
-int fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType asterType,  sf::Texture & texture) {
+void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType asterType,  sf::Texture & texture) {
 
 	// for random direction
 	int j = 0;
@@ -596,14 +598,14 @@ int fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType ast
 
 	}
 
-return(1);
+
 }
 
 // indexOfAsteroid is the index of the large asteroid that has been shot with a bullet and
 // is being replaced on the screen with the two smaller asteroids that are to be activate
 // (onscree) here.  They were set to intialize in fillAsteroidVectors and refillAsteroidVectors.
 // Called from checkCollisionsaAllBulletsWithAnAsteroids.
-int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
+void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 {
 	
 	int flagUnusedAsteroidIndexFound = 0;
@@ -716,7 +718,7 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//sets deltas inside for these small asteroid objects
 	asteroidCollection[indexNextSmallerAsteroid1].setDeltaWithDirection(newDirection1);
 	asteroidCollection[indexNextSmallerAsteroid2].setDeltaWithDirection(newDirection2);	
-	return(1);
+	
 }
 
 //Checks if all large and small asteroids are destroyed 
@@ -785,7 +787,7 @@ void moveasteroids()
 //check for all asteroids offscreen and set them up for moving putting them 
 //their height or their width behind the four screen borders so that there 
 //ready but just unvisable.
-int reinitializeOffscreenAsteroids()
+void reinitializeOffscreenAsteroids()
 {
 	
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
@@ -802,13 +804,13 @@ int reinitializeOffscreenAsteroids()
 		}
 
 	}
-	return(1);
+	
 }
 
 
 //fills vector with numOfBullets and fills the vector.  Lastly, sets 
 //the static variaable.
-int fillBulletVector (int numOfBullets, sf::Texture & texture)
+void fillBulletVector (int numOfBullets, sf::Texture & texture)
 {
 
 	
@@ -822,7 +824,7 @@ int fillBulletVector (int numOfBullets, sf::Texture & texture)
 
 	
 
-	return(1);
+	
 }
 
 
@@ -1005,7 +1007,7 @@ int main(void)
 //pushes the new asteroids for the new level if either small or large
 //than reinitializes their deltax and deltay and their direction and x and y
 //in setInitialAsteroid
-int refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, asteroidType type , sf::Texture & texture)
+void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, asteroidType type , sf::Texture & texture)
 {
 	int j = 0;
 	if (type == larger)
@@ -1048,7 +1050,7 @@ int refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aster
 		}
 	}
 
-	return(1);
+	
 }
 
 	

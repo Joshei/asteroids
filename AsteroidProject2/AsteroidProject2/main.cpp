@@ -649,42 +649,54 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	
 	
 	
-	//little asteroid located at intersection of smaller circle's diameter centered on top of larger circle (asteroid)
+	
 	//diameter of smaller circle is 32
-
 	//The larger asteroid in the remaining code is the asteroidCollection with the indes : indexOfAsteoid
+	//center of little asteroid is located with it's center on the top horizontal tangent of larger asteroid
 	
-	//center of little asteroid is located with center on the top horizontal tangent of larger asteroid
+	//to simple the four assignments of x and y below:
+	asteroid & smallAsteroid1 = asteroidCollection[indexNextSmallerAsteroid1];
+	asteroid & smallAsteroid2 = asteroidCollection[indexNextSmallerAsteroid2];
+	//asteroid & largeAsteroid = asteroidCollection[indexOfAsteroid];
+	int largeAsteroidLeft = asteroidCollection[indexOfAsteroid].getX();
+	int largeAsteroidWidth = asteroidCollection[indexOfAsteroid].getWidth();
+	int largeAsteroidHeight = asteroidCollection[indexOfAsteroid].getHeight();
+	int largeAsteroidTop = asteroidCollection[indexOfAsteroid].getY();
+	int smallAsteroid1Height = (asteroidCollection[indexNextSmallerAsteroid1].getHeight());
+	int smallAsteroid2Height = (asteroidCollection[indexNextSmallerAsteroid2].getHeight());
+	int smallAsteroid1Width = (asteroidCollection[indexNextSmallerAsteroid1].getWidth());
+	int smallAsteroid2Width = (asteroidCollection[indexNextSmallerAsteroid2].getWidth());
 	
+	//For the next four assignments, the small asteroid's center is at the top horizontal tangent of the larger asteroid.
+	//The math here is interesting: the width of the larger asteroid minus the width of the smaller 
+	//asteroid leaves us with the remaining width space on both the right and left of the small asteroid.
+	//We than divide this space by two to get the smaller asteroid positioned at the center horizontally.
+	//if needed, easier to draw out on paper.
 
-	//The small asteroid's center is at the top horizontal tangent of the larger asteroid.
-	//The math here is interesting: the width of the larger asteroid minus the width of the smaller 
-	//asteroid leaves us with the remaining width space on both the right and left of the small asteroid.
-	//We than divide this space by two to get the smaller asteroid positioned at the center horizontally.
-	//easier to draw out on paper
-	asteroidCollection[indexNextSmallerAsteroid1].setX((asteroidCollection[indexOfAsteroid].getX() +
-	( ( asteroidCollection[indexOfAsteroid].getWidth() - (asteroidCollection[indexNextSmallerAsteroid1].getWidth() ) / 2 ) ) ) );
-	//The small asteroid's center is at the top horizontal tangent of the larger asteroid.
-	//The small asteroid is simpily above the asteroid by half of its height.
-	//easier to draw out on paper
-	asteroidCollection[indexNextSmallerAsteroid1].setY((asteroidCollection[indexOfAsteroid].getY() -
-	( asteroidCollection[indexNextSmallerAsteroid1].getHeight()  / 2 ) ) ) ;
-	//The small asteroid's center is at the top horizontal tangent of the larger asteroid.
-	//The math here is interesting: the width of the larger asteroid minus the width of the smaller 
-	//asteroid leaves us with the remaining width space on both the right and left of the small asteroid.
-	//We than divide this space by two to get the smaller asteroid positioned at the center horizontally.
-	//center of little asteroid is located with center on the top tangent of larger asteroid
-	//Drawing this might help you envision it.
-	asteroidCollection[indexNextSmallerAsteroid2].setX((asteroidCollection[indexOfAsteroid].getX() +
-	( (asteroidCollection[indexOfAsteroid].getWidth() - ( asteroidCollection[indexNextSmallerAsteroid2].getWidth()) / 2 ) ) ) );
-	//center of little asteroid is located on bottom of larger asteroid horizontal tangent 
-	//The y location of the small asteroid is the height of the larger asteroid (remember
-	//that the positive direction of the height is downward.)  and subtracted to move up 
-	//negatively the height of the smaller asteroid divided by two.
-	//easier to do if drawn on paper.
-	asteroidCollection[indexNextSmallerAsteroid2].setY(asteroidCollection[indexOfAsteroid].getY() +
-	(  asteroidCollection[indexOfAsteroid].getHeight() - (  asteroidCollection[indexNextSmallerAsteroid2].getHeight()  / 2 ) ) ) ;
-	//initializations for setposition right below.
+	smallAsteroid1.setX(largeAsteroidLeft + ((largeAsteroidWidth - smallAsteroid1Width) / 2));
+
+//	asteroidCollection[indexNextSmallerAsteroid1].setX((asteroidCollection[indexOfAsteroid].getX() +
+//	( ( asteroidCollection[indexOfAsteroid].getWidth() - (asteroidCollection[indexNextSmallerAsteroid1].getWidth() ) / 2 ) ) ) );
+	
+	
+	smallAsteroid1.setY(largeAsteroidTop + ((largeAsteroidHeight - smallAsteroid1Height) / 2));
+	
+	
+//	asteroidCollection[indexNextSmallerAsteroid1].setY((asteroidCollection[indexOfAsteroid].getY() -
+//	( asteroidCollection[indexNextSmallerAsteroid1].getHeight()  / 2 ) ) ) ;
+	
+	smallAsteroid2.setX(largeAsteroidLeft + ((largeAsteroidWidth - smallAsteroid2Width) / 2));
+	
+//	asteroidCollection[indexNextSmallerAsteroid2].setX((asteroidCollection[indexOfAsteroid].getX() +
+//	( (asteroidCollection[indexOfAsteroid].getWidth() - ( asteroidCollection[indexNextSmallerAsteroid2].getWidth()) / 2 ) ) ) );
+	
+	smallAsteroid2.setY(largeAsteroidTop + ((largeAsteroidHeight - smallAsteroid2Height) / 2));
+
+	//	asteroidCollection[indexNextSmallerAsteroid2].setY(asteroidCollection[indexOfAsteroid].getY() +
+//	(  asteroidCollection[indexOfAsteroid].getHeight() - (  asteroidCollection[indexNextSmallerAsteroid2].getHeight()  / 2 ) ) ) ;
+
+
+//initializations for setposition right below.
 	int x1 = asteroidCollection[indexNextSmallerAsteroid1].getX();
 	int y1 = asteroidCollection[indexNextSmallerAsteroid1].getY();
 	int x2 = asteroidCollection[indexNextSmallerAsteroid2].getX();

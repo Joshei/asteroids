@@ -694,26 +694,9 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//if needed, easier to draw out on paper.
 
 	smallAsteroid1.setX(largeAsteroidLeft + ((largeAsteroidWidth - smallAsteroid1Width) / 2));
-
-//	asteroidCollection[indexNextSmallerAsteroid1].setX((asteroidCollection[indexOfAsteroid].getX() +
-//	( ( asteroidCollection[indexOfAsteroid].getWidth() - (asteroidCollection[indexNextSmallerAsteroid1].getWidth() ) / 2 ) ) ) );
-	
-	
 	smallAsteroid1.setY(largeAsteroidTop - ((largeAsteroidHeight - smallAsteroid2Height) / 2));
-	
-	
-//	asteroidCollection[indexNextSmallerAsteroid1].setY((asteroidCollection[indexOfAsteroid].getY() -
-//	( asteroidCollection[indexNextSmallerAsteroid1].getHeight()  / 2 ) ) ) ;
-	
 	smallAsteroid2.setX(largeAsteroidLeft + ((largeAsteroidWidth - smallAsteroid2Width) / 2));
-	
-//	asteroidCollection[indexNextSmallerAsteroid2].setX((asteroidCollection[indexOfAsteroid].getX() +
-//	( (asteroidCollection[indexOfAsteroid].getWidth() - ( asteroidCollection[indexNextSmallerAsteroid2].getWidth()) / 2 ) ) ) );
-	
 	smallAsteroid2.setY(largeAsteroidTop + ((largeAsteroidHeight - smallAsteroid2Height) / 2));
-
-	//	asteroidCollection[indexNextSmallerAsteroid2].setY(asteroidCollection[indexOfAsteroid].getY() +
-//	(  asteroidCollection[indexOfAsteroid].getHeight() - (  asteroidCollection[indexNextSmallerAsteroid2].getHeight()  / 2 ) ) ) ;
 
 
 //initializations for setposition right below.

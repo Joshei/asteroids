@@ -317,20 +317,27 @@ int shoot(void)
 		//to make all the following member function simpler, uses bulletIndex instead
 		bullet & bulletIndex = bullets[numOfBulletIndex];
 			
-		
+		//pre condition : bullet is smaller in width and height than asteroid
 		//up key pressed direction of bullet will be upwards.  creates a bullet the same amount 
 		//away for each off the four directions shot
 		//for now, the bullets width is 16 and its height is 16.  values are divided by 2 to center the diferent images
 			if (shipObject.getDirection() == up)
 			{
 
+
+				int centerShipWidth = .5* shipObject.getWidth();
+				int centerBulletWidth = .5* bulletIndex.getWidth();
+				
+
 				//bullet center of ship
-				bulletIndex.setX(shipObject.getX() + (.5* shipObject.getWidth()) -( .5* (bulletIndex.getWidth())   ));
+				bulletIndex.setX(shipObject.getX() + centerShipWidth - centerBulletWidth);
+				
 				//bullet a bit above ship
+				//the four of these start from the circles most farthest boundry and add 100
 				bulletIndex.setY(-100 + shipObject.getY() + shipObject.getHeight());
 
 			
-				bulletIndex.setDirection(up);
+				bulletIndex.setDirection(shipObject.getDirection());
 				//sets the position of the bullet with x and y coordinates
 				bulletIndex.bulletImage.setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
@@ -349,13 +356,17 @@ int shoot(void)
 			else if (shipObject.getDirection() == right) 
 			{
 
-				//bullet right of ships left value by 100. remember the ship has a width of 64.
+				
+				int centerShipHeight = .5* shipObject.getHeight();
+				int centerBulletHeight = .5* bulletIndex.getHeight();
+
+				//the four of these start from the circles most farthest boundry and add 100
 				bulletIndex.setX(shipObject.getX() + 100);
 				//bullet a bit above ship
-				bulletIndex.setY((shipObject.getY() + .5*(shipObject.getHeight() - (.5*(bulletIndex.getHeight())))));
+				bulletIndex.setY(shipObject.getY() + centerShipHeight - centerBulletHeight);
 
 			
-				bulletIndex.setDirection(right);
+				bulletIndex.setDirection(shipObject.getDirection());
 				//sets the position of the bullet with x and y coordinates
 				bulletIndex.bulletImage.setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
@@ -371,12 +382,17 @@ int shoot(void)
 			//ship is moving downward 
 			else if (shipObject.getDirection() == down) 
 			{
+
+				int centerShipWidth = .5* shipObject.getWidth();
+				int centerBulletWidth = .5* bulletIndex.getWidth();
+				
+
 				//bullet is centered according to ship
-				bulletIndex.setX(shipObject.getX() + .5*(shipObject.getWidth() - (.5* (bulletIndex.getWidth()))));
-				//bullet a bit above ship
+				bulletIndex.setX(shipObject.getX() + centerShipWidth - centerBulletWidth);
+				//the four of these start from the circles most farthest boundry and add 100
 				bulletIndex.setY(100 + shipObject.getY());
 				//direction for move bullet
-				bulletIndex.setDirection(down);
+				bulletIndex.setDirection(shipObject.getDirection());
 				//sets the position of the bullet with x and y coordinates
 				bulletIndex.bulletImage.setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 				//bullet image is part of SFML basic instructions on website tutorial questions
@@ -392,13 +408,17 @@ int shoot(void)
 			else if (shipObject.getDirection() == left) 
 			{
 
-				//ships midpoint is used to center bullet
-				bulletIndex.setX(shipObject.getX() - 100 + (shipObject.getWidth()));
+				
+				int centerShipHeight = .5* shipObject.getHeight();
+				int centerBulletHeight = .5* bulletIndex.getHeight();
+
+				//the four of these start from the circles most farthest boundry and add 100
+				bulletIndex.setX(shipObject.getX() + shipObject.getWidth() - 100 );
 				//bullet a bit above ship
-				bulletIndex.setY((.5 * shipObject.getHeight()) + shipObject.getY() - (.5*( bulletIndex.getHeight())) );
+				bulletIndex.setY(shipObject.getY() + centerShipHeight  - centerBulletHeight);
 
 				//direction set to left for moving/drawing bullet
-				bulletIndex.setDirection(left);
+				bulletIndex.setDirection(shipObject.getDirection());
 				//sets the position of the bullet with x and y coordinates
 				bulletIndex.bulletImage.setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 

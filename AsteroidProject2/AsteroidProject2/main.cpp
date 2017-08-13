@@ -699,7 +699,7 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 //	( ( asteroidCollection[indexOfAsteroid].getWidth() - (asteroidCollection[indexNextSmallerAsteroid1].getWidth() ) / 2 ) ) ) );
 	
 	
-	smallAsteroid1.setY(largeAsteroidTop + ((largeAsteroidHeight - smallAsteroid1Height) / 2));
+	smallAsteroid1.setY(largeAsteroidTop - ((largeAsteroidHeight - smallAsteroid2Height) / 2));
 	
 	
 //	asteroidCollection[indexNextSmallerAsteroid1].setY((asteroidCollection[indexOfAsteroid].getY() -

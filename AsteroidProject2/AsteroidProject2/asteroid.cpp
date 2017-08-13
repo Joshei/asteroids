@@ -30,7 +30,7 @@ asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largerTextureForAs
 //appears on the screen than as an onscreen activation but it will use 
 //this function when the asteroid goes off screen and it's activation is
 //set to offscreen.
-int asteroid::setInitialAsteroid(int fromThisBorder) {
+void asteroid::setInitialAsteroid(int fromThisBorder) {
 	//technically these asteroids are behind the border by their width or height but they've been
 	//set to onscreen so they are ready to be checked for collisions now.
 	setActivate(onscreen);
@@ -69,7 +69,7 @@ int asteroid::setInitialAsteroid(int fromThisBorder) {
 	}
 	//sets the image at the coordinates
 	anAsteroid.setPosition(sf::Vector2f(x, y));
-	return(1);
+	
 }
 
 //takes an enumeration of stateofassteroid
@@ -88,7 +88,7 @@ void asteroid::setWhichDirection(asteroidMovement direction)
 
 }
 
-int asteroid::moveAsteroid(void) 
+void asteroid::moveAsteroid(void) 
 {
 
 	
@@ -97,7 +97,7 @@ int asteroid::moveAsteroid(void)
 	y = y + deltaY;
 	
 
-	return(1);
+	
 }
 
 

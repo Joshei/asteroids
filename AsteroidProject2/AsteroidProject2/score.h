@@ -12,7 +12,7 @@ public:
 	
 	
 	score(int xpos , int ypos );
-	int setFont(sf::Font & theFont);
+	void setFont(sf::Font & theFont);
 	void setScore(int scoreIn);
 	void setXForScore(int xDimension);
 	void setYForScore(int yDimension);
@@ -20,10 +20,10 @@ public:
 	int getXForScore() { return scorePosition.x; }
 	int getYforScore() { return scorePosition.y; }
 	
-	int resetScore(void);
-	int drawScore(int score);
-	int drawScore(void);
-	int addToScore(int addAmount);
+	void resetScore(void);
+	void drawScore(int score);
+	void drawScore(void);
+	void addToScore(int addAmount);
 	
 	
 	

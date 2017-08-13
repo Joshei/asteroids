@@ -22,9 +22,9 @@ public:
 
 	ship(int positionx, int positiony, theDirection direction);
 
-	int rotateShipClock(void);
-	int rotateShipCClock(void);
-	int selectTexture(theDirection direction);
+	void rotateShipClock(void);
+	void rotateShipCClock(void);
+	void selectTexture(theDirection direction);
 };
 
 

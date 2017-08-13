@@ -44,7 +44,7 @@ ship::ship(int positionx, int positiony, theDirection  shipDirection)
 
 
 //press m - rotates ship clockwise.
-int ship::rotateShipClock(void) 
+void ship::rotateShipClock(void) 
 {
 
 	//add one to the direction to rotate clockwise
@@ -52,21 +52,19 @@ int ship::rotateShipClock(void)
 	setDirection(NewDirection);
 	selectTexture(NewDirection);
 	
-	return(1);
 }
 //press n - rotates ship counter clockwise.
-int ship::rotateShipCClock(void) 
+void ship::rotateShipCClock(void) 
 {
 	//add a full rotation (4) before subtracting one to avoid negative numbers and use modulus
 	theDirection NewDirection = static_cast<theDirection>((3 + getDirection()) % 4);
 	setDirection(NewDirection);
 	selectTexture(NewDirection);
 
-	return(1);
 
 }
 
-int ship::selectTexture(theDirection direction)
+void ship::selectTexture(theDirection direction)
 {
 	if (direction == up)
 	{
@@ -86,7 +84,7 @@ int ship::selectTexture(theDirection direction)
 	}
 
 
-	return(1);
+	
 }
 
 

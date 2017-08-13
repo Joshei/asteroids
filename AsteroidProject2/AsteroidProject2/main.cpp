@@ -141,7 +141,7 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 
 	drawShip();
 
-	
+	return(1);
 }
 
 
@@ -948,33 +948,33 @@ int main(void)
 			int oldLevelsLargeAsteroidAmt = levelObject.getNumLargeAsteroids();
 
 				
-				//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
-				if (levelObject.advanceLevelByOne())
+			//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
+			levelObject.advanceLevelByOne();
+				
+
+
+
+
+
+				//break out of first while if set in level::advancelevelbyone and end program 
+				if (g_Shutdownflag == 1)
 				{
-
-
-
-
-
-					//break out of first while if set in level::advancelevelbyone and end program 
-					if (g_Shutdownflag == 1)
-					{
-						continue;
-					}
-
-					//fills one asteroid collection with two statements.
-					//oldLevels... getNumSmallAsteroids() and .getNumLargeAsteroids() are new levels values
-					//the new levels minus the old levels gives us the new asteroids to create
-					int createThisAmtAsteroids = (levelObject.getNumLargeAsteroids() - oldLevelsLargeAsteroidAmt);
-		 			//creates the newly created asteroids with push_back and reinitializes the older asteroids
-					//with a new active setting
- 					refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, largerTextureAsteroid);
-					//see right above
-					createThisAmtAsteroids = levelObject.getNumSmallAsteroids() - oldLevelsSmallAsteroidAmt;
-					//same as above : just a smaller asteroid group for the collection
-					refillAsteroidVectors(createThisAmtAsteroids, 32, 32, smaller, smallerTextureAsteroid);
-					
+					continue;
 				}
+
+				//fills one asteroid collection with two statements.
+				//oldLevels... getNumSmallAsteroids() and .getNumLargeAsteroids() are new levels values
+				//the new levels minus the old levels gives us the new asteroids to create
+				int createThisAmtAsteroids = (levelObject.getNumLargeAsteroids() - oldLevelsLargeAsteroidAmt);
+				//creates the newly created asteroids with push_back and reinitializes the older asteroids
+				//with a new active setting
+				refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, largerTextureAsteroid);
+				//see right above
+				createThisAmtAsteroids = levelObject.getNumSmallAsteroids() - oldLevelsSmallAsteroidAmt;
+				//same as above : just a smaller asteroid group for the collection
+				refillAsteroidVectors(createThisAmtAsteroids, 32, 32, smaller, smallerTextureAsteroid);
+
+				
 			}
 
 

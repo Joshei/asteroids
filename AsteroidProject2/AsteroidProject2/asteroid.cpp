@@ -45,27 +45,27 @@ int asteroid::setInitialAsteroid(int fromThisBorder) {
 	//from top border
 	if (fromThisBorder == 0)
 	{
-		x = (rand() % (gScreenWidth + width));
+		x = (rand() % (G_SCREEN_WIDTH + width));
 		y = 0 - height;
 	}
 	//from right border
 	else if (fromThisBorder == 1)
 	{
-		x = gScreenWidth;
-		y = (rand() % (gScreenHeight - height));
+		x = G_SCREEN_WIDTH;
+		y = (rand() % (G_SCREEN_HEIGHT - height));
 	}
 	//from bottom border
 	else if (fromThisBorder == 2)
 	{
-		x = (rand() % (gScreenWidth + width));
-		y = gScreenHeight;
+		x = (rand() % (G_SCREEN_WIDTH + width));
+		y = G_SCREEN_HEIGHT;
 	}
 	//from left border
 	else if (fromThisBorder == 3) 
 	{
 		//makes image just off the screen.
 		x = 0 - width;
-		y = std::rand() % (gScreenHeight - height);
+		y = std::rand() % (G_SCREEN_HEIGHT - height);
 	}
 	//sets the image at the coordinates
 	anAsteroid.setPosition(sf::Vector2f(x, y));

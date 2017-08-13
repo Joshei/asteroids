@@ -33,8 +33,8 @@ static const asteroidMovement directions[4][3] =
 
 
 
-const int gScreenWidth = 1000;
-const int gScreenHeight = 700;
+const int G_SCREEN_WIDTH = 1000;
+const int G_SCREEN_HEIGHT = 700;
 
 
 class asteroid : public moveableObject 

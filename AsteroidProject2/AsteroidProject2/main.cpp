@@ -64,7 +64,7 @@ std::vector<asteroid> smallerAsteroidObject;
 std::vector <bullet> bullets;
 score theScore(10, 10);
 sf::Event event;
-sf::RenderWindow window(sf::VideoMode(gScreenWidth, gScreenHeight), "Asteroids!");
+sf::RenderWindow window(sf::VideoMode(G_SCREEN_WIDTH, G_SCREEN_HEIGHT), "Asteroids!");
 
 
 //global ship pbject
@@ -459,7 +459,7 @@ int movebullets(void)
 int checkForBulletOffscreen(int index) 
 {
 
-	if (!(bullets[index].intersectsWithScreenRect(gScreenWidth, gScreenHeight)))
+	if (!(bullets[index].intersectsWithScreenRect(G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
 	{
 		bullets[index].setIsactive(false);
 		return(-1);
@@ -478,7 +478,7 @@ int checkForAsteroidOffScreen()
 	{
 
 
-		if (!(asteroidCollection[i].intersectsWithScreenRect( gScreenWidth, gScreenHeight)))
+		if (!(asteroidCollection[i].intersectsWithScreenRect( G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
 		{
 
 			asteroidCollection[i].setActivate(offscreen);
@@ -503,16 +503,16 @@ bool checkForShipOnBorder(int x, int y)
 
 	}
 	//right
-	if (x  > (gScreenWidth - shipObject.getWidth())) 
+	if (x  > (G_SCREEN_WIDTH - shipObject.getWidth())) 
 	{
-		shipObject.setX(gScreenWidth - shipObject.getWidth());
+		shipObject.setX(G_SCREEN_WIDTH - shipObject.getWidth());
 		return(false);
 
 	}
 	//bottom
-	if (y > (gScreenHeight - shipObject.getHeight()))
+	if (y > (G_SCREEN_HEIGHT - shipObject.getHeight()))
 	{
-		shipObject.setY(gScreenHeight - shipObject.getHeight());
+		shipObject.setY(G_SCREEN_HEIGHT - shipObject.getHeight());
 		return(false);
 
 	}
@@ -823,13 +823,7 @@ int main(void)
 	
 	//seeds the time for random direction and postion of asteroids right before drawing on screen
 	std::srand(time(NULL));
-	
-	const int constInitialNumBullets = 10;
-
 	int tempFlagForTest = 0;
-	
-
-
 	FreeConsole();
 
 	
@@ -867,7 +861,7 @@ int main(void)
 	
 	
 	//this will set the vector to 10 bullets index  of 9 of course
-	fillBulletVector(constInitialNumBullets, texturebullet);
+	fillBulletVector(levelObject.getMaxNumBullets(), texturebullet);
 	theScore.setFont(fontForScore);
 
 	//initial ship draw

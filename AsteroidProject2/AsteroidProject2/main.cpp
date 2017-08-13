@@ -211,7 +211,7 @@ int checkCollisionsaAllBulletsWithAnAsteroids( )
 			continue;
 		}
 
-		for (int i = 0; i <= (levelObj::getMaxNumBullets()-1); i++)
+		for (int i = 0; i < levelObj::getMaxNumBullets(); i++)
 		{
 
 
@@ -289,7 +289,7 @@ int shoot(void)
 	
 
 		//static function
- 		for (int i = 0; i <= (levelObj::getMaxNumBullets() - 1); i++)
+ 		for (int i = 0; i < levelObj::getMaxNumBullets(); i++)
 		{
 
 			//if bullet already active go to for loop at next index
@@ -442,7 +442,7 @@ int movebullets(void)
 	int returnValue = 0;
 
 	//static function
-	for (int i = 0; i <= (levelObj::getMaxNumBullets() - 1); i++)
+	for (int i = 0; i < levelObj::getMaxNumBullets(); i++)
 	{
 
 		if (bullets[i].getIsactive()) 
@@ -813,7 +813,7 @@ int fillBulletVector (int numOfBullets, sf::Texture & texture)
 
 	
 	
-	for (int i = 0; i <= numOfBullets -1 ; i++)
+	for (int i = 0; i < numOfBullets ; i++)
 	{
 		
 		bullets.push_back( bullet(texture, 16, 16));

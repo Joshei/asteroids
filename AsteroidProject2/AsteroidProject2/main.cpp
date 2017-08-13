@@ -59,8 +59,6 @@ sf::Font fontForScore;
 
 //initialized of the vectors for asteroids
 std::vector<asteroid> asteroidCollection;
-std::vector<asteroid> largerAsteroidObject;
-std::vector<asteroid> smallerAsteroidObject;
 std::vector <bullet> bullets;
 score theScore(10, 10);
 sf::Event event;
@@ -173,7 +171,7 @@ int checkCollisionsShipWithAsteroids()
 {
 
 
-	for (int i = 0; i <= g_TotalNumAllAsteroids - 1; i++)
+	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 
 		//checks if asteroid on screen if so is not initialized, destroyed, instantiated, or offscreen
@@ -204,7 +202,7 @@ int checkCollisionsaAllBulletsWithAnAsteroids( )
 {
 
 
-	for (int j = 0; j < g_TotalNumAllAsteroids ; j++)
+	for (std::size_t j = 0; j <  asteroidCollection.size(); j++)
 	{
 		
 
@@ -494,7 +492,7 @@ int checkForBulletOffscreen(int index)
 int checkForAsteroidOffScreen()
 {
 
-	for (int i = 0; i <= (g_TotalNumAllAsteroids-1); i++)
+	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 
 
@@ -571,7 +569,7 @@ int fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType ast
 
 	//g_TotalNumAllAsteroids increases whenever ther is a new asteroid creation 
 	//(from push_back)
-	for (int i = g_TotalNumAllAsteroids; i < g_TotalAsteroids; i++)
+	for (std::size_t i = asteroidCollection.size(); i < g_TotalAsteroids; i++)
 	{
 		g_TotalNumAllAsteroids++;
 
@@ -618,7 +616,7 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//smallasteroid available than there should therefore be two, becauser there are two asteroids created
 	//for each large asteroid.  Small asteroids created in this function will be set to onscreen. 
 	//A small asteroid before this function is set with an activeness of initialized.  
-	for (int i = 0 ; i <= (g_TotalNumAllAsteroids - 1); i++)
+	for (std::size_t i = 0 ; i < asteroidCollection.size(); i++)
 	{
 		
 
@@ -633,11 +631,11 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 			//their ready for moving and drawing
 			asteroidCollection[i].setActivate(onscreen);
 			//unused asteroid found and breaking out of loop because of this variables amount!
-			i = g_TotalNumAllAsteroids;
+			break;// i = g_TotalNumAllAsteroids;
 		}
 	}
 
-	for (int j = 0; j <= (g_TotalNumAllAsteroids - 1); j++)
+	for (std::size_t j = 0; j < asteroidCollection.size(); j++)
 	{
 
 
@@ -654,7 +652,7 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 			asteroidCollection[j].setActivate(onscreen);
 			
 			//unused asteroid found and breaking out of loop because of this variables amount!
-			j = g_TotalNumAllAsteroids;
+			break;// j = g_TotalNumAllAsteroids;
 
 
 		}
@@ -726,7 +724,7 @@ int checkAllAsteroidsDestroyed()
 {
 
 	int asteroidCount = 0;
-	for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
+	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 
 		if (asteroidCollection[i].getActivate() == destroyed)
@@ -762,7 +760,7 @@ int checkAllAsteroidsDestroyed()
 void moveasteroids()
 {
 
-	for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
+	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 
 		if (asteroidCollection[i].getActivate() == onscreen)
@@ -790,7 +788,7 @@ void moveasteroids()
 int reinitializeOffscreenAsteroids()
 {
 	
-	for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
+	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 		if (asteroidCollection[i].getActivate() == offscreen)
 		{
@@ -1012,13 +1010,13 @@ int refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aster
 	int j = 0;
 	if (type == larger)
 	{
-		for (int i = 0; i <= (numAsteroidsToCreate - 1); i++)
+		for (int i = 0; i < numAsteroidsToCreate; i++)
 		{
 			//create the new additional asteroids 
 			asteroidCollection.push_back(asteroid(Width, Height, texture, larger));
 			g_TotalNumAllAsteroids++;
 		}
-		for (int i = 0; i <= (g_TotalNumAllAsteroids - 1); i++)
+		for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 		{
 			if (asteroidCollection[i].getAsteroidType() == larger)
 			{
@@ -1031,7 +1029,7 @@ int refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aster
 	}
 	else if (type == smaller)
 	{
-		for (int i = 0; i <= (numAsteroidsToCreate - 1); i++)
+		for (int i = 0; i < numAsteroidsToCreate; i++)
 		{
 				//creates extra small asteroids
 				asteroidCollection.push_back(asteroid(Width, Height, texture, smaller));
@@ -1039,11 +1037,10 @@ int refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aster
 		}
 		//reinitalizes the old and new asteroids with the new activation so that they
 		//can be moved after their changed from initialized to onscreen in createsmallasteroids
-		for (int i = 0; i <= (g_TotalNumAllAsteroids-1); i++)
+		for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 		{
 
-			if (asteroidCollection[i].getAsteroidType() == 
-				smaller)
+			if (asteroidCollection[i].getAsteroidType() == smaller)
 			{
 				
 				asteroidCollection[i].setActivate(initialized);

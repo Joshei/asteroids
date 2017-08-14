@@ -11,7 +11,7 @@ public:
 
 	
 
-	moveableObject(void);
+	moveableObject();
 
 
 	bool intersects(const moveableObject & theOtherObject);
@@ -21,36 +21,36 @@ public:
 
 
 	//inlines
-	int getX(void) 
+	int getX() 
 	{ 
 		return(x); 
 	}
 	
-	int getY(void) 
+	int getY() 
 	{
 		return(y); 
 	}
 	
-	int getDeltaY(void) 
+	int getDeltaY() 
 	{
 		return(deltaY); 
 	}
 	
-	int getDeltaX(void) 
+	int getDeltaX() 
 	{
 		return(deltaX); 
 	}
 
-	theDirection getDirection(void)
+	theDirection getDirection()
 	{
 		return(direction);
 	}
 
-	int getHeight(void) {
+	int getHeight() {
 		return (height);
 	}
 
-	int getWidth(void) {
+	int getWidth() {
 		return(width);
 	}
 

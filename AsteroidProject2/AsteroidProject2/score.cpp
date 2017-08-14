@@ -57,7 +57,7 @@ void  score::drawScore(int score)
 }
 
 //draws the current score (used after addToScore)
-void score::drawScore(void)
+void score::drawScore()
 {
 	drawScore(scoreAmount);
 	
@@ -75,7 +75,7 @@ void score::addToScore(int addAmount)
 
 
 
-void score::resetScore(void)
+void score::resetScore()
 {
 
 	scoreAmount = 0;

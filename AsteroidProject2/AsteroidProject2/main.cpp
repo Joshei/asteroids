@@ -31,14 +31,12 @@ bool checkForShipOnBorder(int x, int y);
 bool checkkeyboard();
 bool checkAllAsteroidsDestroyed();
 int  moveShip(int amountForMovem, int keyPressed);
-int shoot(void);
+int shoot();
 bool checkForBulletOffscreen(int index);
-
-
 void drawShip();
 void checkCollisionsShipWithAsteroids();
 void checkCollisionsaAllBulletsWithAnAsteroids();
-void movebullets(void);
+void movebullets();
 void checkForAsteroidOffScreen();
 void shutdown(int exitNum);
 void fillAsteroidVector(int numOfAsteroid , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
@@ -77,7 +75,7 @@ levelObj levelObject;
 
 //GLOBAL FUNCTION DEFINITIONS FOLLOW:
 
-void drawShip(void){
+void drawShip(){
 
 
 	window.draw(shipObject.shipImage);
@@ -279,7 +277,7 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 
 
 
-int shoot(void) 
+int shoot() 
 {
 
 	
@@ -438,7 +436,7 @@ int shoot(void)
 }
 
 //move the bullets and if still on screen draw them
-void movebullets(void) 
+void movebullets() 
 {
 
 	int returnValue = 0;

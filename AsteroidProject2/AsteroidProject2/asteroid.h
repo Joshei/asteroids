@@ -49,32 +49,32 @@ public:
 	
 	asteroid( int theWidth, int theHeight, sf::Texture & largerTextureForAsteroid, asteroidType type);
 	
-	void moveAsteroid(void);
+	void moveAsteroid();
 	void setActivate(int activateFlag);
 	void setWhichDirection(asteroidMovement direction);
 	void setType(asteroidType theType);
 	
 	
 	//inlines
-	int getActivate(void)
+	int getActivate()
 	{ 
 		return activated; 
 	}
 
 	
 
-	int getFromThisBorder(void)
+	int getFromThisBorder()
 	{ 
 		return(fromThisBorder); 
 	}
 
-	asteroidMovement getWhichDirection(void)
+	asteroidMovement getWhichDirection()
 	{
 		return(whichDirection);
 
 	}
 
-	asteroidType getAsteroidType(void)
+	asteroidType getAsteroidType()
 	{
 		return(type);
 	}

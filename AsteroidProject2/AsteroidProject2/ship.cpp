@@ -44,7 +44,7 @@ ship::ship(int positionx, int positiony, theDirection  shipDirection)
 
 
 //press m - rotates ship clockwise.
-void ship::rotateShipClock(void) 
+void ship::rotateShipClock() 
 {
 
 	//add one to the direction to rotate clockwise
@@ -54,7 +54,7 @@ void ship::rotateShipClock(void)
 	
 }
 //press n - rotates ship counter clockwise.
-void ship::rotateShipCClock(void) 
+void ship::rotateShipCClock() 
 {
 	//add a full rotation (4) before subtracting one to avoid negative numbers and use modulus
 	theDirection NewDirection = static_cast<theDirection>((3 + getDirection()) % 4);

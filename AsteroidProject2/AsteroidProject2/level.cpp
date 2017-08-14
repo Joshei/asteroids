@@ -4,7 +4,7 @@
 
 int levelObj::maxBullets = 10;
 
-levelObj::levelObj(void)
+levelObj::levelObj()
 {
 	levelNumber = 1;
 	numOfLargeAsteroids = 1;

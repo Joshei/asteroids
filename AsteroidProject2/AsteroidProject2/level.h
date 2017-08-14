@@ -1,7 +1,7 @@
 class levelObj {
 
 public:
-	levelObj(void);
+	levelObj();
 	
 	int getNumLargeAsteroids();
 	int getNumSmallAsteroids();
@@ -12,7 +12,7 @@ public:
 
 	static void setMaxNumBullets(int maxNumBullets);
 
-	static int getMaxNumBullets(void)
+	static int getMaxNumBullets()
 	{
 		return maxBullets;
 	}

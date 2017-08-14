@@ -6,7 +6,7 @@
 
 
 
-moveableObject::moveableObject(void)
+moveableObject::moveableObject()
 	: width(0), height(0), x(0), y(0), deltaX(0), deltaY(0), direction(up)
 {
 

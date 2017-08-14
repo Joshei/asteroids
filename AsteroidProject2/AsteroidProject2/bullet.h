@@ -23,7 +23,7 @@ public:
 	
 		
 		
-		int getIsactive(void) 
+		int getIsactive() 
 		{
 			return (isactive); 
 		}

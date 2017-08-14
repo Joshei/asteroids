@@ -88,7 +88,7 @@ void asteroid::setWhichDirection(asteroidMovement direction)
 
 }
 
-void asteroid::moveAsteroid(void) 
+void asteroid::moveAsteroid() 
 {
 
 	

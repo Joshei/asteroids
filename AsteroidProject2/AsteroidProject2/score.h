@@ -20,9 +20,9 @@ public:
 	int getXForScore() { return scorePosition.x; }
 	int getYforScore() { return scorePosition.y; }
 	
-	void resetScore(void);
+	void resetScore();
 	void drawScore(int score);
-	void drawScore(void);
+	void drawScore();
 	void addToScore(int addAmount);
 	
 	

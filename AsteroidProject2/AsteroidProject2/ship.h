@@ -22,8 +22,8 @@ public:
 
 	ship(int positionx, int positiony, theDirection direction);
 
-	void rotateShipClock(void);
-	void rotateShipCClock(void);
+	void rotateShipClock();
+	void rotateShipCClock();
 	void selectTexture(theDirection direction);
 };
 

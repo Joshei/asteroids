@@ -28,11 +28,11 @@ int g_TotalNumAllAsteroids = 0;
 //GLOBAL FUNCTION DECLARATIONS
 
 bool checkForShipOnBorder(int x, int y);
-int checkkeyboard();
-int checkAllAsteroidsDestroyed();
+bool checkkeyboard();
+bool checkAllAsteroidsDestroyed();
 int  moveShip(int amountForMovem, int keyPressed);
 int shoot(void);
-int checkForBulletOffscreen(int index);
+bool checkForBulletOffscreen(int index);
 
 
 void drawShip();
@@ -145,7 +145,7 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 }
 
 
-int checkkeyboard(void) 
+bool checkkeyboard(void) 
 {
 
 	
@@ -161,10 +161,10 @@ int checkkeyboard(void)
 	else
 	{
 		//if in here no key pressed this cycle
-		return(-1);
+		return(false);
 	}
 
-	return(1);
+	return(true);
 }
 
 
@@ -459,8 +459,8 @@ void movebullets(void)
 			
 			returnValue = checkForBulletOffscreen(i);
 			
-			//bullet not offscreen
-			if (returnValue == 1)
+			//bullet not offscreen (is onscreen)
+			if (returnValue == false)
 			{
 				//SFML code from web site tutorial
 				window.draw(bullets[i].bulletImage);
@@ -476,16 +476,17 @@ void movebullets(void)
 //The drawing function will check to see if the bullet is still active.  if the bullet
 //is offscreen than a return of -1 means that the bullet will not be drawn in the movebullets
 //function.  The screenWidth and screenHeight is used to check if the image is totally off the screen!
-int checkForBulletOffscreen(int index) 
+bool checkForBulletOffscreen(int index) 
 {
-
+	//is bullet not on screen?
 	if (!(bullets[index].intersectsWithScreenRect(G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
 	{
+		//bullet is not on screen
 		bullets[index].setIsactive(false);
-		return(-1);
+		return(true);
 	}
-	
-	return(1);
+	//bullet is on screen
+	return(false);
 }
 
 //The function checks if the asteroid is totally off the screen. If it is the asteroid 
@@ -722,7 +723,7 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 }
 
 //Checks if all large and small asteroids are destroyed 
-int checkAllAsteroidsDestroyed()
+bool checkAllAsteroidsDestroyed()
 {
 
 	int asteroidCount = 0;
@@ -743,11 +744,11 @@ int checkAllAsteroidsDestroyed()
 	}
 	if (asteroidCount == g_TotalNumAllAsteroids)
 	{
-		return(1);
+		return(true);
 	}
 
 
-	return(-1);
+	return(false);
 }
 
 	
@@ -919,7 +920,7 @@ int main(void)
 		
 		//checks keyboard and if pressed calls moveship with the deltas otherwise calls moveship
 		//with - 1 which causes sliding effect
-		if (checkkeyboard() == -1)
+		if (checkkeyboard() == false)
 		{
 			//also checks if movement would be beyond border is so returns -1
 			moveShip(-1);
@@ -940,7 +941,7 @@ int main(void)
 
 		//if 1 is returned than all those asteroids are destroyed and reinitializeation and new asteroids are created
 		//and a new level is started
-		if (checkAllAsteroidsDestroyed() == 1)
+		if (checkAllAsteroidsDestroyed() == true)
 		{
 			
 			//holds this levels value because they are changed in advanceLevelByOne for RefillAsteroidVector

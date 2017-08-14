@@ -2,7 +2,7 @@
 #define MOVEABLEOBJECT_H
 #include <windows.h>
 #include "enumeration.h"
-
+ 
 //class asteroid and class bullet inherit from this
 class moveableObject 
 {

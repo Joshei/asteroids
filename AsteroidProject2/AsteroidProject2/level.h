@@ -3,19 +3,30 @@ class levelObj {
 public:
 	levelObj();
 	
-	int getNumLargeAsteroids();
-	int getNumSmallAsteroids();
+	
+	static int maxBullets;
+	static void setMaxNumBullets(int maxNumBullets);
 
 	void advanceLevelByOne();
+	
+	int getNumLargeAsteroids()
+	{
 
-	static int maxBullets;
+		return(numOfLargeAsteroids);
+	}
 
-	static void setMaxNumBullets(int maxNumBullets);
+	int getNumSmallAsteroids()
+	{
+
+		return(numOfSmallAsteroids);
+	}
 
 	static int getMaxNumBullets()
 	{
 		return maxBullets;
 	}
+
+
 private:
 
 	int levelNumber;

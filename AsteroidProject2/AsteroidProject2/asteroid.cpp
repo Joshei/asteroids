@@ -21,6 +21,18 @@ asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largerTextureForAs
 	type = theAsteroidType;
 }
 
+void asteroid::moveAsteroid()
+{
+
+
+	anAsteroid.move(sf::Vector2f(deltaX, deltaY));
+	x = x + deltaX;
+	y = y + deltaY;
+
+
+
+}
+
 //creates a large or small asteroid that is at one of the four sides of the screens
 //at a random position and a random (one of 12) direction.  The asteroid's
 //x and y have been set so that the image is just off the screen (next pixel)
@@ -88,17 +100,18 @@ void asteroid::setWhichDirection(asteroidMovement direction)
 
 }
 
-void asteroid::moveAsteroid() 
+void asteroid::setType(asteroidType theType)
 {
+	type = theType;
 
-	
-	anAsteroid.move(sf::Vector2f(deltaX, deltaY));
-	x = x + deltaX;
-	y = y + deltaY;
-	
-
-	
 }
+
+void::asteroid::setTexture(sf::Texture & texture)
+{
+	anAsteroid.setTexture(texture);
+}
+
+
 
 
 void asteroid::setDeltaWithDirection(asteroidMovement & theDirection)
@@ -150,13 +163,3 @@ void asteroid::setDeltaWithDirection(asteroidMovement & theDirection)
 }
 
 
-void asteroid::setType(asteroidType theType)
-{
-	type = theType;
-
-}
-
-void::asteroid::setTexture(sf::Texture & texture)
-{
-	anAsteroid.setTexture(texture);
-}

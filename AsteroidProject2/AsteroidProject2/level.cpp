@@ -12,17 +12,6 @@ levelObj::levelObj()
 
 
 }
-int levelObj::getNumLargeAsteroids()
-{
-
-	return(numOfLargeAsteroids);
-}
-
-int levelObj::getNumSmallAsteroids()
-{
-
-	return(numOfSmallAsteroids);
-}
 
 
 void levelObj::advanceLevelByOne()

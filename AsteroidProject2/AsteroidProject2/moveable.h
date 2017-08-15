@@ -18,6 +18,13 @@ public:
 	bool intersectsWithRectangles(const RECT & thisRect , const RECT & otherRect);
 	bool intersectsWithScreenRect(int displayWidth, int displayHeight);
 	
+	void setX(int inX);
+	void setY(int inY);
+	void setDeltaX(int  inDeltaX);
+	void setDeltaY(int inDeltaY);
+	void setDirection(theDirection inDirection);
+	void setWidth(int inWidth);
+	void setHeight(int inHeight);
 
 
 	//inlines
@@ -54,13 +61,7 @@ public:
 		return(width);
 	}
 
-	void setX(int inX);
-	void setY(int inY);
-	void setDeltaX(int  inDeltaX);
-	void setDeltaY(int inDeltaY);
-	void setDirection(theDirection inDirection);
-	void setWidth(int inWidth);
-	void setHeight(int inHeight);
+	
 
 protected:
 

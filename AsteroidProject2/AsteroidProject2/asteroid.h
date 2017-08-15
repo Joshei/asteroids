@@ -50,10 +50,12 @@ public:
 	asteroid( int theWidth, int theHeight, sf::Texture & largerTextureForAsteroid, asteroidType type);
 	
 	void moveAsteroid();
+	void setInitialAsteroid(int i);
 	void setActivate(int activateFlag);
 	void setWhichDirection(asteroidMovement direction);
 	void setType(asteroidType theType);
-	
+	void setTexture(sf::Texture & theTexture);
+	void setDeltaWithDirection(asteroidMovement & Direction);
 	
 	//inlines
 	int getActivate()
@@ -80,13 +82,7 @@ public:
 	}
 
 	
-	void setInitialAsteroid(int i);
-
-	void setDeltaWithDirection(asteroidMovement & Direction);
 	
-	void  setTexture(sf::Texture & theTexture);
-	
-
 protected:
 
 	

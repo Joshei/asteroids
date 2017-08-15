@@ -16,14 +16,17 @@ public:
 	void setScore(int scoreIn);
 	void setXForScore(int xDimension);
 	void setYForScore(int yDimension);
+	void drawScore(int score);
+	void drawScore();
+	void addToScore(int addAmount);
+	void resetScore();
 	int getScore() { return scoreAmount; }
 	int getXForScore() { return scorePosition.x; }
 	int getYforScore() { return scorePosition.y; }
 	
-	void resetScore();
-	void drawScore(int score);
-	void drawScore();
-	void addToScore(int addAmount);
+	
+	
+	
 	
 	
 	

@@ -18,7 +18,7 @@
 int g_Shutdownflag = 0;
 
 int g_Level = 0;
-//g_NumOfSmallerAsteroids  g_NumOfLargerAsteroids
+
 //used to break out of while, when is set 
 int g_TotalNumAllAsteroids = 0;
 
@@ -244,7 +244,7 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 				//larger asteroid
 				if (asteroidCollection[j].getAsteroidType() == larger)
 				{
-					//passes in next number of small asteroid and than creates two
+					//passes in the index of the larger asteroid and than activates two small asteroids 
 					createSmallerAsteroids(j, smallerTextureAsteroid);
 
 					
@@ -591,7 +591,7 @@ void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType as
 			j = (rand() % 4);
 			//asteroid now calls constructor 
 			asteroidCollection.push_back(asteroid(width, height, texture, larger));
-			//sets deltax and deltay and which direction
+			//sets deltax and deltay and which direction, and activation
 			asteroidCollection[i].setInitialAsteroid(j);
 		}
 
@@ -632,7 +632,7 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 			//their ready for moving and drawing
 			asteroidCollection[i].setActivate(onscreen);
 			//unused asteroid found and breaking out of loop because of this variables amount!
-			break;// i = g_TotalNumAllAsteroids;
+			break;
 		}
 	}
 
@@ -653,7 +653,7 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 			asteroidCollection[j].setActivate(onscreen);
 			
 			//unused asteroid found and breaking out of loop because of this variables amount!
-			break;// j = g_TotalNumAllAsteroids;
+			break;
 
 
 		}
@@ -798,7 +798,7 @@ void reinitializeOffscreenAsteroids()
 			//resets asteroid to onscreen for draw and move.
 			//this is used for both large and small asteroids and is not the same
 			//as when (two) asteroids are created in the createSmallerAsteroids called
-			//in checkCollisionsAllBullets...
+			//in checkCollisionsAllBullets...sets deltax, deltay, whichdirection, and activation
 			asteroidCollection[i].setInitialAsteroid(randNum);
 		}
 
@@ -869,7 +869,7 @@ int main(void)
 	//create vector fills the object with a random entry border (0-3)
 	//Uses setInitialAsteroid. third and fourth argument is width an than height
 	
-	//creates vector with asteroids - order is not important
+	//creates vector with asteroids - order (large and small) is not important
 	fillAsteroidVector(levelObject.getNumLargeAsteroids(), 64, 64, larger, largerTextureAsteroid);
 	fillAsteroidVector(levelObject.getNumSmallAsteroids(), 32, 32, smaller, smallerTextureAsteroid);
 	
@@ -966,7 +966,7 @@ int main(void)
 				//the new levels minus the old levels gives us the new asteroids to create
 				int createThisAmtAsteroids = (levelObject.getNumLargeAsteroids() - oldLevelsLargeAsteroidAmt);
 				//creates the newly created asteroids with push_back and reinitializes the older asteroids
-				//with a new active setting
+				//with a new active setting - order (small and large not important)
 				refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, largerTextureAsteroid);
 				//see right above
 				createThisAmtAsteroids = levelObject.getNumSmallAsteroids() - oldLevelsSmallAsteroidAmt;
@@ -985,6 +985,7 @@ int main(void)
 		reinitializeOffscreenAsteroids();
 		
 
+		
 		if (theScore.getScore() == 0)
 		{
 			theScore.drawScore(0);
@@ -1022,7 +1023,7 @@ void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aste
 			if (asteroidCollection[i].getAsteroidType() == larger)
 			{
 				j = (rand() % 4);
-				//sets deltax and deltay, x and y, direction
+				//sets deltax and deltay, x and y, direction, and activation
 				asteroidCollection[i].setInitialAsteroid(j);
 			}
 		}

@@ -3,12 +3,12 @@
 
 #include <SFML/Graphics.hpp>
 
+
+
 class score {
 
 public:
 
-	//sfml object:  holds the score message and the sf::Font is passed in to it from outside class
-	sf::Text textMessage;
 	
 	
 	score(int xpos , int ypos );
@@ -35,7 +35,9 @@ public:
 	
 private:
 	
-	
+	//sfml object:  holds the score message and the sf::Font is passed in to it from outside class
+	sf::Text textMessage;
+
 	int scoreAmount;
 	//these two positions are for the upper left hand corner of the text
 	struct {

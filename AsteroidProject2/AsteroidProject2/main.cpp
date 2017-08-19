@@ -496,9 +496,10 @@ void checkForAsteroidOffScreen()
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 
-
+		//if true
 		if (!(asteroidCollection[i].intersectsWithScreenRect( G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
 		{
+			//doesn't intersect - returns true
 
 			asteroidCollection[i].setActivate(offscreen);
 		}
@@ -789,12 +790,14 @@ void moveasteroids()
 void reinitializeOffscreenAsteroids()
 {
 	
+	
+
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 		if (asteroidCollection[i].getActivate() == offscreen)
 		{
-			int randNum = std::rand() % (4);
-
+			
+			int randNum = rand() % (4);
 			//resets asteroid to onscreen for draw and move.
 			//this is used for both large and small asteroids and is not the same
 			//as when (two) asteroids are created in the createSmallerAsteroids called

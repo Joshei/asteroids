@@ -58,16 +58,26 @@ bool moveableObject::intersectsWithRectangles(const RECT & thisRectangle, const 
 }
 bool moveableObject::intersectsWithScreenRect(int screenWidth, int screenHeight)
 {
+	//moveable object
 	thisRect.left = x;
 	thisRect.top = y;
 	thisRect.right = x + width;
 	thisRect.bottom = y + height;
-	//screen Rectangle
-	otherRect.left = 0;
-	otherRect.top = 0;
-	otherRect.right = screenWidth;
-	otherRect.bottom = screenHeight;
+
+	//screen Rectangle the next two changes are to make sure that the object is totally off the screen
+	//the left and top edge "of the screen" is when the moveable object is located so it's edge is
+	//on zero.
+	otherRect.left = 0 - width - 1;
+	otherRect.top = 0 - height - 1;
+
+	//allows for one space past border to be part of rectangle to work 
+	//when the object is readied with onscreen status
+	otherRect.right = screenWidth + 1;
+	otherRect.bottom = screenHeight + 1;
+	
 	return(intersectsWithRectangles(thisRect, otherRect));
+
+
 }
 //sets x position for those objects that inherit from moveable
 void moveableObject::setX(int  inX)

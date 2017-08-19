@@ -54,30 +54,61 @@ void asteroid::setInitialAsteroid(int fromThisBorder) {
 	
 	//sets the initial x and y for each asteroid according to what border the image is behind
 	
+	//the initial placement for x and y is totally off the screen.  that means for left and top
+	//there must be subtraction of width of heigh from zero on the screen rectangle
 	//from top border
 	if (fromThisBorder == 0)
 	{
-		x = (rand() % (G_SCREEN_WIDTH + width));
-		y = 0 - height;
+		
+		//if x is the maximum amount plus one than object starts behind the edge by its width
+		x = (rand() % (G_SCREEN_WIDTH + 1));
+		
+		if (x == G_SCREEN_WIDTH + 1)
+		{
+			x = 0 - width - 1;
+		}
+
+
+		y = 0 - height - 1 ;
 	}
 	//from right border
 	else if (fromThisBorder == 1)
 	{
-		x = G_SCREEN_WIDTH;
-		y = (rand() % (G_SCREEN_HEIGHT - height));
+		x = G_SCREEN_WIDTH + 1;
+		//if y is the maximum amount plus one start the object one height behind the top
+		y = (rand() % (G_SCREEN_HEIGHT+1));
+		if (y == (G_SCREEN_HEIGHT + 1))
+		{
+			y = 0 - height - 1;
+		}
+
 	}
 	//from bottom border
 	else if (fromThisBorder == 2)
 	{
-		x = (rand() % (G_SCREEN_WIDTH + width));
-		y = G_SCREEN_HEIGHT;
+		//if x is the maximum amount plus one than object starts behind the edge by its width
+		x = (rand() % (G_SCREEN_WIDTH + 1));
+		if (x == G_SCREEN_WIDTH + 1)
+		{
+			x = 0 - width - 1;
+		}
+		
+
+		y = G_SCREEN_HEIGHT + 1;
 	}
 	//from left border
 	else if (fromThisBorder == 3) 
 	{
 		//makes image just off the screen.
-		x = 0 - width;
-		y = std::rand() % (G_SCREEN_HEIGHT - height);
+		x = 0 - width - 1;
+		//if y is the maximum amount plus one start the object one height behind the top
+		y = std::rand() % (G_SCREEN_HEIGHT +1);
+		if (y == (G_SCREEN_HEIGHT + 1))
+		{
+			y = 0 - height - 1;
+		}
+
+
 	}
 	//sets the image at the coordinates
 	anAsteroid.setPosition(sf::Vector2f(x, y));

@@ -705,6 +705,8 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	int x2 = asteroidCollection[indexNextSmallerAsteroid2].getX();
 	int y2 = asteroidCollection[indexNextSmallerAsteroid2].getY();
 	////sets the position of the asteroid with x and y coordinates
+
+	//y1 is higher in location than y2
 	asteroidCollection[indexNextSmallerAsteroid1].anAsteroid.setPosition(sf::Vector2f(x1, y1));
 	asteroidCollection[indexNextSmallerAsteroid2].anAsteroid.setPosition(sf::Vector2f(x2, y2));
 	
@@ -713,11 +715,23 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//local objects for use of passing in below by reference
 	asteroidMovement newDirection1 = directions[0][0];
 	asteroidMovement newDirection2 = directions[0][0];
-	//calls with refernce si we can use the obtained direction in the following two functions
+	//calls with refernce so we can use the obtained direction in the following two functions
+	//The two remaing directions that arn't differentionated in this function
+	//by having either one up or one down are up and down which have two ups or two downs
+	//these were chosen to be alternated by there two directions as though it works to 
+	//rotate the direction of the specific small asteroid directions.  So they are different
+	//in order but correct in direction by being clock or counterclockwise.
 	getTwoDirectionsFromMajorDirection(majorDirection, newDirection1, newDirection2);
-	//sets deltas inside for these small asteroid objects
+	
+	
+	
+	//indexNextSmallerAsteroid1 is the index of the small asteroid position that is higher than
+	//indexNextSmallerAsteroid2.  This furthor indicates that newDirection1 is higher on screen
+	//than newDirection2.  
 	asteroidCollection[indexNextSmallerAsteroid1].setDeltaWithDirection(newDirection1);
-	asteroidCollection[indexNextSmallerAsteroid2].setDeltaWithDirection(newDirection2);	
+	asteroidCollection[indexNextSmallerAsteroid2].setDeltaWithDirection(newDirection2);
+		
+
 	
 }
 
@@ -883,6 +897,10 @@ int main(void)
 
 	//initial ship draw
 	drawShip();
+
+	//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
+	//this will setlevelto one because it is zero before call.
+	levelObject.advanceLevelByOne();
 
 	while (window.isOpen() && (g_Shutdownflag == 0))
 	{
@@ -1062,6 +1080,11 @@ void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aste
 //Takes one direction from a large asteroid and returns the two new directions of small asteroid by reference
 void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, asteroidMovement & smallAsteroidDirection1, asteroidMovement & smallAsteroidDirection2)
 {
+
+	//the smallasteroiddirectio1 is always higher than the smallasteroidirection2
+	//it is passed in as newdirection1 and newdirectio2.  newdirection1 is also higher  
+	//than newDirection2 on the screen.  Two remaining : up and down are alternated so that
+	//it is like being rotated correctly when small asteroids are drawn out.
 	switch (theMajorDirection) {
 
 
@@ -1070,12 +1093,12 @@ void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, as
 		smallAsteroidDirection2 = asteroidMovement::UP_LEFT;
 		break;
 	case asteroidMovement::DOWN:
-		smallAsteroidDirection1 = asteroidMovement::DOWN_RIGHT;
-		smallAsteroidDirection2 = asteroidMovement::DOWN_LEFT;
+		smallAsteroidDirection1 = asteroidMovement::DOWN_LEFT;
+		smallAsteroidDirection2 = asteroidMovement::DOWN_RIGHT;
 		break;
 	case asteroidMovement::LEFT:
-		smallAsteroidDirection1 = asteroidMovement::DOWN_LEFT;
-		smallAsteroidDirection2 = asteroidMovement::UP_LEFT;
+		smallAsteroidDirection1 = asteroidMovement::UP_LEFT;
+		smallAsteroidDirection2 = asteroidMovement::DOWN_LEFT;
 		break;
 	case asteroidMovement::UP_LEFT:
 		smallAsteroidDirection1 = asteroidMovement::UP;
@@ -1088,6 +1111,7 @@ void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, as
 	case asteroidMovement::RIGHT:
 		smallAsteroidDirection1 = asteroidMovement::UP_RIGHT;
 		smallAsteroidDirection2 = asteroidMovement::DOWN_RIGHT;
+
 		break;
 	case asteroidMovement::UP_RIGHT:
 		smallAsteroidDirection1 = asteroidMovement::UP;

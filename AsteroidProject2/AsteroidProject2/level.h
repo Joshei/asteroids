@@ -5,8 +5,7 @@ public:
 	
 	
 	static int maxBullets;
-	static void setMaxNumBullets(int maxNumBullets);
-
+	
 	void advanceLevelByOne();
 	
 	int getNumLargeAsteroids()

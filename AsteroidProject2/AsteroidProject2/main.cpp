@@ -33,6 +33,8 @@ bool checkAllAsteroidsDestroyed();
 int  moveShip(int amountForMovem, int keyPressed);
 int shoot();
 bool checkForBulletOffscreen(int index);
+
+
 void drawShip();
 void checkCollisionsShipWithAsteroids();
 void checkCollisionsaAllBulletsWithAnAsteroids();
@@ -143,7 +145,7 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 }
 
 
-bool checkkeyboard(void) 
+bool checkkeyboard() 
 {
 
 	
@@ -439,7 +441,7 @@ int shoot()
 void movebullets() 
 {
 
-	int returnValue = 0;
+	bool returnValue = false;
 
 	//static function
 	for (int i = 0; i < levelObj::getMaxNumBullets(); i++)
@@ -564,7 +566,7 @@ void shutdown(int exitNum)
 void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType asterType,  sf::Texture & texture) {
 
 	// for random direction
-	int j = 0;
+	
 	//g_TotalAsteroids is the total number of asteroids : already created plus newly added that we are adding
 	//right now
 	int g_TotalAsteroids = g_TotalNumAllAsteroids + numAsteroid;
@@ -589,7 +591,7 @@ void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType as
 		else if (asterType == larger)
 		{
 			//generated is 0 through three for starting direction on screen : top, right, bottom, left
-			j = (rand() % 4);
+			int j = rand() % 4;
 			//asteroid now calls constructor 
 			asteroidCollection.push_back(asteroid(width, height, texture, larger));
 			//sets deltax and deltay and which direction, and activation
@@ -811,7 +813,7 @@ void reinitializeOffscreenAsteroids()
 		if (asteroidCollection[i].getActivate() == offscreen)
 		{
 			
-			int randNum = rand() % (4);
+			int randNum = rand() % 4;
 			//resets asteroid to onscreen for draw and move.
 			//this is used for both large and small asteroids and is not the same
 			//as when (two) asteroids are created in the createSmallerAsteroids called
@@ -850,10 +852,41 @@ void fillBulletVector (int numOfBullets, sf::Texture & texture)
 
 int main(void)
 {
+	//int x = 0;
+	//while (1) {
+	//	x = rand() % G_SCREEN_WIDTH;
+	//	if (x == 1000)break;
+	//}
+
+/*
+	int a = 0;
+	for (int i = 0; i<= 10; i++)
+	{
+		
+		
+		if (1) {
+
+
+			if (1)
+			{
+				a = 2;
+				break;
+			}
+			a = 3;
+
+		}
+
+
+		a = 4;
 	
-	
+	}
+
+	*/
+
 	//seeds the time for random direction and postion of asteroids right before drawing on screen
 	std::srand(time(NULL));
+	
+
 	int tempFlagForTest = 0;
 	FreeConsole();
 
@@ -1006,7 +1039,8 @@ int main(void)
 		reinitializeOffscreenAsteroids();
 		
 
-		
+		//initial score text is drawn here until there is a score and than set and drawm elsewhere
+		//(checkCollisionWithAllBullets...)
 		if (theScore.getScore() == 0)
 		{
 			theScore.drawScore(0);
@@ -1030,7 +1064,7 @@ int main(void)
 //in setInitialAsteroid
 void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, asteroidType type , sf::Texture & texture)
 {
-	int j = 0;
+	
 	if (type == larger)
 	{
 		for (int i = 0; i < numAsteroidsToCreate; i++)
@@ -1043,7 +1077,7 @@ void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aste
 		{
 			if (asteroidCollection[i].getAsteroidType() == larger)
 			{
-				j = (rand() % 4);
+				int j = rand() % 4;
 				//sets deltax and deltay, x and y, direction, and activation
 				asteroidCollection[i].setInitialAsteroid(j);
 			}

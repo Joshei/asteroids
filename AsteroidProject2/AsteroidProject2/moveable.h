@@ -14,8 +14,8 @@ public:
 	moveableObject();
 
 
-	bool intersects(const moveableObject & theOtherObject);
-	bool intersectsWithRectangles(const RECT & thisRect , const RECT & otherRect);
+	bool intersects(moveableObject & theOtherObject);
+	bool intersectsWithRectangles(RECT & thisRect , RECT & otherRect);
 	bool intersectsWithScreenRect(int displayWidth, int displayHeight);
 	
 	void setX(int inX);

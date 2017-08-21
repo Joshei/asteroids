@@ -63,7 +63,7 @@ void asteroid::setInitialAsteroid(int fromThisBorder) {
 	{
 		
 		//if x is the maximum amount plus one than object starts behind the edge by its width
-		x = (rand() % (G_SCREEN_WIDTH));
+		x = rand() % G_SCREEN_WIDTH;
 		
 		if (x > G_SCREEN_WIDTH - width)
 		{
@@ -78,7 +78,7 @@ void asteroid::setInitialAsteroid(int fromThisBorder) {
 	{
 		x = G_SCREEN_WIDTH - width;
 		//if y is the maximum amount plus one start the object one height behind the top
-		y = (rand() % (G_SCREEN_HEIGHT));
+		y = rand() % G_SCREEN_HEIGHT;
 		if (y > (G_SCREEN_HEIGHT - height))
 		{
 			y = G_SCREEN_HEIGHT - height;
@@ -89,7 +89,7 @@ void asteroid::setInitialAsteroid(int fromThisBorder) {
 	else if (fromThisBorder == 2)
 	{
 		//if x is the maximum amount plus one than object starts behind the edge by its width
-		x = (rand() % (G_SCREEN_WIDTH));
+		x = rand() % G_SCREEN_WIDTH;
 		if (x > G_SCREEN_WIDTH - width )
 		{
 			x = G_SCREEN_WIDTH - width;
@@ -104,7 +104,7 @@ void asteroid::setInitialAsteroid(int fromThisBorder) {
 		//makes image just off the screen.
 		x = 0;
 		//if y is the maximum amount plus one start the object one height behind the top
-		y = std::rand() % (G_SCREEN_HEIGHT);
+		y = std::rand() % G_SCREEN_HEIGHT;
 		if (y > (G_SCREEN_HEIGHT - height))
 		{
 			y = G_SCREEN_HEIGHT - height;

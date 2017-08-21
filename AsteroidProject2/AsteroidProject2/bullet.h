@@ -9,10 +9,7 @@ class bullet : public moveableObject
 
 public:
 
-		
-		//sfml object passed a texture uses a pointer
-		sf::Sprite bulletImage;
-		
+	
 		static int maxBullets;
 		
 		bullet( sf::Texture & textureBullet, int bulletHeight, int bulletWidth );
@@ -20,7 +17,10 @@ public:
 		void setIsactive(bool activateFlag); 
 
 		
-	
+		sf::Sprite  & getBulletImage()
+		{
+			return(bulletImage);
+		}
 		
 		
 		int getIsactive() 
@@ -29,6 +29,8 @@ public:
 		}
 	
 private:
+
+		sf::Sprite bulletImage;
 
 		bool isactive;
 	

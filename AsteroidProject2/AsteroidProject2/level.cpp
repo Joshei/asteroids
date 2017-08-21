@@ -39,11 +39,11 @@ void levelObj::advanceLevelByOne()
 		
 		break;
 	case 5:
-	//will break out of while loop in main and end program
-	//g_Shutdownflag = 1;
+	
 		exit(-1);
 		break;
 	default:
+		exit(-1);
 		break;
 
 	}

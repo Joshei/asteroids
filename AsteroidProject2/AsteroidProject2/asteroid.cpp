@@ -171,6 +171,7 @@ void asteroid::setDeltaWithDirection(asteroidMovement & theDirection)
 		deltaX = 1;
 		break;
 	default:
+		exit(-1);
 		break;
 	}
 
@@ -190,7 +191,10 @@ void asteroid::setDeltaWithDirection(asteroidMovement & theDirection)
 	case asteroidMovement::DOWN_RIGHT:
 		deltaY = 1;
 		break;
+		
 	default:
+		exit(-1);
+
 		break;
 
 	}

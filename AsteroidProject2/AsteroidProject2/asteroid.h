@@ -44,8 +44,7 @@ class asteroid : public moveableObject
 
 public:
 
-	//sfml object passed a texture uses a pointer
-	sf::Sprite anAsteroid;
+	
 
 	
 	asteroid( int theWidth, int theHeight, sf::Texture & largerTextureForAsteroid, asteroidType type);
@@ -82,11 +81,16 @@ public:
 		return(type);
 	}
 
+	sf::Sprite &  getSprite()
+	{
+		return anAsteroid;
+	}
 	
 	
 private:
 
-	
+	//sfml object passed a texture uses a pointer
+	sf::Sprite anAsteroid;
 
 	asteroidMovement whichDirection;
 

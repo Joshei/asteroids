@@ -15,9 +15,6 @@
 #include "enumeration.h"
 #include "level.h"
 
-int g_Shutdownflag = 0;
-
-int g_Level = 0;
 
 //used to break out of while, when is set 
 int g_TotalNumAllAsteroids = 0;
@@ -339,9 +336,9 @@ int shoot()
 			
 				bulletIndex.setDirection(shipObject.getDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.bulletImage.setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
-				window.draw(bulletIndex.bulletImage);
+				window.draw(bulletIndex.getBulletImage());
 
 				//there are three speeds so far: bullet, ship, and asteroids
 				//sets bullet speed to downward 5 per cycle.
@@ -368,9 +365,9 @@ int shoot()
 			
 				bulletIndex.setDirection(shipObject.getDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.bulletImage.setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
-				window.draw(bulletIndex.bulletImage);
+				window.draw(bulletIndex.getBulletImage());
 
 				//sets bullet x speed at a change of 5.
 				bulletIndex.setDeltaX(5);
@@ -394,9 +391,9 @@ int shoot()
 				//direction for move bullet
 				bulletIndex.setDirection(shipObject.getDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.bulletImage.setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 				//bullet image is part of SFML basic instructions on website tutorial questions
-				window.draw(bulletIndex.bulletImage);
+				window.draw(bulletIndex.getBulletImage());
 				bulletIndex.setDeltaX(0);
 				//sets change of speed to 5 for each cycle through
 				bulletIndex.setDeltaY(5);
@@ -420,9 +417,9 @@ int shoot()
 				//direction set to left for moving/drawing bullet
 				bulletIndex.setDirection(shipObject.getDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.bulletImage.setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
-				window.draw(bulletIndex.bulletImage);
+				window.draw(bulletIndex.getBulletImage());
 				//change is 5 per cycle of main
 				bulletIndex.setDeltaX(-5);
 				bulletIndex.setDeltaY(0);
@@ -450,7 +447,7 @@ void movebullets()
 		if (bullets[i].getIsactive()) 
 		{
 			//changes the postion for the draw function in this function
-			bullets[i].bulletImage.move(sf::Vector2f(bullets[i].getDeltaX(), bullets[i].getDeltaY()));
+			bullets[i].getBulletImage().move(sf::Vector2f(bullets[i].getDeltaX(), bullets[i].getDeltaY()));
 
 			//changes x and y for detection of collision and offscreen
 			bullets[i].setX(bullets[i].getX() + bullets[i].getDeltaX());
@@ -463,7 +460,7 @@ void movebullets()
 			if (returnValue == false)
 			{
 				//SFML code from web site tutorial
-				window.draw(bullets[i].bulletImage);
+				window.draw(bullets[i].getBulletImage());
 			}
 		}
 	}
@@ -666,7 +663,7 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//as initialized
 	if (flagUnusedAsteroidIndexFound != 2)
 	{
-		shutdown(-5);
+		exit(-1);
 	}
 	
 	
@@ -709,8 +706,8 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	////sets the position of the asteroid with x and y coordinates
 
 	//y1 is higher in location than y2
-	asteroidCollection[indexNextSmallerAsteroid1].anAsteroid.setPosition(sf::Vector2f(x1, y1));
-	asteroidCollection[indexNextSmallerAsteroid2].anAsteroid.setPosition(sf::Vector2f(x2, y2));
+	asteroidCollection[indexNextSmallerAsteroid1].getSprite().setPosition(sf::Vector2f(x1, y1));
+	asteroidCollection[indexNextSmallerAsteroid2].getSprite().setPosition(sf::Vector2f(x2, y2));
 	
 	//get direction of large asteroid for use in determining small asteroids deltaX and deltaY
 	asteroidMovement majorDirection = asteroidCollection[indexOfAsteroid].getWhichDirection();
@@ -787,7 +784,7 @@ void moveasteroids()
 
 
 			asteroidCollection[i].moveAsteroid();
-			window.draw(asteroidCollection[i].anAsteroid);
+			window.draw(asteroidCollection[i].getSprite());
 
 
 		}
@@ -935,7 +932,7 @@ int main(void)
 	//this will setlevelto one because it is zero before call.
 	levelObject.advanceLevelByOne();
 
-	while (window.isOpen() && (g_Shutdownflag == 0))
+	while (window.isOpen() )
 	{
 		
 		while (window.pollEvent(event))
@@ -1002,6 +999,7 @@ int main(void)
 
 				
 			//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
+			//this function can shutdown program
 			levelObject.advanceLevelByOne();
 				
 
@@ -1009,11 +1007,7 @@ int main(void)
 
 
 
-				//break out of first while if set in level::advancelevelbyone and end program 
-				if (g_Shutdownflag == 1)
-				{
-					continue;
-				}
+				
 
 				//fills one asteroid collection with two statements.
 				//oldLevels... getNumSmallAsteroids() and .getNumLargeAsteroids() are new levels values

@@ -22,44 +22,23 @@ public:
 	void setY(int inY);
 	void setDeltaX(int  inDeltaX);
 	void setDeltaY(int inDeltaY);
-	void setDirection(theDirection inDirection);
+	
 	void setWidth(int inWidth);
 	void setHeight(int inHeight);
 
 
 	//inlines
-	int getX() 
-	{ 
-		return(x); 
-	}
+	int getX(){return x;}
 	
-	int getY() 
-	{
-		return(y); 
-	}
+	int getY(){return y;}
 	
-	int getDeltaY() 
-	{
-		return(deltaY); 
-	}
+	int getDeltaY(){return deltaY;}
 	
-	int getDeltaX() 
-	{
-		return(deltaX); 
-	}
+	int getDeltaX(){return deltaX;}
 
-	theDirection getDirection()
-	{
-		return(direction);
-	}
+	int getHeight(){return height;}
 
-	int getHeight() {
-		return (height);
-	}
-
-	int getWidth() {
-		return(width);
-	}
+	int getWidth(){return width;}
 
 	
 
@@ -72,7 +51,7 @@ protected:
 	int deltaY;
 	int width;
 	int height;
-	theDirection direction;
+	
 	int x;
 	int y;
 	

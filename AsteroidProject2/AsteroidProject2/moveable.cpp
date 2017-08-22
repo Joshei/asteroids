@@ -2,7 +2,7 @@
 
 
 moveableObject::moveableObject()
-	: width(0), height(0), x(0), y(0), deltaX(0), deltaY(0), direction(up)
+	: width(0), height(0), x(0), y(0), deltaX(0), deltaY(0)
 {
 	//used for collision functions for checking for itersects with moveable objects and 
 	//also screen non intercept
@@ -23,7 +23,7 @@ bool moveableObject::intersects(moveableObject & other)
 	otherRect.right = other.x + other.width;
 	otherRect.bottom = other.y + other.height;
 	bool isIntersected = intersectsWithRectangles(thisRect, otherRect);
-	return(isIntersected);
+	return isIntersected;
 }
 //returns boolean if intersected or not, called from either moveableObject::intersects or 
 //moveableObject::screenIntersects 
@@ -40,21 +40,21 @@ bool moveableObject::intersectsWithRectangles(RECT & thisRectangle, RECT & other
 	//clever check for non intersection with rectangles
 	if (objectOneLeft > objectTwoRight)
 	{
-		return(false);
+		return false;
 	}
 	if (objectOneTop > objectTwoBottom)
 	{
-		return(false);
+		return false;
 	}
 	if (objectOneRight < objectTwoLeft)
 	{
-		return(false);
+		return false;
 	}
 	if (objectOneBottom < objectTwoTop)
 	{
-		return(false);
+		return false;
 	}
-	return(true);
+	return true;
 }
 bool moveableObject::intersectsWithScreenRect(int screenWidth, int screenHeight)
 {
@@ -99,14 +99,7 @@ void moveableObject::setDeltaY(int inDeltaY)
 {
 	deltaY = inDeltaY;
 }
-//direction is used to determine the deltax and deltay of the asteroids to use when
-//two asteroids are created upon destruction of larger.
-//also could be used later if a "wrapping effect" is needed for the asteroids from
-//border to border
-void moveableObject::setDirection(theDirection inDirection)
-{
-	direction = inDirection;
-}
+
 //this allows each object to have its own width
 void moveableObject::setWidth(int inWidth)
 {

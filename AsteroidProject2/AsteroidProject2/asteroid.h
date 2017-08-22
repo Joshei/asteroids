@@ -58,33 +58,15 @@ public:
 	void setDeltaWithDirection(asteroidMovement & Direction);
 	
 	//inlines
-	int getActivate()
-	{ 
-		return activated; 
-	}
+	int getActivate(){return activated;}
 
-	
+	int getFromThisBorder(){return fromThisBorder;}
 
-	int getFromThisBorder()
-	{ 
-		return(fromThisBorder); 
-	}
+	asteroidMovement getWhichDirection(){return whichDirection;}
 
-	asteroidMovement getWhichDirection()
-	{
-		return(whichDirection);
+	asteroidType getAsteroidType(){return type;}
 
-	}
-
-	asteroidType getAsteroidType()
-	{
-		return(type);
-	}
-
-	sf::Sprite &  getSprite()
-	{
-		return anAsteroid;
-	}
+	sf::Sprite &  getSprite(){return anAsteroid;}
 	
 	
 private:

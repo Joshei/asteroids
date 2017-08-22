@@ -77,7 +77,7 @@ levelObj levelObject;
 void drawShip(){
 
 
-	window.draw(shipObject.shipImage);
+	window.draw(shipObject.getShipImage());
 	
 }
 
@@ -133,7 +133,7 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 	
 	//SFML moves to the new location changing the ships postion by these two numbers.  X and Y are 
 	//still computed above though, for collisions and offscreen detection.
-	shipObject.shipImage.move(sf::Vector2f(deltaX, deltaY));
+	shipObject.getShipImage().move(sf::Vector2f(deltaX, deltaY));
 	
 
 	drawShip();

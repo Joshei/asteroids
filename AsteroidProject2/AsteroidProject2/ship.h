@@ -21,6 +21,7 @@ public:
 	sf::Sprite shipImage;
 
 	ship(int positionx, int positiony, theDirection direction);
+	sf::Sprite & getShipImage() { return shipImage; }
 
 	void rotateShipClock();
 	void rotateShipCClock();

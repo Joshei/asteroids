@@ -18,7 +18,7 @@ public:
 
 		void SetDirection(theDirection inDirection);
 
-		sf::Sprite  & GetBulletImage(){return bulletimage;}
+		sf::Sprite  & GetBulletImage(){return bulletImage;}
 		
 		
 		int GetIsactive(){return isactive;}
@@ -31,7 +31,7 @@ private:
 
 		theDirection direction;
 
-		sf::Sprite bulletimage;
+		sf::Sprite bulletImage;
 
 		bool isactive;
 	

@@ -119,10 +119,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="asteroid.cpp" />
-    <ClCompile Include="bigAsteroid.cpp" />
     <ClCompile Include="bullet.cpp" />
     <ClCompile Include="level.cpp" />
-    <ClCompile Include="littleAsteroid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="moveable.cpp" />
     <ClCompile Include="score.cpp" />
@@ -130,15 +128,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="asteroid.h" />
-    <ClInclude Include="bigAsteroid.h" />
     <ClInclude Include="bullet.h" />
     <ClInclude Include="enumeration.h" />
     <ClInclude Include="level.h" />
-    <ClInclude Include="littleAsteroid.h" />
     <ClInclude Include="moveable.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="ship.h" />
-    <ClInclude Include="smallasteroiod.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

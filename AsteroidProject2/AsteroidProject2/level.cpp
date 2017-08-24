@@ -2,7 +2,7 @@
 #include "level.h"
 
 
-int levelObj::maxBullets = 10;
+int levelObj::maxbullets = 10;
 
 levelObj::levelObj()
 {

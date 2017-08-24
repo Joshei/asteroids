@@ -10,32 +10,32 @@ extern void shutdown(int exitValue);
 //this function is a bit different from : asteroid.cpp, bullet.cpp
 //the loadFromFile  is in the constructor.  Ship.cpp uses the passed in Font as a reference.
 //the other mentioned cpps have the texture passed in as a refernce
-ship::ship(int positionx, int positiony, theDirection  shipDirection) 
+ship::ship(int positionx, int positiony, theDirection  shipdirection) 
 {
 	x = positionx;
 	y = positiony;
 	//these are the dimensions for all of the images of ther ship in different facing directions
 	height = 64;
 	width = 64;
-	direction = shipDirection;
+	direction = shipdirection;
 
-	if (!textureshipnorth.loadFromFile("shipNorth.png"))
+	if (!textureShipNorth.loadFromFile("shipNorth.png"))
 	{
 		shutdown(-10);
 	}
-	if (!textureshipeast.loadFromFile("shipEast.png")) 
+	if (!textureShipEast.loadFromFile("shipEast.png")) 
 	{
 		shutdown(-11);
 	}
-	if (!textureshipsouth.loadFromFile("shipSouth.png")) 
+	if (!textureShipSouth.loadFromFile("shipSouth.png")) 
 	{
 		shutdown(-12);
 	}
-	if (!textureshipwest.loadFromFile("shipWest.png")) 
+	if (!textureShipWest.loadFromFile("shipWest.png")) 
 	{
 		shutdown(-13);
 	}
-	SelectTexture(shipDirection);
+	SelectTexture(shipdirection);
 	
 	//sets the position of the ship with x and y coordinates
 	shipImage.setPosition(sf::Vector2f(positionx, positiony));
@@ -68,19 +68,19 @@ void ship::SelectTexture(theDirection direction)
 {
 	if (direction == up)
 	{
-		shipImage.setTexture(textureshipnorth);
+		shipImage.setTexture(textureShipNorth);
 	}
 	if (direction == right)
 	{
-		shipImage.setTexture(textureshipeast);
+		shipImage.setTexture(textureShipEast);
 	}
 	if (direction == down)
 	{
-		shipImage.setTexture(textureshipsouth);
+		shipImage.setTexture(textureShipSouth);
 	}
 	if (direction == left)
 	{
-		shipImage.setTexture(textureshipwest);
+		shipImage.setTexture(textureShipWest);
 	}
 
 

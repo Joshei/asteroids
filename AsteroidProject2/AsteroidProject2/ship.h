@@ -5,7 +5,7 @@
 
 
 #include "moveable.h"
-//#include "enumeration.h"
+
 
 
 class ship : public moveableObject
@@ -33,10 +33,10 @@ private:
 	theDirection direction;
 	//sfml objects
 	sf::Sprite shipImage;
-	sf::Texture textureshipnorth;
-	sf::Texture textureshipeast;
-	sf::Texture textureshipsouth;
-	sf::Texture textureshipwest;
+	sf::Texture textureShipNorth;
+	sf::Texture textureShipEast;
+	sf::Texture textureShipSouth;
+	sf::Texture textureShipWest;
 
 };
 

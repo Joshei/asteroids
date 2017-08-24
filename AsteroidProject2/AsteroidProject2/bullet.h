@@ -14,17 +14,17 @@ public:
 		
 		bullet(sf::Texture & textureBullet, int bulletHeight, int bulletWidth);
 		
-		void setIsactive(bool activateFlag); 
+		void SetIsactive(bool activateFlag); 
 
-		void setDirection(theDirection inDirection);
+		void SetDirection(theDirection inDirection);
 
-		sf::Sprite  & getBulletImage(){return bulletImage;}
+		sf::Sprite  & GetBulletImage(){return bulletImage;}
 		
 		
-		int getIsactive(){return isactive;}
+		int GetIsactive(){return isactive;}
 	
 
-		theDirection getDirection(){return direction;}
+		theDirection GetDirection(){return direction;}
 		
 
 private:

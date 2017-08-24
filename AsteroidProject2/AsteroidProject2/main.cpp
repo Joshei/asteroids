@@ -215,7 +215,7 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 		{
 
 
-			if (!bullets[i].getIsactive())
+			if (!bullets[i].GetIsactive())
 			{
 				continue;
 			}
@@ -231,7 +231,7 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 
 
 				//bullet is used and not active until refired
-				bullets[i].setIsactive(false);
+				bullets[i].SetIsactive(false);
 				
 				//asteroid is destroyed and is used later after level is passed in advanceLevelByOne 
 				asteroidCollection[j].setActivate(destroyed);
@@ -292,7 +292,7 @@ int shoot()
 		{
 
 			//if bullet already active go to for loop at next index
-			if (bullets[i].getIsactive())
+			if (bullets[i].GetIsactive())
 			{
 				continue;
 			}
@@ -300,7 +300,7 @@ int shoot()
 			numOfBulletIndex = i;
 
 			//bullet was inactive now is active (was off screen)
-			bullets[i].setIsactive(true);
+			bullets[i].SetIsactive(true);
 			break;
 
 		}
@@ -334,17 +334,17 @@ int shoot()
 				bulletIndex.setY(-100 + shipObject.getY() + shipObject.getHeight());
 
 			
-				bulletIndex.setDirection(shipObject.GetDirection());
+				bulletIndex.SetDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
-				window.draw(bulletIndex.getBulletImage());
+				window.draw(bulletIndex.GetBulletImage());
 
 				//there are three speeds so far: bullet, ship, and asteroids
 				//sets bullet speed to downward 5 per cycle.
 				bulletIndex.setDeltaX(0);
 				bulletIndex.setDeltaY(-5);
-				bulletIndex.setIsactive(true);
+				bulletIndex.SetIsactive(true);
 				
 
 			}
@@ -363,16 +363,16 @@ int shoot()
 				bulletIndex.setY(shipObject.getY() + centerShipHeight - centerBulletHeight);
 
 			
-				bulletIndex.setDirection(shipObject.GetDirection());
+				bulletIndex.SetDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
-				window.draw(bulletIndex.getBulletImage());
+				window.draw(bulletIndex.GetBulletImage());
 
 				//sets bullet x speed at a change of 5.
 				bulletIndex.setDeltaX(5);
 				bulletIndex.setDeltaY(0);
-				bulletIndex.setIsactive(true);
+				bulletIndex.SetIsactive(true);
 				
 
 			}
@@ -389,15 +389,15 @@ int shoot()
 				//the four of these start from the circles most farthest boundry and add 100
 				bulletIndex.setY(100 + shipObject.getY());
 				//direction for move bullet
-				bulletIndex.setDirection(shipObject.GetDirection());
+				bulletIndex.SetDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 				//bullet image is part of SFML basic instructions on website tutorial questions
-				window.draw(bulletIndex.getBulletImage());
+				window.draw(bulletIndex.GetBulletImage());
 				bulletIndex.setDeltaX(0);
 				//sets change of speed to 5 for each cycle through
 				bulletIndex.setDeltaY(5);
-				bulletIndex.setIsactive(true);
+				bulletIndex.SetIsactive(true);
 				
 
 			}
@@ -415,15 +415,15 @@ int shoot()
 				bulletIndex.setY(shipObject.getY() + centerShipHeight  - centerBulletHeight);
 
 				//direction set to left for moving/drawing bullet
-				bulletIndex.setDirection(shipObject.GetDirection());
+				bulletIndex.SetDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
-				window.draw(bulletIndex.getBulletImage());
+				window.draw(bulletIndex.GetBulletImage());
 				//change is 5 per cycle of main
 				bulletIndex.setDeltaX(-5);
 				bulletIndex.setDeltaY(0);
-				bulletIndex.setIsactive(true);
+				bulletIndex.SetIsactive(true);
 				
 
 
@@ -444,10 +444,10 @@ void movebullets()
 	for (int i = 0; i < levelObj::getMaxNumBullets(); i++)
 	{
 
-		if (bullets[i].getIsactive()) 
+		if (bullets[i].GetIsactive()) 
 		{
 			//changes the postion for the draw function in this function
-			bullets[i].getBulletImage().move(sf::Vector2f(bullets[i].getDeltaX(), bullets[i].getDeltaY()));
+			bullets[i].GetBulletImage().move(sf::Vector2f(bullets[i].getDeltaX(), bullets[i].getDeltaY()));
 
 			//changes x and y for detection of collision and offscreen
 			bullets[i].setX(bullets[i].getX() + bullets[i].getDeltaX());
@@ -460,7 +460,7 @@ void movebullets()
 			if (returnValue == false)
 			{
 				//SFML code from web site tutorial
-				window.draw(bullets[i].getBulletImage());
+				window.draw(bullets[i].GetBulletImage());
 			}
 		}
 	}
@@ -479,7 +479,7 @@ bool checkForBulletOffscreen(int index)
 	if (!(bullets[index].intersectsWithScreenRect(G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
 	{
 		//bullet is not on screen
-		bullets[index].setIsactive(false);
+		bullets[index].SetIsactive(false);
 		return(true);
 	}
 	//bullet is on screen

@@ -14,11 +14,11 @@ public:
 	score(int xpos, int ypos);
 	void SetFont(sf::Font & theFont);
 	void SetScore(int scoreIn);
-	void SetXForScore(int xDimension);
-	void SetYForScore(int yDimension);
+	void SetXForScore(int xdimension);
+	void SetYForScore(int ydimension);
 	void DrawScore(int score);
 	void DrawScore();
-	void AddToScore(int addAmount);
+	void AddToScore(int addamount);
 	void ResetScore();
 	int GetScore(){return scoreamount;}
 	int GetXForScore(){return scoreposition.x;}

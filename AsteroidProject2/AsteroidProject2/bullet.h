@@ -10,9 +10,9 @@ class bullet : public moveableObject
 public:
 
 	
-		static int maxBullets;
 		
-		bullet(sf::Texture & textureBullet, int bulletHeight, int bulletWidth);
+		
+		bullet(sf::Texture & textureBullet, int bulletheight, int bulletwidth);
 		
 		void SetIsactive(bool activateFlag); 
 

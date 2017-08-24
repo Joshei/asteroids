@@ -14,17 +14,17 @@ public:
 	moveableObject();
 
 
-	bool Intersects(moveableObject & theOtherObject);
-	bool IntersectsWithRectangles(RECT & thisRect , RECT & otherRect);
-	bool IntersectsWithScreenRect(int displayWidth, int displayHeight);
+	bool Intersects(moveableObject & theotherobject);
+	bool IntersectsWithRectangles(RECT & thisrect , RECT & otherrect);
+	bool IntersectsWithScreenRect(int displaywidth, int displayheight);
 	
 	void SetX(int inX);
 	void SetY(int inY);
-	void SetDeltaX(int  inDeltaX);
-	void SetDeltaY(int inDeltaY);
+	void SetDeltaX(int  indeltax);
+	void SetDeltaY(int indeltay);
 	
-	void SetWidth(int inWidth);
-	void SetHeight(int inHeight);
+	void SetWidth(int inwidth);
+	void SetHeight(int inheight);
 
 
 	//inlines
@@ -32,9 +32,9 @@ public:
 	
 	int GetY(){return y;}
 	
-	int GetDeltaY(){return deltaY;}
+	int GetDeltaY(){return deltay;}
 	
-	int GetDeltaX(){return deltaX;}
+	int GetDeltaX(){return deltax;}
 
 	int GetHeight(){return height;}
 
@@ -45,10 +45,10 @@ public:
 protected:
 
 	//used for intercept of moveable objects or screen and moveable (not intercept)
-	RECT thisRect;
-	RECT otherRect;
-	int deltaX;
-	int deltaY;
+	RECT thisrect;
+	RECT otherrect;
+	int deltax;
+	int deltay;
 	int width;
 	int height;
 	

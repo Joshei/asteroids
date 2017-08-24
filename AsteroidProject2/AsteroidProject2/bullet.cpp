@@ -5,10 +5,9 @@
 
 
 
-//statics	
-int bullet::maxBullets = 10;
 
-//upon creation of vector maxBullets has to be set (a static variable)
+
+
 bullet::bullet( sf::Texture & texturebullet, int bulheight, int bulwidth )
 {
 	height = bulheight;

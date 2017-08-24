@@ -65,9 +65,9 @@ void score::DrawScore()
 
 
 
-void score::AddToScore(int addAmount)
+void score::AddToScore(int addamount)
 {
-	scoreamount += addAmount;
+	scoreamount += addamount;
 
 
 	

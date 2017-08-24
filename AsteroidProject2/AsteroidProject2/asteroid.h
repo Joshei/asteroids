@@ -53,9 +53,9 @@ public:
 	void SetInitialAsteroid(int i);
 	void SetActivate(int activateFlag);
 	void SetWhichDirection(asteroidMovement direction);
-	void SetType(asteroidType theType);
+	void SetType(asteroidType thetype);
 	void SetTexture(sf::Texture & theTexture);
-	void SetDeltaWithDirection(asteroidMovement & Direction);
+	void SetDeltaWithDirection(asteroidMovement & direction);
 	
 	//inlines
 	int GetActivate(){return activated;}

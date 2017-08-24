@@ -25,9 +25,9 @@ void asteroid::MoveAsteroid()
 {
 
 
-	anAsteroid.move(sf::Vector2f(deltaX, deltaY));
-	x = x + deltaX;
-	y = y + deltaY;
+	anAsteroid.move(sf::Vector2f(deltax, deltay));
+	x = x + deltax;
+	y = y + deltay;
 
 
 
@@ -158,17 +158,17 @@ void asteroid::SetDeltaWithDirection(asteroidMovement & thedirection)
 
 	case asteroidMovement::UP:
 	case asteroidMovement::DOWN:
-		deltaX = 0;
+		deltax = 0;
 		break;
 	case asteroidMovement::LEFT:
 	case asteroidMovement::UP_LEFT:
 	case asteroidMovement::DOWN_LEFT:
-		deltaX = -1;
+		deltax = -1;
 		break;
 	case asteroidMovement::RIGHT:
 	case asteroidMovement::UP_RIGHT:
 	case asteroidMovement::DOWN_RIGHT:
-		deltaX = 1;
+		deltax = 1;
 		break;
 	default:
 		exit(-1);
@@ -179,17 +179,17 @@ void asteroid::SetDeltaWithDirection(asteroidMovement & thedirection)
 
 	case asteroidMovement::LEFT:
 	case asteroidMovement::RIGHT:
-		deltaY = 0;
+		deltay = 0;
 		break;
 	case asteroidMovement::UP:
 	case asteroidMovement::UP_LEFT:
 	case asteroidMovement::UP_RIGHT:
-		deltaY = -1;
+		deltay = -1;
 		break;
 	case asteroidMovement::DOWN:
 	case asteroidMovement::DOWN_LEFT:
 	case asteroidMovement::DOWN_RIGHT:
-		deltaY = 1;
+		deltay = 1;
 		break;
 		
 	default:

@@ -49,24 +49,24 @@ public:
 	
 	asteroid( int theWidth, int theHeight, sf::Texture & largerTextureForAsteroid, asteroidType type);
 	
-	void moveAsteroid();
-	void setInitialAsteroid(int i);
-	void setActivate(int activateFlag);
-	void setWhichDirection(asteroidMovement direction);
-	void setType(asteroidType theType);
-	void setTexture(sf::Texture & theTexture);
-	void setDeltaWithDirection(asteroidMovement & Direction);
+	void MoveAsteroid();
+	void SetInitialAsteroid(int i);
+	void SetActivate(int activateFlag);
+	void SetWhichDirection(asteroidMovement direction);
+	void SetType(asteroidType theType);
+	void SetTexture(sf::Texture & theTexture);
+	void SetDeltaWithDirection(asteroidMovement & Direction);
 	
 	//inlines
-	int getActivate(){return activated;}
+	int GetActivate(){return activated;}
 
-	int getFromThisBorder(){return fromThisBorder;}
+	int GetFromThisBorder(){return fromThisBorder;}
 
-	asteroidMovement getWhichDirection(){return whichDirection;}
+	asteroidMovement GetWhichDirection(){return whichDirection;}
 
-	asteroidType getAsteroidType(){return type;}
+	asteroidType GetAsteroidType(){return type;}
 
-	sf::Sprite &  getSprite(){return anAsteroid;}
+	sf::Sprite &  GetSprite(){return anAsteroid;}
 	
 	
 private:

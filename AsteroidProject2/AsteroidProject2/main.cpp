@@ -176,7 +176,7 @@ void checkCollisionsShipWithAsteroids()
 
 		//checks if asteroid on screen if so is not initialized, destroyed, instantiated, or offscreen
 		//so if it is onscreen enters beneath this if.  Otherwise it continues to the for loop with next value of i.
-		if (asteroidCollection[i].getActivate() != onscreen )
+		if (asteroidCollection[i].GetActivate() != onscreen )
 		{
 			continue;
 
@@ -206,7 +206,7 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 	{
 		
 
-		if (asteroidCollection[j].getActivate() != onscreen )
+		if (asteroidCollection[j].GetActivate() != onscreen )
 		{
 			continue;
 		}
@@ -234,14 +234,14 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 				bullets[i].SetIsactive(false);
 				
 				//asteroid is destroyed and is used later after level is passed in advanceLevelByOne 
-				asteroidCollection[j].setActivate(destroyed);
+				asteroidCollection[j].SetActivate(destroyed);
 
 
 
 				//This is the diference of the two different sized asteroids when they are hit.  
 				//Remember so far the enumeration difference is just two : smaller and 
 				//larger asteroid
-				if (asteroidCollection[j].getAsteroidType() == larger)
+				if (asteroidCollection[j].GetAsteroidType() == larger)
 				{
 					//passes in the index of the larger asteroid and than activates two small asteroids 
 					createSmallerAsteroids(j, smallerTextureAsteroid);
@@ -253,7 +253,7 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 
 				
 				}
-				else if (asteroidCollection[j].getAsteroidType() == smaller)
+				else if (asteroidCollection[j].GetAsteroidType() == smaller)
 				{
 					theScore.addToScore(60);
 					theScore.drawScore();
@@ -500,7 +500,7 @@ void checkForAsteroidOffScreen()
 		{
 			//doesn't intersect - returns true
 
-			asteroidCollection[i].setActivate(offscreen);
+			asteroidCollection[i].SetActivate(offscreen);
 		}
 
 	}
@@ -583,7 +583,7 @@ void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType as
 		{
 			asteroidCollection.push_back(asteroid(width, height, texture, smaller));
 			//readies for onscreen usage in createSmallerAsteroid which sets deltax and deltay and whichdirection
-			asteroidCollection[i].setActivate(initialized);
+			asteroidCollection[i].SetActivate(initialized);
 		}
 		else if (asterType == larger)
 		{
@@ -592,7 +592,7 @@ void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType as
 			//asteroid now calls constructor 
 			asteroidCollection.push_back(asteroid(width, height, texture, larger));
 			//sets deltax and deltay and which direction, and activation
-			asteroidCollection[i].setInitialAsteroid(j);
+			asteroidCollection[i].SetInitialAsteroid(j);
 		}
 
 	}
@@ -622,7 +622,7 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 		
 
 		//small asteroids are initialized as onscreen because they were initailized - see comment above
-		if (asteroidCollection[i].getActivate() == initialized)
+		if (asteroidCollection[i].GetActivate() == initialized)
 		{
 
 			//if this is two from these to for loops than two small asteroids have been found for
@@ -630,7 +630,7 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 			flagUnusedAsteroidIndexFound++;
 			indexNextSmallerAsteroid1 = i;
 			//their ready for moving and drawing
-			asteroidCollection[i].setActivate(onscreen);
+			asteroidCollection[i].SetActivate(onscreen);
 			//unused asteroid found and breaking out of loop because of this variables amount!
 			break;
 		}
@@ -642,7 +642,7 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 
 		//small asteroids are initialized as onscreen because they were set as "initialized"
 		//in fillAsteroidVectors() or refillAsteroidVectors()
-		if (asteroidCollection[j].getActivate() == initialized)
+		if (asteroidCollection[j].GetActivate() == initialized)
 		{
 
 			//if this is two one for each for loop,  both small asteroids ready for movement
@@ -650,7 +650,7 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 			indexNextSmallerAsteroid2 = j;
 
 			//their ready for moving and drawing
-			asteroidCollection[j].setActivate(onscreen);
+			asteroidCollection[j].SetActivate(onscreen);
 			
 			//unused asteroid found and breaking out of loop because of this variables amount!
 			break;
@@ -706,11 +706,11 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	////sets the position of the asteroid with x and y coordinates
 
 	//y1 is higher in location than y2
-	asteroidCollection[indexNextSmallerAsteroid1].getSprite().setPosition(sf::Vector2f(x1, y1));
-	asteroidCollection[indexNextSmallerAsteroid2].getSprite().setPosition(sf::Vector2f(x2, y2));
+	asteroidCollection[indexNextSmallerAsteroid1].GetSprite().setPosition(sf::Vector2f(x1, y1));
+	asteroidCollection[indexNextSmallerAsteroid2].GetSprite().setPosition(sf::Vector2f(x2, y2));
 	
 	//get direction of large asteroid for use in determining small asteroids deltaX and deltaY
-	asteroidMovement majorDirection = asteroidCollection[indexOfAsteroid].getWhichDirection();
+	asteroidMovement majorDirection = asteroidCollection[indexOfAsteroid].GetWhichDirection();
 	//local objects for use of passing in below by reference
 	asteroidMovement newDirection1 = directions[0][0];
 	asteroidMovement newDirection2 = directions[0][0];
@@ -727,8 +727,8 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//indexNextSmallerAsteroid1 is the index of the small asteroid position that is higher than
 	//indexNextSmallerAsteroid2.  This furthor indicates that newDirection1 is higher on screen
 	//than newDirection2.  
-	asteroidCollection[indexNextSmallerAsteroid1].setDeltaWithDirection(newDirection1);
-	asteroidCollection[indexNextSmallerAsteroid2].setDeltaWithDirection(newDirection2);
+	asteroidCollection[indexNextSmallerAsteroid1].SetDeltaWithDirection(newDirection1);
+	asteroidCollection[indexNextSmallerAsteroid2].SetDeltaWithDirection(newDirection2);
 		
 
 	
@@ -742,7 +742,7 @@ bool checkAllAsteroidsDestroyed()
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 
-		if (asteroidCollection[i].getActivate() == destroyed)
+		if (asteroidCollection[i].GetActivate() == destroyed)
 		{
 			asteroidCount++;
 			
@@ -778,13 +778,13 @@ void moveasteroids()
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 
-		if (asteroidCollection[i].getActivate() == onscreen)
+		if (asteroidCollection[i].GetActivate() == onscreen)
 		{
 
 
 
-			asteroidCollection[i].moveAsteroid();
-			window.draw(asteroidCollection[i].getSprite());
+			asteroidCollection[i].MoveAsteroid();
+			window.draw(asteroidCollection[i].GetSprite());
 
 
 		}
@@ -807,7 +807,7 @@ void reinitializeOffscreenAsteroids()
 
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
-		if (asteroidCollection[i].getActivate() == offscreen)
+		if (asteroidCollection[i].GetActivate() == offscreen)
 		{
 			
 			int randNum = rand() % 4;
@@ -815,7 +815,7 @@ void reinitializeOffscreenAsteroids()
 			//this is used for both large and small asteroids and is not the same
 			//as when (two) asteroids are created in the createSmallerAsteroids called
 			//in checkCollisionsAllBullets...sets deltax, deltay, whichdirection, and activation
-			asteroidCollection[i].setInitialAsteroid(randNum);
+			asteroidCollection[i].SetInitialAsteroid(randNum);
 		}
 
 	}
@@ -1069,11 +1069,11 @@ void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aste
 		}
 		for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 		{
-			if (asteroidCollection[i].getAsteroidType() == larger)
+			if (asteroidCollection[i].GetAsteroidType() == larger)
 			{
 				int j = rand() % 4;
 				//sets deltax and deltay, x and y, direction, and activation
-				asteroidCollection[i].setInitialAsteroid(j);
+				asteroidCollection[i].SetInitialAsteroid(j);
 			}
 		}
 
@@ -1091,10 +1091,10 @@ void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aste
 		for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 		{
 
-			if (asteroidCollection[i].getAsteroidType() == smaller)
+			if (asteroidCollection[i].GetAsteroidType() == smaller)
 			{
 				
-				asteroidCollection[i].setActivate(initialized);
+				asteroidCollection[i].SetActivate(initialized);
 			}
 		}
 	}

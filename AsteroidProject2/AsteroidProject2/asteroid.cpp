@@ -21,7 +21,7 @@ asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largerTextureForAs
 	type = theAsteroidType;
 }
 
-void asteroid::moveAsteroid()
+void asteroid::MoveAsteroid()
 {
 
 
@@ -42,16 +42,16 @@ void asteroid::moveAsteroid()
 //appears on the screen than as an onscreen activation but it will use 
 //this function when the asteroid goes off screen and it's activation is
 //set to offscreen.
-void asteroid::setInitialAsteroid(int fromThisBorder) {
+void asteroid::SetInitialAsteroid(int fromThisBorder) {
 
 	
 	//technically these asteroids are behind the border by their width or height but they've been
 	//set to onscreen so they are ready to be checked for collisions now.
-	setActivate(onscreen);
+	SetActivate(onscreen);
 	//uses enum class object declared in asteroid.h (on top of header file)
 	whichDirection = directions[fromThisBorder][std::rand() % 3];
 	//sets the deltax and deltay from this random direction
-	setDeltaWithDirection(whichDirection);
+	SetDeltaWithDirection(whichDirection);
 	
 	
 	//sets the initial x and y for each asteroid according to what border the image is behind
@@ -118,7 +118,7 @@ void asteroid::setInitialAsteroid(int fromThisBorder) {
 }
 
 //takes an enumeration of stateofassteroid
-void asteroid::setActivate(int activateFlag) 
+void asteroid::SetActivate(int activateFlag) 
 {
 
 	activated = activateFlag;
@@ -126,20 +126,20 @@ void asteroid::setActivate(int activateFlag)
 }
 
 
-void asteroid::setWhichDirection(asteroidMovement direction)
+void asteroid::SetWhichDirection(asteroidMovement direction)
 {
 	
 	whichDirection = direction;
 
 }
 
-void asteroid::setType(asteroidType theType)
+void asteroid::SetType(asteroidType theType)
 {
 	type = theType;
 
 }
 
-void::asteroid::setTexture(sf::Texture & texture)
+void::asteroid::SetTexture(sf::Texture & texture)
 {
 	anAsteroid.setTexture(texture);
 }
@@ -147,7 +147,7 @@ void::asteroid::setTexture(sf::Texture & texture)
 
 
 //called twice, first higher than lower
-void asteroid::setDeltaWithDirection(asteroidMovement & theDirection)
+void asteroid::SetDeltaWithDirection(asteroidMovement & theDirection)
 {
 
 	//sets the change in x and the change in y (delta) for computing movement.  Of course x is horizonatl andh y

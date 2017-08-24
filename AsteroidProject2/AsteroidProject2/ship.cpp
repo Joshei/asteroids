@@ -35,7 +35,7 @@ ship::ship(int positionx, int positiony, theDirection  shipDirection)
 	{
 		shutdown(-13);
 	}
-	selectTexture(shipDirection);
+	SelectTexture(shipDirection);
 	
 	//sets the position of the ship with x and y coordinates
 	shipImage.setPosition(sf::Vector2f(positionx, positiony));
@@ -44,27 +44,27 @@ ship::ship(int positionx, int positiony, theDirection  shipDirection)
 
 
 //press m - rotates ship clockwise.
-void ship::rotateShipClock() 
+void ship::RotateShipClock() 
 {
 
 	//add one to the direction to rotate clockwise
-	theDirection NewDirection = static_cast<theDirection>((1 + getDirection()) % 4);
-	setDirection(NewDirection);
-	selectTexture(NewDirection);
+	theDirection NewDirection = static_cast<theDirection>((1 + GetDirection()) % 4);
+	SetDirection(NewDirection);
+	SelectTexture(NewDirection);
 	
 }
 //press n - rotates ship counter clockwise.
-void ship::rotateShipCClock() 
+void ship::RotateShipCClock() 
 {
 	//add a full rotation (4) before subtracting one to avoid negative numbers and use modulus
-	theDirection NewDirection = static_cast<theDirection>((3 + getDirection()) % 4);
-	setDirection(NewDirection);
-	selectTexture(NewDirection);
+	theDirection NewDirection = static_cast<theDirection>((3 + GetDirection()) % 4);
+	SetDirection(NewDirection);
+	SelectTexture(NewDirection);
 
 
 }
 
-void ship::selectTexture(theDirection direction)
+void ship::SelectTexture(theDirection direction)
 {
 	if (direction == up)
 	{
@@ -92,7 +92,7 @@ void ship::selectTexture(theDirection direction)
 //two asteroids are created upon destruction of larger.
 //also could be used later if a "wrapping effect" is needed for the asteroids from
 //border to border
-void ship::setDirection(theDirection inDirection)
+void ship::SetDirection(theDirection inDirection)
 {
 	direction = inDirection;
 }

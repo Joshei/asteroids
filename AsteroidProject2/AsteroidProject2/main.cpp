@@ -77,7 +77,7 @@ levelObj levelObject;
 void drawShip(){
 
 
-	window.draw(shipObject.getShipImage());
+	window.draw(shipObject.GetShipImage());
 	
 }
 
@@ -133,7 +133,7 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 	
 	//SFML moves to the new location changing the ships postion by these two numbers.  X and Y are 
 	//still computed above though, for collisions and offscreen detection.
-	shipObject.getShipImage().move(sf::Vector2f(deltaX, deltaY));
+	shipObject.GetShipImage().move(sf::Vector2f(deltaX, deltaY));
 	
 
 	drawShip();
@@ -318,7 +318,7 @@ int shoot()
 		//up key pressed direction of bullet will be upwards.  creates a bullet the same amount 
 		//away for each off the four directions shot
 		//for now, the bullets width is 16 and its height is 16.  values are divided by 2 to center the diferent images
-			if (shipObject.getDirection() == up)
+			if (shipObject.GetDirection() == up)
 			{
 
 
@@ -334,7 +334,7 @@ int shoot()
 				bulletIndex.setY(-100 + shipObject.getY() + shipObject.getHeight());
 
 			
-				bulletIndex.setDirection(shipObject.getDirection());
+				bulletIndex.setDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
 				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
@@ -350,7 +350,7 @@ int shoot()
 			}
 			
 
-			else if (shipObject.getDirection() == right) 
+			else if (shipObject.GetDirection() == right) 
 			{
 
 				
@@ -363,7 +363,7 @@ int shoot()
 				bulletIndex.setY(shipObject.getY() + centerShipHeight - centerBulletHeight);
 
 			
-				bulletIndex.setDirection(shipObject.getDirection());
+				bulletIndex.setDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
 				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
@@ -377,7 +377,7 @@ int shoot()
 
 			}
 			//ship is moving downward 
-			else if (shipObject.getDirection() == down) 
+			else if (shipObject.GetDirection() == down) 
 			{
 
 				int centerShipWidth = .5* shipObject.getWidth();
@@ -389,7 +389,7 @@ int shoot()
 				//the four of these start from the circles most farthest boundry and add 100
 				bulletIndex.setY(100 + shipObject.getY());
 				//direction for move bullet
-				bulletIndex.setDirection(shipObject.getDirection());
+				bulletIndex.setDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
 				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 				//bullet image is part of SFML basic instructions on website tutorial questions
@@ -402,7 +402,7 @@ int shoot()
 
 			}
 			//ship is moving left so bullet will be left of ship
-			else if (shipObject.getDirection() == left) 
+			else if (shipObject.GetDirection() == left) 
 			{
 
 				
@@ -415,7 +415,7 @@ int shoot()
 				bulletIndex.setY(shipObject.getY() + centerShipHeight  - centerBulletHeight);
 
 				//direction set to left for moving/drawing bullet
-				bulletIndex.setDirection(shipObject.getDirection());
+				bulletIndex.setDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
 				bulletIndex.getBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
 
@@ -940,12 +940,12 @@ int main(void)
 	
 			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::M))
 			{
-				shipObject.rotateShipClock();
+				shipObject.RotateShipClock();
 			}
 
 			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::N))
 			{
-				shipObject.rotateShipCClock();
+				shipObject.RotateShipCClock();
 			}
 
 			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))

@@ -19,12 +19,12 @@ public:
 
 	ship(int positionx, int positiony, theDirection direction);
 	
-	void rotateShipClock();
-	void rotateShipCClock();
-	void selectTexture(theDirection direction);
-	void setDirection(theDirection inDirection);
-	theDirection getDirection(){return direction;}
-	sf::Sprite & getShipImage(){return shipImage;}
+	void RotateShipClock();
+	void RotateShipCClock();
+	void SelectTexture(theDirection direction);
+	void SetDirection(theDirection inDirection);
+	theDirection GetDirection(){return direction;}
+	sf::Sprite & GetShipImage(){return shipImage;}
 
 
 private:

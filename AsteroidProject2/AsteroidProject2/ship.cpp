@@ -19,19 +19,19 @@ ship::ship(int positionx, int positiony, theDirection  shipDirection)
 	width = 64;
 	direction = shipDirection;
 
-	if (!textureShipNorth.loadFromFile("shipNorth.png"))
+	if (!textureshipnorth.loadFromFile("shipNorth.png"))
 	{
 		shutdown(-10);
 	}
-	if (!textureShipEast.loadFromFile("shipEast.png")) 
+	if (!textureshipeast.loadFromFile("shipEast.png")) 
 	{
 		shutdown(-11);
 	}
-	if (!textureShipSouth.loadFromFile("shipSouth.png")) 
+	if (!textureshipsouth.loadFromFile("shipSouth.png")) 
 	{
 		shutdown(-12);
 	}
-	if (!textureShipWest.loadFromFile("shipWest.png")) 
+	if (!textureshipwest.loadFromFile("shipWest.png")) 
 	{
 		shutdown(-13);
 	}
@@ -68,19 +68,19 @@ void ship::SelectTexture(theDirection direction)
 {
 	if (direction == up)
 	{
-		shipImage.setTexture(textureShipNorth);
+		shipImage.setTexture(textureshipnorth);
 	}
 	if (direction == right)
 	{
-		shipImage.setTexture(textureShipEast);
+		shipImage.setTexture(textureshipeast);
 	}
 	if (direction == down)
 	{
-		shipImage.setTexture(textureShipSouth);
+		shipImage.setTexture(textureshipsouth);
 	}
 	if (direction == left)
 	{
-		shipImage.setTexture(textureShipWest);
+		shipImage.setTexture(textureshipwest);
 	}
 
 

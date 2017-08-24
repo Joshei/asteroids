@@ -33,10 +33,10 @@ private:
 	theDirection direction;
 	//sfml objects
 	sf::Sprite shipImage;
-	sf::Texture textureShipNorth;
-	sf::Texture textureShipEast;
-	sf::Texture textureShipSouth;
-	sf::Texture textureShipWest;
+	sf::Texture textureshipnorth;
+	sf::Texture textureshipeast;
+	sf::Texture textureshipsouth;
+	sf::Texture textureshipwest;
 
 };
 

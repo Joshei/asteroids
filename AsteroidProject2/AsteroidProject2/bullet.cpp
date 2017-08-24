@@ -14,7 +14,7 @@ bullet::bullet( sf::Texture & textureBullet, int bulHeight, int bulWidth )
 	height = bulHeight;
 	width =  bulWidth;
 	isactive = false;
-	bulletImage.setTexture(textureBullet);
+	bulletimage.setTexture(textureBullet);
 
 }
 

@@ -248,15 +248,15 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 
 					
 					
-					theScore.addToScore(40);
-					theScore.drawScore();
+					theScore.AddToScore(40);
+					theScore.DrawScore();
 
 				
 				}
 				else if (asteroidCollection[j].GetAsteroidType() == smaller)
 				{
-					theScore.addToScore(60);
-					theScore.drawScore();
+					theScore.AddToScore(60);
+					theScore.DrawScore();
 				}
 				
 				break;
@@ -923,7 +923,7 @@ int main(void)
 	
 	//this will set the vector to 10 bullets index  of 9 of course
 	fillBulletVector(levelObject.getMaxNumBullets(), texturebullet);
-	theScore.setFont(fontForScore);
+	theScore.SetFont(fontForScore);
 
 	//initial ship draw
 	drawShip();
@@ -1035,9 +1035,9 @@ int main(void)
 
 		//initial score text is drawn here until there is a score and than set and drawm elsewhere
 		//(checkCollisionWithAllBullets...)
-		if (theScore.getScore() == 0)
+		if (theScore.GetScore() == 0)
 		{
-			theScore.drawScore(0);
+			theScore.DrawScore(0);
 		}
 
 

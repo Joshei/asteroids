@@ -12,17 +12,17 @@ public:
 	
 	
 	score(int xpos, int ypos);
-	void setFont(sf::Font & theFont);
-	void setScore(int scoreIn);
-	void setXForScore(int xDimension);
-	void setYForScore(int yDimension);
-	void drawScore(int score);
-	void drawScore();
-	void addToScore(int addAmount);
-	void resetScore();
-	int getScore(){return scoreAmount;}
-	int getXForScore(){return scorePosition.x;}
-	int getYforScore(){return scorePosition.y;}
+	void SetFont(sf::Font & theFont);
+	void SetScore(int scoreIn);
+	void SetXForScore(int xDimension);
+	void SetYForScore(int yDimension);
+	void DrawScore(int score);
+	void DrawScore();
+	void AddToScore(int addAmount);
+	void ResetScore();
+	int GetScore(){return scoreAmount;}
+	int GetXForScore(){return scorePosition.x;}
+	int GetYforScore(){return scorePosition.y;}
 	
 
 	sf::Text & getTextMessage(){return textMessage;}

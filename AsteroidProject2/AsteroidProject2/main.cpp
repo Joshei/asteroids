@@ -211,7 +211,7 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 			continue;
 		}
 
-		for (int i = 0; i < levelObj::getMaxNumBullets(); i++)
+		for (int i = 0; i < levelObj::GetMaxNumBullets(); i++)
 		{
 
 
@@ -288,7 +288,7 @@ int shoot()
 	
 
 		//static function
- 		for (int i = 0; i < levelObj::getMaxNumBullets(); i++)
+ 		for (int i = 0; i < levelObj::GetMaxNumBullets(); i++)
 		{
 
 			//if bullet already active go to for loop at next index
@@ -441,7 +441,7 @@ void movebullets()
 	bool returnValue = false;
 
 	//static function
-	for (int i = 0; i < levelObj::getMaxNumBullets(); i++)
+	for (int i = 0; i < levelObj::GetMaxNumBullets(); i++)
 	{
 
 		if (bullets[i].GetIsactive()) 
@@ -917,12 +917,12 @@ int main(void)
 	//Uses setInitialAsteroid. third and fourth argument is width an than height
 	
 	//creates vector with asteroids - order (large and small) is not important
-	fillAsteroidVector(levelObject.getNumLargeAsteroids(), 64, 64, larger, largerTextureAsteroid);
-	fillAsteroidVector(levelObject.getNumSmallAsteroids(), 32, 32, smaller, smallerTextureAsteroid);
+	fillAsteroidVector(levelObject.GetNumLargeAsteroids(), 64, 64, larger, largerTextureAsteroid);
+	fillAsteroidVector(levelObject.GetNumSmallAsteroids(), 32, 32, smaller, smallerTextureAsteroid);
 	
 	
 	//this will set the vector to 10 bullets index  of 9 of course
-	fillBulletVector(levelObject.getMaxNumBullets(), texturebullet);
+	fillBulletVector(levelObject.GetMaxNumBullets(), texturebullet);
 	theScore.SetFont(fontForScore);
 
 	//initial ship draw
@@ -930,7 +930,7 @@ int main(void)
 
 	//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
 	//this will setlevelto one because it is zero before call.
-	levelObject.advanceLevelByOne();
+	levelObject.AdvanceLevelByOne();
 
 	while (window.isOpen() )
 	{
@@ -949,7 +949,7 @@ int main(void)
 			}
 
 			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))
-			{
+			{ 
 				shoot();
 			}
 
@@ -994,13 +994,13 @@ int main(void)
 		{
 			
 			//holds this levels value because they are changed in advanceLevelByOne for RefillAsteroidVector
-			int oldLevelsSmallAsteroidAmt = levelObject.getNumSmallAsteroids();
-			int oldLevelsLargeAsteroidAmt = levelObject.getNumLargeAsteroids();
+			int oldLevelsSmallAsteroidAmt = levelObject.GetNumSmallAsteroids();
+			int oldLevelsLargeAsteroidAmt = levelObject.GetNumLargeAsteroids();
 
 				
 			//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
 			//this function can shutdown program
-			levelObject.advanceLevelByOne();
+			levelObject.AdvanceLevelByOne();
 				
 
 
@@ -1012,12 +1012,12 @@ int main(void)
 				//fills one asteroid collection with two statements.
 				//oldLevels... getNumSmallAsteroids() and .getNumLargeAsteroids() are new levels values
 				//the new levels minus the old levels gives us the new asteroids to create
-				int createThisAmtAsteroids = (levelObject.getNumLargeAsteroids() - oldLevelsLargeAsteroidAmt);
+				int createThisAmtAsteroids = (levelObject.GetNumLargeAsteroids() - oldLevelsLargeAsteroidAmt);
 				//creates the newly created asteroids with push_back and reinitializes the older asteroids
 				//with a new active setting - order (small and large not important)
 				refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, largerTextureAsteroid);
 				//see right above
-				createThisAmtAsteroids = levelObject.getNumSmallAsteroids() - oldLevelsSmallAsteroidAmt;
+				createThisAmtAsteroids = levelObject.GetNumSmallAsteroids() - oldLevelsSmallAsteroidAmt;
 				//same as above : just a smaller asteroid group for the collection
 				refillAsteroidVectors(createThisAmtAsteroids, 32, 32, smaller, smallerTextureAsteroid);
 

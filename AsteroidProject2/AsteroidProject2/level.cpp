@@ -12,7 +12,7 @@ levelObj::levelObj()
 }
 
 
-void levelObj::advanceLevelByOne()
+void levelObj::AdvanceLevelByOne()
 {
 	levelNumber++;
 

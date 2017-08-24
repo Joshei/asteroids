@@ -11,7 +11,7 @@ moveableObject::moveableObject()
 }
 //checks for collision of two moveable objects by calling intersectsWithRectangles function. Returns
 //bool value for if collides
-bool moveableObject::intersects(moveableObject & other)
+bool moveableObject::Intersects(moveableObject & other)
 {
 	thisRect.left = x;
 	thisRect.top = y;
@@ -22,12 +22,12 @@ bool moveableObject::intersects(moveableObject & other)
 	otherRect.top = other.y;
 	otherRect.right = other.x + other.width;
 	otherRect.bottom = other.y + other.height;
-	bool isIntersected = intersectsWithRectangles(thisRect, otherRect);
+	bool isIntersected = IntersectsWithRectangles(thisRect, otherRect);
 	return isIntersected;
 }
 //returns boolean if intersected or not, called from either moveableObject::intersects or 
 //moveableObject::screenIntersects 
-bool moveableObject::intersectsWithRectangles(RECT & thisRectangle, RECT & otherRectangle)
+bool moveableObject::IntersectsWithRectangles(RECT & thisRectangle, RECT & otherRectangle)
 {
 	int objectOneLeft = thisRectangle.left;
 	int objectOneTop = thisRectangle.top;
@@ -56,7 +56,7 @@ bool moveableObject::intersectsWithRectangles(RECT & thisRectangle, RECT & other
 	}
 	return true;
 }
-bool moveableObject::intersectsWithScreenRect(int screenWidth, int screenHeight)
+bool moveableObject::IntersectsWithScreenRect(int screenWidth, int screenHeight)
 {
 	//moveable object
 	thisRect.left = x;
@@ -75,38 +75,38 @@ bool moveableObject::intersectsWithScreenRect(int screenWidth, int screenHeight)
 	otherRect.right = screenWidth ;
 	otherRect.bottom = screenHeight;
 	
-	return(intersectsWithRectangles(thisRect, otherRect));
+	return(IntersectsWithRectangles(thisRect, otherRect));
 
 
 }
 //sets x position for those objects that inherit from moveable
-void moveableObject::setX(int  inX)
+void moveableObject::SetX(int  inX)
 {
 	x = inX;
 }
 //sets y positio for those objects that inherit from moveable
-void moveableObject::setY(int inY)
+void moveableObject::SetY(int inY)
 {
 	y = inY;
 }
 //deltaX is the change in x after each key press and cycle in main
-void moveableObject::setDeltaX(int  inDeltaX)
+void moveableObject::SetDeltaX(int  inDeltaX)
 {
 	deltaX = inDeltaX;
 }
 //deltaY is the change in x after each key press and cycle in main
-void moveableObject::setDeltaY(int inDeltaY)
+void moveableObject::SetDeltaY(int inDeltaY)
 {
 	deltaY = inDeltaY;
 }
 
 //this allows each object to have its own width
-void moveableObject::setWidth(int inWidth)
+void moveableObject::SetWidth(int inWidth)
 {
 	width = inWidth;
 }
 //this allow each object to have its own height
-void moveableObject::setHeight(int inHeight)
+void moveableObject::SetHeight(int inHeight)
 {
 	height = inHeight;
 }

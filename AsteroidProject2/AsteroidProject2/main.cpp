@@ -100,22 +100,22 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 	//now set at 3 or -3 so the x and y can also be computed.  This is if the paramter passed in 
 	//is not -1.  If it is -1 then ship is moved with the same deltas.  Deltas are also used to set
 	//the SFML move function below.
-	if (pressedKey == up) { shipObject.setDeltaY(amountForMovement); }
-	else if (pressedKey == down) { shipObject.setDeltaY(amountForMovement); }
-	else if (pressedKey == right) { shipObject.setDeltaX(amountForMovement); }
-	else if (pressedKey == left) { shipObject.setDeltaX(amountForMovement); }
+	if (pressedKey == up) { shipObject.SetDeltaY(amountForMovement); }
+	else if (pressedKey == down) { shipObject.SetDeltaY(amountForMovement); }
+	else if (pressedKey == right) { shipObject.SetDeltaX(amountForMovement); }
+	else if (pressedKey == left) { shipObject.SetDeltaX(amountForMovement); }
 	
 
 		
 	//set the change in y and the change in x variables (meaning if delta)
-	int deltaX = shipObject.getDeltaX();
-	int deltaY = shipObject.getDeltaY();
+	int deltaX = shipObject.GetDeltaX();
+	int deltaY = shipObject.GetDeltaY();
 
 
 	//set the x and y using the delta (change of x or y) and updating the x and y values for checking 
 	//for collisions and off screen
-	int x = shipObject.getX();
-	int y = shipObject.getY();
+	int x = shipObject.GetX();
+	int y = shipObject.GetY();
 	x = x + deltaX;
 	y = y + deltaY;
 
@@ -127,8 +127,8 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 		return (-1);
 	}
 
-	shipObject.setX(x);
-	shipObject.setY(y);
+	shipObject.SetX(x);
+	shipObject.SetY(y);
 
 	
 	//SFML moves to the new location changing the ships postion by these two numbers.  X and Y are 
@@ -181,7 +181,7 @@ void checkCollisionsShipWithAsteroids()
 			continue;
 
 		}
-		if (shipObject.intersects(asteroidCollection[i]))
+		if (shipObject.Intersects(asteroidCollection[i]))
 		{
 			shutdown(-1);
 		}
@@ -224,7 +224,7 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 
 
 
-			if (bullets[i].intersects(asteroidCollection[j]))
+			if (bullets[i].Intersects(asteroidCollection[j]))
 			{
 				
 
@@ -322,28 +322,28 @@ int shoot()
 			{
 
 
-				int centerShipWidth = .5* shipObject.getWidth();
-				int centerBulletWidth = .5* bulletIndex.getWidth();
+				int centerShipWidth = .5* shipObject.GetWidth();
+				int centerBulletWidth = .5* bulletIndex.GetWidth();
 				
 
 				//bullet center of ship
-				bulletIndex.setX(shipObject.getX() + centerShipWidth - centerBulletWidth);
+				bulletIndex.SetX(shipObject.GetX() + centerShipWidth - centerBulletWidth);
 				
 				//bullet a bit above ship
 				//the four of these start from the circles most farthest boundry and add 100
-				bulletIndex.setY(-100 + shipObject.getY() + shipObject.getHeight());
+				bulletIndex.SetY(-100 + shipObject.GetY() + shipObject.GetHeight());
 
 			
 				bulletIndex.SetDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.GetX(), bulletIndex.GetY()));
 
 				window.draw(bulletIndex.GetBulletImage());
 
 				//there are three speeds so far: bullet, ship, and asteroids
 				//sets bullet speed to downward 5 per cycle.
-				bulletIndex.setDeltaX(0);
-				bulletIndex.setDeltaY(-5);
+				bulletIndex.SetDeltaX(0);
+				bulletIndex.SetDeltaY(-5);
 				bulletIndex.SetIsactive(true);
 				
 
@@ -354,24 +354,24 @@ int shoot()
 			{
 
 				
-				int centerShipHeight = .5* shipObject.getHeight();
-				int centerBulletHeight = .5* bulletIndex.getHeight();
+				int centerShipHeight = .5* shipObject.GetHeight();
+				int centerBulletHeight = .5* bulletIndex.GetHeight();
 
 				//the four of these start from the circles most farthest boundry and add 100
-				bulletIndex.setX(shipObject.getX() + 100);
+				bulletIndex.SetX(shipObject.GetX() + 100);
 				//bullet a bit above ship
-				bulletIndex.setY(shipObject.getY() + centerShipHeight - centerBulletHeight);
+				bulletIndex.SetY(shipObject.GetY() + centerShipHeight - centerBulletHeight);
 
 			
 				bulletIndex.SetDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.GetX(), bulletIndex.GetY()));
 
 				window.draw(bulletIndex.GetBulletImage());
 
 				//sets bullet x speed at a change of 5.
-				bulletIndex.setDeltaX(5);
-				bulletIndex.setDeltaY(0);
+				bulletIndex.SetDeltaX(5);
+				bulletIndex.SetDeltaY(0);
 				bulletIndex.SetIsactive(true);
 				
 
@@ -380,23 +380,23 @@ int shoot()
 			else if (shipObject.GetDirection() == down) 
 			{
 
-				int centerShipWidth = .5* shipObject.getWidth();
-				int centerBulletWidth = .5* bulletIndex.getWidth();
+				int centerShipWidth = .5* shipObject.GetWidth();
+				int centerBulletWidth = .5* bulletIndex.GetWidth();
 				
 
 				//bullet is centered according to ship
-				bulletIndex.setX(shipObject.getX() + centerShipWidth - centerBulletWidth);
+				bulletIndex.SetX(shipObject.GetX() + centerShipWidth - centerBulletWidth);
 				//the four of these start from the circles most farthest boundry and add 100
-				bulletIndex.setY(100 + shipObject.getY());
+				bulletIndex.SetY(100 + shipObject.GetY());
 				//direction for move bullet
 				bulletIndex.SetDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.GetX(), bulletIndex.GetY()));
 				//bullet image is part of SFML basic instructions on website tutorial questions
 				window.draw(bulletIndex.GetBulletImage());
-				bulletIndex.setDeltaX(0);
+				bulletIndex.SetDeltaX(0);
 				//sets change of speed to 5 for each cycle through
-				bulletIndex.setDeltaY(5);
+				bulletIndex.SetDeltaY(5);
 				bulletIndex.SetIsactive(true);
 				
 
@@ -406,23 +406,23 @@ int shoot()
 			{
 
 				
-				int centerShipHeight = .5* shipObject.getHeight();
-				int centerBulletHeight = .5* bulletIndex.getHeight();
+				int centerShipHeight = .5* shipObject.GetHeight();
+				int centerBulletHeight = .5* bulletIndex.GetHeight();
 
 				//the four of these start from the circles most farthest boundry and add 100
-				bulletIndex.setX(shipObject.getX() + shipObject.getWidth() - 100 );
+				bulletIndex.SetX(shipObject.GetX() + shipObject.GetWidth() - 100 );
 				//bullet a bit above ship
-				bulletIndex.setY(shipObject.getY() + centerShipHeight  - centerBulletHeight);
+				bulletIndex.SetY(shipObject.GetY() + centerShipHeight  - centerBulletHeight);
 
 				//direction set to left for moving/drawing bullet
 				bulletIndex.SetDirection(shipObject.GetDirection());
 				//sets the position of the bullet with x and y coordinates
-				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.getX(), bulletIndex.getY()));
+				bulletIndex.GetBulletImage().setPosition(sf::Vector2f(bulletIndex.GetX(), bulletIndex.GetY()));
 
 				window.draw(bulletIndex.GetBulletImage());
 				//change is 5 per cycle of main
-				bulletIndex.setDeltaX(-5);
-				bulletIndex.setDeltaY(0);
+				bulletIndex.SetDeltaX(-5);
+				bulletIndex.SetDeltaY(0);
 				bulletIndex.SetIsactive(true);
 				
 
@@ -447,11 +447,11 @@ void movebullets()
 		if (bullets[i].GetIsactive()) 
 		{
 			//changes the postion for the draw function in this function
-			bullets[i].GetBulletImage().move(sf::Vector2f(bullets[i].getDeltaX(), bullets[i].getDeltaY()));
+			bullets[i].GetBulletImage().move(sf::Vector2f(bullets[i].GetDeltaX(), bullets[i].GetDeltaY()));
 
 			//changes x and y for detection of collision and offscreen
-			bullets[i].setX(bullets[i].getX() + bullets[i].getDeltaX());
-			bullets[i].setY(bullets[i].getY() + bullets[i].getDeltaY());
+			bullets[i].SetX(bullets[i].GetX() + bullets[i].GetDeltaX());
+			bullets[i].SetY(bullets[i].GetY() + bullets[i].GetDeltaY());
 
 			
 			returnValue = checkForBulletOffscreen(i);
@@ -476,7 +476,7 @@ void movebullets()
 bool checkForBulletOffscreen(int index) 
 {
 	//is bullet not on screen?
-	if (!(bullets[index].intersectsWithScreenRect(G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
+	if (!(bullets[index].IntersectsWithScreenRect(G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
 	{
 		//bullet is not on screen
 		bullets[index].SetIsactive(false);
@@ -496,7 +496,7 @@ void checkForAsteroidOffScreen()
 	{
 
 		//if true
-		if (!(asteroidCollection[i].intersectsWithScreenRect( G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
+		if (!(asteroidCollection[i].IntersectsWithScreenRect( G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
 		{
 			//doesn't intersect - returns true
 
@@ -516,29 +516,29 @@ bool checkForShipOnBorder(int x, int y)
 	//left
 	if (x < 0 )
 	{
-		shipObject.setX(0);
+		shipObject.SetX(0);
 		
 		return(false);
 
 	}
 	//right
-	if (x  > (G_SCREEN_WIDTH - shipObject.getWidth())) 
+	if (x  > (G_SCREEN_WIDTH - shipObject.GetWidth())) 
 	{
-		shipObject.setX(G_SCREEN_WIDTH - shipObject.getWidth());
+		shipObject.SetX(G_SCREEN_WIDTH - shipObject.GetWidth());
 		return(false);
 
 	}
 	//bottom
-	if (y > (G_SCREEN_HEIGHT - shipObject.getHeight()))
+	if (y > (G_SCREEN_HEIGHT - shipObject.GetHeight()))
 	{
-		shipObject.setY(G_SCREEN_HEIGHT - shipObject.getHeight());
+		shipObject.SetY(G_SCREEN_HEIGHT - shipObject.GetHeight());
 		return(false);
 
 	}
 	//top
 	if (y < 0 ) 
 	{
-		shipObject.setY(0);
+		shipObject.SetY(0);
 		return(false);
 
 	}
@@ -677,14 +677,14 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	asteroid & smallAsteroid1 = asteroidCollection[indexNextSmallerAsteroid1];
 	asteroid & smallAsteroid2 = asteroidCollection[indexNextSmallerAsteroid2];
 	//asteroid & largeAsteroid = asteroidCollection[indexOfAsteroid];
-	int largeAsteroidLeft = asteroidCollection[indexOfAsteroid].getX();
-	int largeAsteroidWidth = asteroidCollection[indexOfAsteroid].getWidth();
-	int largeAsteroidHeight = asteroidCollection[indexOfAsteroid].getHeight();
-	int largeAsteroidTop = asteroidCollection[indexOfAsteroid].getY();
-	int smallAsteroid1Height = (asteroidCollection[indexNextSmallerAsteroid1].getHeight());
-	int smallAsteroid2Height = (asteroidCollection[indexNextSmallerAsteroid2].getHeight());
-	int smallAsteroid1Width = (asteroidCollection[indexNextSmallerAsteroid1].getWidth());
-	int smallAsteroid2Width = (asteroidCollection[indexNextSmallerAsteroid2].getWidth());
+	int largeAsteroidLeft = asteroidCollection[indexOfAsteroid].GetX();
+	int largeAsteroidWidth = asteroidCollection[indexOfAsteroid].GetWidth();
+	int largeAsteroidHeight = asteroidCollection[indexOfAsteroid].GetHeight();
+	int largeAsteroidTop = asteroidCollection[indexOfAsteroid].GetY();
+	int smallAsteroid1Height = (asteroidCollection[indexNextSmallerAsteroid1].GetHeight());
+	int smallAsteroid2Height = (asteroidCollection[indexNextSmallerAsteroid2].GetHeight());
+	int smallAsteroid1Width = (asteroidCollection[indexNextSmallerAsteroid1].GetWidth());
+	int smallAsteroid2Width = (asteroidCollection[indexNextSmallerAsteroid2].GetWidth());
 	
 	//For the next four assignments, the small asteroid's center is at the top horizontal tangent of the larger asteroid.
 	//The math here is interesting: the width of the larger asteroid minus the width of the smaller 
@@ -692,17 +692,17 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//We than divide this space by two to get the smaller asteroid positioned at the center horizontally.
 	//if needed, easier to draw out on paper.
 
-	smallAsteroid1.setX(largeAsteroidLeft + ((largeAsteroidWidth - smallAsteroid1Width) / 2));
-	smallAsteroid1.setY(largeAsteroidTop - ((largeAsteroidHeight - smallAsteroid2Height) / 2));
-	smallAsteroid2.setX(largeAsteroidLeft + ((largeAsteroidWidth - smallAsteroid2Width) / 2));
-	smallAsteroid2.setY(largeAsteroidTop + ((largeAsteroidHeight - smallAsteroid2Height) / 2));
+	smallAsteroid1.SetX(largeAsteroidLeft + ((largeAsteroidWidth - smallAsteroid1Width) / 2));
+	smallAsteroid1.SetY(largeAsteroidTop - ((largeAsteroidHeight - smallAsteroid2Height) / 2));
+	smallAsteroid2.SetX(largeAsteroidLeft + ((largeAsteroidWidth - smallAsteroid2Width) / 2));
+	smallAsteroid2.SetY(largeAsteroidTop + ((largeAsteroidHeight - smallAsteroid2Height) / 2));
 
 
 //initializations for setposition right below.
-	int x1 = asteroidCollection[indexNextSmallerAsteroid1].getX();
-	int y1 = asteroidCollection[indexNextSmallerAsteroid1].getY();
-	int x2 = asteroidCollection[indexNextSmallerAsteroid2].getX();
-	int y2 = asteroidCollection[indexNextSmallerAsteroid2].getY();
+	int x1 = asteroidCollection[indexNextSmallerAsteroid1].GetX();
+	int y1 = asteroidCollection[indexNextSmallerAsteroid1].GetY();
+	int x2 = asteroidCollection[indexNextSmallerAsteroid2].GetX();
+	int y2 = asteroidCollection[indexNextSmallerAsteroid2].GetY();
 	////sets the position of the asteroid with x and y coordinates
 
 	//y1 is higher in location than y2

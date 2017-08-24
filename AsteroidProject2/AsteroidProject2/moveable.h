@@ -14,31 +14,31 @@ public:
 	moveableObject();
 
 
-	bool intersects(moveableObject & theOtherObject);
-	bool intersectsWithRectangles(RECT & thisRect , RECT & otherRect);
-	bool intersectsWithScreenRect(int displayWidth, int displayHeight);
+	bool Intersects(moveableObject & theOtherObject);
+	bool IntersectsWithRectangles(RECT & thisRect , RECT & otherRect);
+	bool IntersectsWithScreenRect(int displayWidth, int displayHeight);
 	
-	void setX(int inX);
-	void setY(int inY);
-	void setDeltaX(int  inDeltaX);
-	void setDeltaY(int inDeltaY);
+	void SetX(int inX);
+	void SetY(int inY);
+	void SetDeltaX(int  inDeltaX);
+	void SetDeltaY(int inDeltaY);
 	
-	void setWidth(int inWidth);
-	void setHeight(int inHeight);
+	void SetWidth(int inWidth);
+	void SetHeight(int inHeight);
 
 
 	//inlines
-	int getX(){return x;}
+	int GetX(){return x;}
 	
-	int getY(){return y;}
+	int GetY(){return y;}
 	
-	int getDeltaY(){return deltaY;}
+	int GetDeltaY(){return deltaY;}
 	
-	int getDeltaX(){return deltaX;}
+	int GetDeltaX(){return deltaX;}
 
-	int getHeight(){return height;}
+	int GetHeight(){return height;}
 
-	int getWidth(){return width;}
+	int GetWidth(){return width;}
 
 	
 

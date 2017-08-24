@@ -6,36 +6,36 @@ int levelObj::maxBullets = 10;
 
 levelObj::levelObj()
 {
-	levelNumber = 0;
-	numOfLargeAsteroids = 0;
-	numOfSmallAsteroids = 0;
+	levelnumber = 0;
+	numoflargeasteroids = 0;
+	numofsmallasteroids = 0;
 }
 
 
 void levelObj::AdvanceLevelByOne()
 {
-	levelNumber++;
+	levelnumber++;
 
-	switch (levelNumber) {
+	switch (levelnumber) {
 
 	case 1:
-		numOfLargeAsteroids = 3;
-		numOfSmallAsteroids = numOfLargeAsteroids * 2;
+		numoflargeasteroids = 3;
+		numofsmallasteroids = numoflargeasteroids * 2;
 		
 		break;
 	case 2:
-		numOfLargeAsteroids = 2;
-		numOfSmallAsteroids = numOfLargeAsteroids * 2;
+		numoflargeasteroids = 2;
+		numofsmallasteroids = numoflargeasteroids * 2;
 		
 		break;
 	case 3:
-		numOfLargeAsteroids = 3;
-		numOfSmallAsteroids = numOfLargeAsteroids * 2;
+		numoflargeasteroids = 3;
+		numofsmallasteroids = numoflargeasteroids * 2;
 		
 		break;
 	case 4:
-		numOfLargeAsteroids = 4;
-		numOfSmallAsteroids = numOfLargeAsteroids * 2;
+		numoflargeasteroids = 4;
+		numofsmallasteroids = numoflargeasteroids * 2;
 		
 		break;
 	case 5:

@@ -8,18 +8,18 @@ public:
 	
 	void AdvanceLevelByOne();
 	
-	int GetNumLargeAsteroids(){return numOfLargeAsteroids;}
+	int GetNumLargeAsteroids(){return numoflargeasteroids;}
 
-	int GetNumSmallAsteroids(){return numOfSmallAsteroids;}
+	int GetNumSmallAsteroids(){return numofsmallasteroids;}
 
 	static int GetMaxNumBullets(){return maxBullets;}
 
 
 private:
 
-	int levelNumber;
-	int numOfSmallAsteroids;
-	int numOfLargeAsteroids;
+	int levelnumber;
+	int numofsmallasteroids;
+	int numoflargeasteroids;
 
 
 

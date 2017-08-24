@@ -7,10 +7,10 @@
 
 
 score::score(int xpos, int ypos )
-:scoreAmount(0)
+:scoreamount(0)
 {
-	scorePosition.x = xpos;
-	scorePosition.y = ypos;
+	scoreposition.x = xpos;
+	scoreposition.y = ypos;
 }
 
 
@@ -24,17 +24,17 @@ void score::SetFont(sf::Font & theFont)
 
 void score::SetScore(int score)
 {
-	scoreAmount = score;
+	scoreamount = score;
 }
 
 void score::SetXForScore(int x)
 {
-	scorePosition.x = x;
+	scoreposition.x = x;
 
 }
 void score::SetYForScore(int y)
 {
-	scorePosition.y = y;
+	scoreposition.y = y;
 }
 
 
@@ -49,7 +49,7 @@ void  score::DrawScore(int score)
 	textMessage.setFillColor(sf::Color::Red);
 	textMessage.setStyle(sf::Text::Bold);
 	textMessage.setPosition(10, 50);
-	scoreAmount = score;
+	scoreamount = score;
 	textMessage.setString(scoreString);
 
 	
@@ -59,7 +59,7 @@ void  score::DrawScore(int score)
 //draws the current score (used after addToScore)
 void score::DrawScore()
 {
-	DrawScore(scoreAmount);
+	DrawScore(scoreamount);
 	
 }
 
@@ -67,7 +67,7 @@ void score::DrawScore()
 
 void score::AddToScore(int addAmount)
 {
-	scoreAmount += addAmount;
+	scoreamount += addAmount;
 
 
 	
@@ -78,7 +78,7 @@ void score::AddToScore(int addAmount)
 void score::ResetScore()
 {
 
-	scoreAmount = 0;
+	scoreamount = 0;
 
 }
 

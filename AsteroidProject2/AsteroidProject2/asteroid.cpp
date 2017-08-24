@@ -8,17 +8,17 @@
 
 
 
-asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largerTextureForAsteroid, asteroidType theAsteroidType)
+asteroid::asteroid(int theWidth, int theHeight, sf::Texture & largertextureforasteroid, asteroidType theasteroidtype)
 {
 
 	activated = instantiated;
 	height = theHeight;
 	width = theWidth;
-	anAsteroid.setTexture(largerTextureForAsteroid);
+	anAsteroid.setTexture(largertextureforasteroid);
 	//initialized, no -1 available, so set to down.  Smaller asteroids won't use this setting.
 	whichdirection = asteroidMovement::DOWN;
 	fromThisborder = -1;
-	type = theAsteroidType;
+	type = theasteroidtype;
 }
 
 void asteroid::MoveAsteroid()
@@ -42,14 +42,14 @@ void asteroid::MoveAsteroid()
 //appears on the screen than as an onscreen activation but it will use 
 //this function when the asteroid goes off screen and it's activation is
 //set to offscreen.
-void asteroid::SetInitialAsteroid(int fromThisBorder) {
+void asteroid::SetInitialAsteroid(int fromthisborder) {
 
 	
 	//technically these asteroids are behind the border by their width or height but they've been
 	//set to onscreen so they are ready to be checked for collisions now.
 	SetActivate(onscreen);
 	//uses enum class object declared in asteroid.h (on top of header file)
-	whichdirection = directions[fromThisBorder][std::rand() % 3];
+	whichdirection = directions[fromthisborder][std::rand() % 3];
 	//sets the deltax and deltay from this random direction
 	SetDeltaWithDirection(whichdirection);
 	
@@ -59,7 +59,7 @@ void asteroid::SetInitialAsteroid(int fromThisBorder) {
 	//the initial placement for x and y is totally off the screen.  that means for left and top
 	//there must be subtraction of width of heigh from zero on the screen rectangle
 	//from top border
-	if (fromThisBorder == 0)
+	if (fromthisborder == 0)
 	{
 		
 		//if x is the maximum amount plus one than object starts behind the edge by its width
@@ -74,7 +74,7 @@ void asteroid::SetInitialAsteroid(int fromThisBorder) {
 		y = 0;
 	}
 	//from right border
-	else if (fromThisBorder == 1)
+	else if (fromthisborder == 1)
 	{
 		x = G_SCREEN_WIDTH - width;
 		//if y is the maximum amount plus one start the object one height behind the top
@@ -86,7 +86,7 @@ void asteroid::SetInitialAsteroid(int fromThisBorder) {
 
 	}
 	//from bottom border
-	else if (fromThisBorder == 2)
+	else if (fromthisborder == 2)
 	{
 		//if x is the maximum amount plus one than object starts behind the edge by its width
 		x = rand() % G_SCREEN_WIDTH;
@@ -99,7 +99,7 @@ void asteroid::SetInitialAsteroid(int fromThisBorder) {
 		y = G_SCREEN_HEIGHT - height;
 	}
 	//from left border
-	else if (fromThisBorder == 3) 
+	else if (fromthisborder == 3) 
 	{
 		//makes image just off the screen.
 		x = 0;
@@ -118,10 +118,10 @@ void asteroid::SetInitialAsteroid(int fromThisBorder) {
 }
 
 //takes an enumeration of stateofassteroid
-void asteroid::SetActivate(int activateFlag) 
+void asteroid::SetActivate(int activateflag) 
 {
 
-	activated = activateFlag;
+	activated = activateflag;
 
 }
 
@@ -147,14 +147,14 @@ void::asteroid::SetTexture(sf::Texture & texture)
 
 
 //called twice, first higher than lower
-void asteroid::SetDeltaWithDirection(asteroidMovement & theDirection)
+void asteroid::SetDeltaWithDirection(asteroidMovement & thedirection)
 {
 
 	//sets the change in x and the change in y (delta) for computing movement.  Of course x is horizonatl andh y
 	//is vertical.
 
 	//upper 
-	switch (theDirection) {
+	switch (thedirection) {
 
 	case asteroidMovement::UP:
 	case asteroidMovement::DOWN:
@@ -175,7 +175,7 @@ void asteroid::SetDeltaWithDirection(asteroidMovement & theDirection)
 		break;
 	}
 
-	switch (theDirection) {
+	switch (thedirection) {
 
 	case asteroidMovement::LEFT:
 	case asteroidMovement::RIGHT:

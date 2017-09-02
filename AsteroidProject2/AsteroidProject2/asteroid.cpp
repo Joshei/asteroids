@@ -25,7 +25,7 @@ void asteroid::MoveAsteroid()
 {
 
 
-	anAsteroid.move(sf::Vector2f(deltax, deltay));
+	//anAsteroid.move(sf::Vector2f(deltax, deltay));
 	x = x + deltax;
 	y = y + deltay;
 

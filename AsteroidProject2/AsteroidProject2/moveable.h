@@ -9,7 +9,9 @@ class moveableObject
 
 public:
 
-	
+	int prevx;
+	int prevy;
+
 
 	moveableObject();
 

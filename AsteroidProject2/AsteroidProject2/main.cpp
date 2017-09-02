@@ -40,14 +40,15 @@ void checkForAsteroidOffScreen();
 void shutdown(int exitNum);
 void fillAsteroidVector(int numOfAsteroid , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
 void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAstroid);
-void moveasteroids();
+void MoveAsteroids();
 void reinitializeOffscreenAsteroids();
 void fillBulletVector(int numberOfBullets, sf::Texture & textureOfBullet);
 void refillAsteroidVectors(int createThisManyAsteroids, int theWidth, int theHeight, asteroidType asteroidType, sf::Texture & theTexture);
 void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, asteroidMovement & smallAsteroidDirection1, asteroidMovement & smallAsteroidDirection2);
-
-
-
+void setallasteroidsprev();
+void PositionAsteroidsAndDraw(int theinterpolation);
+void PositionBulletsAndDraw(int interpolation);
+void SetAllBulletsPrev();
 /////////!!!!!!!!!!!!!!!!!!
 
 
@@ -89,6 +90,8 @@ void drawShip(){
 int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 {
 
+	
+
 	//delta amountForMovement of ship:
 	
 	//up :   -3
@@ -123,7 +126,7 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 	//is off screen returns false
 	if (checkForShipOnBorder(x, y) == false)
 	{
-		drawShip();
+//		drawShip();
 		return (-1);
 	}
 
@@ -133,11 +136,11 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 	
 	//SFML moves to the new location changing the ships postion by these two numbers.  X and Y are 
 	//still computed above though, for collisions and offscreen detection.
-	shipObject.GetShipImage().move(sf::Vector2f(deltaX, deltaY));
+	//shipObject.GetShipImage().move(sf::Vector2f(deltaX, deltaY));
 	
 
-	drawShip();
-
+	//drawShip();
+	
 	return(1);
 }
 
@@ -152,6 +155,7 @@ bool checkkeyboard()
 	//bullets.  All together the asteroids, bullets, and ship speeds set up the relative 
 	//distance-by-movement.  (they can move at different speeds!)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))  { moveShip(-3, left); }
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) { exit(22); }
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) { moveShip(3, right); }
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))	 { moveShip(-3, up); }
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))  { moveShip(3, down ); }
@@ -326,6 +330,16 @@ int shoot()
 				int centerBulletWidth = .5* bulletIndex.GetWidth();
 				
 
+
+				//bullet & bulletIndex = bullets[numOfBulletIndex];
+				//bullets[0].GetBulletImage().setPosition(test);
+				//test1 = bullets[0].GetBulletImage().getPosition();
+
+				//bulletIndex.GetBulletImage().setPosition((shipObject.GetX() + centerShipWidth - centerBulletWidth),
+				//(-100 + shipObject.GetY() + shipObject.GetHeight()));
+
+
+
 				//bullet center of ship
 				bulletIndex.SetX(shipObject.GetX() + centerShipWidth - centerBulletWidth);
 				
@@ -447,15 +461,60 @@ void movebullets()
 		if (bullets[i].GetIsactive()) 
 		{
 			//changes the postion for the draw function in this function
-			bullets[i].GetBulletImage().move(sf::Vector2f(bullets[i].GetDeltaX(), bullets[i].GetDeltaY()));
+			//bullets[i].GetBulletImage().move(sf::Vector2f(bullets[i].GetDeltaX(), bullets[i].GetDeltaY()));
 
 			//changes x and y for detection of collision and offscreen
 			bullets[i].SetX(bullets[i].GetX() + bullets[i].GetDeltaX());
 			bullets[i].SetY(bullets[i].GetY() + bullets[i].GetDeltaY());
 
 			
-			returnValue = checkForBulletOffscreen(i);
+			//returnValue = checkForBulletOffscreen(i);
 			
+			//bullet not offscreen (is onscreen)
+			//if (returnValue == false)
+			//{
+				//SFML code from web site tutorial
+			//	window.draw(bullets[i].GetBulletImage());
+			//}
+		}
+	}
+
+
+	
+}
+
+
+
+////////////////////////////////
+
+//move the bullets and if still on screen draw them
+void PositionBulletsAndDraw(int interpolation)
+{
+
+	bool returnValue = false;
+
+	//static function
+	for (int i = 0; i < levelObj::GetMaxNumBullets(); i++)
+	{
+
+		if (bullets[i].GetIsactive())
+		{
+			//changes the postion for the draw function in this function
+			//bullets[i].GetBulletImage().move(sf::Vector2f(bullets[i].GetDeltaX(), bullets[i].GetDeltaY()));
+
+
+
+			bullets[i].GetBulletImage().setPosition(sf::Vector2f((bullets[i].prevx + ((bullets[i].GetX() - bullets[i].prevx)* interpolation)),
+				(bullets[i].prevy + ((bullets[i].GetY() - bullets[i].prevy) * interpolation))));
+
+
+			//changes x and y for detection of collision and offscreen
+			//bullets[i].SetX(bullets[i].GetX() + bullets[i].GetDeltaX());
+			//bullets[i].SetY(bullets[i].GetY() + bullets[i].GetDeltaY());
+
+
+			returnValue = checkForBulletOffscreen(i);
+
 			//bullet not offscreen (is onscreen)
 			if (returnValue == false)
 			{
@@ -466,8 +525,35 @@ void movebullets()
 	}
 
 
-	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////
+
+
+
+
+
+
 
 //if the bullet is off the screen it is set as inactive so that it will not be drawn
 //The drawing function will check to see if the bullet is still active.  if the bullet
@@ -698,7 +784,7 @@ void createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	smallAsteroid2.SetY(largeAsteroidTop + ((largeAsteroidHeight - smallAsteroid2Height) / 2));
 
 
-//initializations for setposition right below.
+	//initializations for setposition right below.
 	int x1 = asteroidCollection[indexNextSmallerAsteroid1].GetX();
 	int y1 = asteroidCollection[indexNextSmallerAsteroid1].GetY();
 	int x2 = asteroidCollection[indexNextSmallerAsteroid2].GetX();
@@ -772,8 +858,10 @@ bool checkAllAsteroidsDestroyed()
 //It could also be on the screen ..."onscreen"
 //if it is a small asteroid it is onscreen if it has been created with :
 //createsmallasteroids.
-void moveasteroids()
+void MoveAsteroids()
 {
+
+	
 
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
@@ -781,10 +869,17 @@ void moveasteroids()
 		if (asteroidCollection[i].GetActivate() == onscreen)
 		{
 
-
+			
 
 			asteroidCollection[i].MoveAsteroid();
-			window.draw(asteroidCollection[i].GetSprite());
+
+			
+			//asteroidCollection[i].GetSprite().setPosition(100, 100);
+			//asteroidCollection[i].GetSprite().setPosition(sf::Vector2f((asteroidCollection[i].prevx + ((asteroidCollection[i].GetX() - asteroidCollection[i].prevx)* interpolation)),
+			//(asteroidCollection[i].prevy + ((asteroidCollection[i].GetY() - asteroidCollection[i].prevy) * interpolation))));
+
+			
+			//window.draw(asteroidCollection[i].GetSprite());
 
 
 		}
@@ -794,6 +889,30 @@ void moveasteroids()
 
 
 	
+}
+
+
+void PositionAsteroidsAndDraw(int interpolation)
+{
+	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
+	{
+
+		if (asteroidCollection[i].GetActivate() == onscreen)
+		{
+
+			//asteroidCollection[i].GetSprite().setPosition(100, 100);
+			asteroidCollection[i].GetSprite().setPosition(sf::Vector2f((asteroidCollection[i].prevx + ((asteroidCollection[i].GetX() - asteroidCollection[i].prevx)* interpolation)),
+			(asteroidCollection[i].prevy + ((asteroidCollection[i].GetY() - asteroidCollection[i].prevy) * interpolation))));
+
+
+			window.draw(asteroidCollection[i].GetSprite());
+
+
+		}
+
+
+	}
+
 }
 
 
@@ -842,25 +961,70 @@ void fillBulletVector (int numOfBullets, sf::Texture & texture)
 	
 }
 
+void setallasteroidsprev()
+{
+
+	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
+	{
+
+		if (asteroidCollection[i].GetActivate() == onscreen)
+		{
+			asteroidCollection[i].prevx = asteroidCollection[i].GetX();
+			asteroidCollection[i].prevy = asteroidCollection[i].GetY();
 
 
+		}
+	}
+
+}
+
+
+
+
+
+bool moveshipvar = true;
+const float ticksPerSecond = 40.f;
+const float skipTicks = 1000.f / ticksPerSecond;
+sf::Clock mainClock;
+
+
+float interpolation = 0.f;
 
 
 
 int main(void)
 {
+
+
+	const float SKIP_TICKS = skipTicks;
+
+	/*
+	if (!texturebullet.loadFromFile("bullet.png"))
+	{
+		shutdown(-8);
+	}
+	bullets.push_back(bullet(texturebullet, 16, 16));
+
+	sf::Vector2f test(10, 10);
+	sf::Vector2f test1(10, 10);
+	bullets[0].GetBulletImage().setPosition(test);
+	bullets[0].GetBulletImage().move(5,5);
+
+	bullets[0].GetBulletImage().setPosition(test);
+	test1 = bullets[0].GetBulletImage().getPosition();
+
 	//int x = 0;
 	//while (1) {
 	//	x = rand() % G_SCREEN_WIDTH;
 	//	if (x == 1000)break;
 	//}
 
-/*
+
 	int a = 0;
 	for (int i = 0; i<= 10; i++)
 	{
-		
-		
+
+
 		if (1) {
 
 
@@ -875,163 +1039,233 @@ int main(void)
 
 
 		a = 4;
-	
+
 	}
 
 	*/
 
 	//seeds the time for random direction and postion of asteroids right before drawing on screen
-	std::srand(time(NULL));
-	
+std::srand(time(NULL));
 
-	int tempFlagForTest = 0;
-	FreeConsole();
 
-	
-	if (!largerTextureAsteroid.loadFromFile("largerasteroid.png"))
-	{
-		shutdown(-6);
-	}
+int tempFlagForTest = 0;
+FreeConsole();
 
-	
-	if (!smallerTextureAsteroid.loadFromFile("smallerasteroid.png"))
-	{
-		shutdown(-7);
-	}
 
-	
-	if (!texturebullet.loadFromFile("bullet.png"))
-	{
-		shutdown(-8);
-	}
+if (!largerTextureAsteroid.loadFromFile("largerasteroid.png"))
+{
+	shutdown(-6);
+}
 
-	
-	if (!fontForScore.loadFromFile("ARIALBD.ttf"))
-	{
-		shutdown(-9);
-	}
 
-	
-	
-	//create vector fills the object with a random entry border (0-3)
-	//Uses setInitialAsteroid. third and fourth argument is width an than height
-	
-	//creates vector with asteroids - order (large and small) is not important
-	fillAsteroidVector(levelObject.GetNumLargeAsteroids(), 64, 64, larger, largerTextureAsteroid);
-	fillAsteroidVector(levelObject.GetNumSmallAsteroids(), 32, 32, smaller, smallerTextureAsteroid);
-	
-	
-	//this will set the vector to 10 bullets index  of 9 of course
-	fillBulletVector(levelObject.GetMaxNumBullets(), texturebullet);
-	theScore.SetFont(fontForScore);
+if (!smallerTextureAsteroid.loadFromFile("smallerasteroid.png"))
+{
+	shutdown(-7);
+}
 
-	//initial ship draw
-	drawShip();
 
-	//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
-	//this will setlevelto one because it is zero before call.
-	levelObject.AdvanceLevelByOne();
+if (!texturebullet.loadFromFile("bullet.png"))
+{
+	shutdown(-8);
+}
 
-	while (window.isOpen() )
+
+if (!fontForScore.loadFromFile("ARIALBD.ttf"))
+{
+	shutdown(-9);
+}
+
+
+
+//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
+//this will setlevelto one because it is zero before call.
+levelObject.AdvanceLevelByOne();
+
+
+
+
+
+//create vector fills the object with a random entry border (0-3)
+//Uses setInitialAsteroid. third and fourth argument is width an than height
+
+//creates vector with asteroids - order (large and small) is not important
+fillAsteroidVector(levelObject.GetNumLargeAsteroids(), 64, 64, larger, largerTextureAsteroid);
+fillAsteroidVector(levelObject.GetNumSmallAsteroids(), 32, 32, smaller, smallerTextureAsteroid);
+
+
+//this will set the vector to 10 bullets index  of 9 of course
+fillBulletVector(levelObject.GetMaxNumBullets(), texturebullet);
+theScore.SetFont(fontForScore);
+
+//initial ship draw
+drawShip();
+
+
+
+
+
+double sleep_time = 0;
+
+
+//double currenttime = GetTickCount();
+//double accum = 0.9;
+//int nexttick = 0;
+
+
+//float firstTime = (float)GetTickCount();
+//float next_game_tick = 0;
+
+
+
+
+
+
+
+
+double nextTick = mainClock.restart().asMilliseconds();
+
+	//next_game_tick = GetTickCount();
+	while (window.isOpen())
 	{
 		
-		while (window.pollEvent(event))
+		setallasteroidsprev();
+		SetAllBulletsPrev();
+
+		shipObject.prevx = shipObject.GetX();
+		shipObject.prevy = shipObject.GetY();
+		
+
+		while (mainClock.getElapsedTime().asMilliseconds() > nextTick)
 		{
-	
-			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::M))
-			{
-				shipObject.RotateShipClock();
-			}
+			
+			
+			
 
-			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::N))
+			while (window.pollEvent(event))
 			{
-				shipObject.RotateShipCClock();
-			}
 
-			if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))
-			{ 
-				shoot();
+				if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::M))
+				{
+					shipObject.RotateShipClock();
+				}
+
+				if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::N))
+				{
+					shipObject.RotateShipCClock();
+				}
+
+				if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Space))
+				{
+					shoot();
+				}
+
+
+				if (event.type == sf::Event::Closed)
+				{
+					window.close();
+				}
 			}
 
 			
-			if (event.type == sf::Event::Closed)
+
+
+			
+			//checks keyboard and if pressed calls moveship with the deltas otherwise calls moveship
+			//with - 1 which causes sliding effect
+			if (checkkeyboard() == false)
 			{
-				window.close();
+
+				
+				//also checks if movement would be beyond border is so returns -1
+				moveShip(-1);
+				
+				//window.draw(shipObject.GetShipImage());
 			}
+
+			
+			MoveAsteroids();
+			movebullets();
+			//window.clear();
+			//window.draw(shipObject.GetShipImage());
+			//window.draw(asteroidCollection[1].GetSprite());
+
+
+
+			nextTick += skipTicks;
+			//moveShip(-1);
+			
+
 		}
 
 
-		window.clear();
-		
+///////////////////////////////////
 
-		//if the asteroids are not on the screen they will not be moved.  draws the asteroid too.
-		moveasteroids();
+
+
+			//if the asteroids are not on the screen they will not be moved.  draws the asteroid too.
+			//moveasteroids();
+
+			
+
 		
-		//checks keyboard and if pressed calls moveship with the deltas otherwise calls moveship
-		//with - 1 which causes sliding effect
-		if (checkkeyboard() == false)
-		{
-			//also checks if movement would be beyond border is so returns -1
-			moveShip(-1);
-		}
 
 
 		checkCollisionsShipWithAsteroids();
-		
-		
-		
+
+
+
 		//draws bullets too...
-		movebullets();
-		
-		
-		
+	//	movebullets();
+
+
+
 		checkCollisionsaAllBulletsWithAnAsteroids();
-	   
+
 
 		//if 1 is returned than all those asteroids are destroyed and reinitializeation and new asteroids are created
 		//and a new level is started
 		if (checkAllAsteroidsDestroyed() == true)
 		{
-			
+
 			//holds this levels value because they are changed in advanceLevelByOne for RefillAsteroidVector
 			int oldLevelsSmallAsteroidAmt = levelObject.GetNumSmallAsteroids();
 			int oldLevelsLargeAsteroidAmt = levelObject.GetNumLargeAsteroids();
 
-				
+
 			//new amounts of new asteroids are set in getNumSmallAsteroids() and getNumLargeAsteroids
 			//this function can shutdown program
 			levelObject.AdvanceLevelByOne();
-				
 
 
 
 
 
-				
 
-				//fills one asteroid collection with two statements.
-				//oldLevels... getNumSmallAsteroids() and .getNumLargeAsteroids() are new levels values
-				//the new levels minus the old levels gives us the new asteroids to create
-				int createThisAmtAsteroids = (levelObject.GetNumLargeAsteroids() - oldLevelsLargeAsteroidAmt);
-				//creates the newly created asteroids with push_back and reinitializes the older asteroids
-				//with a new active setting - order (small and large not important)
-				refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, largerTextureAsteroid);
-				//see right above
-				createThisAmtAsteroids = levelObject.GetNumSmallAsteroids() - oldLevelsSmallAsteroidAmt;
-				//same as above : just a smaller asteroid group for the collection
-				refillAsteroidVectors(createThisAmtAsteroids, 32, 32, smaller, smallerTextureAsteroid);
 
-				
-			}
+
+			//fills one asteroid collection with two statements.
+			//oldLevels... getNumSmallAsteroids() and .getNumLargeAsteroids() are new levels values
+			//the new levels minus the old levels gives us the new asteroids to create
+			int createThisAmtAsteroids = (levelObject.GetNumLargeAsteroids() - oldLevelsLargeAsteroidAmt);
+			//creates the newly created asteroids with push_back and reinitializes the older asteroids
+			//with a new active setting - order (small and large not important)
+			refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, largerTextureAsteroid);
+			//see right above
+			createThisAmtAsteroids = levelObject.GetNumSmallAsteroids() - oldLevelsSmallAsteroidAmt;
+			//same as above : just a smaller asteroid group for the collection
+			refillAsteroidVectors(createThisAmtAsteroids, 32, 32, smaller, smallerTextureAsteroid);
+
+
+		}
 
 
 		//sets asteroids to offscreen if they are
 		checkForAsteroidOffScreen();
-		
-		
+
+
 		//check for all asteroids offscreen and if so set them up for moving behind the four screen borders
 		reinitializeOffscreenAsteroids();
-		
+
 
 		//initial score text is drawn here until there is a score and than set and drawm elsewhere
 		//(checkCollisionWithAllBullets...)
@@ -1041,11 +1275,65 @@ int main(void)
 		}
 
 
-		window.draw(theScore.getTextMessage());
 
-		Sleep(10);
+
+
+	
+	
+		   
 		
+			//moveShip();
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////
+
+
+
+
+
+		window.clear();
+		interpolation = float(((mainClock.getElapsedTime().asMilliseconds() + SKIP_TICKS)  - (nextTick)) / (SKIP_TICKS) );
+
+		
+		
+		//asteroidCollection[0].GetSprite().setPosition(sf::Vector2f((asteroidCollection[0].prevx + ((asteroidCollection[0].GetX() - asteroidCollection[0].prevx)* interpolation)),
+		//	(asteroidCollection[0].prevy + ((asteroidCollection[0].GetY() - asteroidCollection[0].prevy) * interpolation))));
+
+
+		PositionAsteroidsAndDraw(interpolation);
+		PositionBulletsAndDraw(interpolation);
+
+
+		shipObject.GetShipImage().setPosition(sf::Vector2f ((shipObject.prevx  + ((shipObject.GetX() - shipObject.prevx)* interpolation)),
+			(shipObject.prevy + ((shipObject.GetY() - shipObject.prevy) * interpolation))));
+		
+		//window.draw(asteroidCollection[0].GetSprite());
+		 
+
+		int ggg = shipObject.prevx;
+		int gg = shipObject.prevy;
+		int z = shipObject.GetX();
+		int zz = shipObject.GetY();
+
+		
+		//working
+		
+		window.draw(shipObject.GetShipImage());
+		
+		window.draw(theScore.getTextMessage());
 		window.display();
+
 		
 	}
 
@@ -1153,5 +1441,22 @@ void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, as
 	default:
 		break;
 	}
+}
+
+void SetAllBulletsPrev()
+{
+
+	for (std::size_t i = 0; i < bullets.size(); i++)
+	{
+
+		if (bullets[i].GetIsactive())
+		{
+			bullets[i].prevx = bullets[i].GetX();
+			bullets[i].prevy = bullets[i].GetY();
+
+
+		}
+	}
+
 }
 

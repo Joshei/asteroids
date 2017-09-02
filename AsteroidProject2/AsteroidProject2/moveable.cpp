@@ -8,6 +8,8 @@ moveableObject::moveableObject()
 	//also screen non intercept
 	thisrect = { 0,0,0,0 };
 	otherrect = { 0,0,0,0 };
+	prevx = 500;
+	prevy = 500;
 }
 //checks for collision of two moveable objects by calling intersectsWithRectangles function. Returns
 //bool value for if collides

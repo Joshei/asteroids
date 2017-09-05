@@ -8,8 +8,8 @@ moveableObject::moveableObject()
 	//also screen non intercept
 	thisrect = { 0,0,0,0 };
 	otherrect = { 0,0,0,0 };
-	prevx = 500;
-	prevy = 500;
+	//prevx = 500;
+	//prevy = 500;
 }
 //checks for collision of two moveable objects by calling intersectsWithRectangles function. Returns
 //bool value for if collides
@@ -111,4 +111,15 @@ void moveableObject::SetWidth(int inwidth)
 void moveableObject::SetHeight(int inheight)
 {
 	height = inheight;
+}
+
+//these two set functions hold the prev x and y postions so that the main loop can interpolate correctly 
+void moveableObject::SetPrevX(int inprevx)
+{
+	prevx = inprevx;
+}
+void moveableObject::SetPrevY(int inprevy)
+{
+	prevy = inprevy;
+
 }

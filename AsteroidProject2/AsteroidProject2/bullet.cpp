@@ -8,7 +8,7 @@
 
 
 
-bullet::bullet( sf::Texture & textureBullet, int bulheight, int bulwidth )
+bullet::bullet( sf::Texture & textureBullet, int bulwidth, int bulheight )
 {
 	height = bulheight;
 	width =  bulwidth;

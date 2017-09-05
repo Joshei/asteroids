@@ -9,8 +9,7 @@ class moveableObject
 
 public:
 
-	int prevx;
-	int prevy;
+	
 
 
 	moveableObject();
@@ -20,13 +19,18 @@ public:
 	bool IntersectsWithRectangles(RECT & thisrect , RECT & otherrect);
 	bool IntersectsWithScreenRect(int displaywidth, int displayheight);
 	
-	void SetX(int inX);
-	void SetY(int inY);
+	void SetX(int inx);
+	void SetY(int iny);
 	void SetDeltaX(int  indeltax);
 	void SetDeltaY(int indeltay);
 	
 	void SetWidth(int inwidth);
 	void SetHeight(int inheight);
+
+	void SetPrevX(int inprevx);
+	void SetPrevY(int inprevy);
+
+
 
 
 	//inlines
@@ -42,7 +46,8 @@ public:
 
 	int GetWidth(){return width;}
 
-	
+	int GetPrevX(){return prevx;}
+	int GetPrevY(){return prevy;}
 
 protected:
 
@@ -52,11 +57,15 @@ protected:
 	int deltax;
 	int deltay;
 	int width;
+
+
 	int height;
 	
 	int x;
 	int y;
 	
+	int prevx;
+	int prevy;
 
 	
 };

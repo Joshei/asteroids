@@ -163,12 +163,12 @@ void asteroid::SetDeltaWithDirection(asteroidMovement & thedirection)
 	case asteroidMovement::LEFT:
 	case asteroidMovement::UP_LEFT:
 	case asteroidMovement::DOWN_LEFT:
-		deltax = -1;
+		deltax = -3;
 		break;
 	case asteroidMovement::RIGHT:
 	case asteroidMovement::UP_RIGHT:
 	case asteroidMovement::DOWN_RIGHT:
-		deltax = 1;
+		deltax = 3;
 		break;
 	default:
 		exit(-1);
@@ -184,16 +184,16 @@ void asteroid::SetDeltaWithDirection(asteroidMovement & thedirection)
 	case asteroidMovement::UP:
 	case asteroidMovement::UP_LEFT:
 	case asteroidMovement::UP_RIGHT:
-		deltay = -1;
+		deltay = -3;
 		break;
 	case asteroidMovement::DOWN:
 	case asteroidMovement::DOWN_LEFT:
 	case asteroidMovement::DOWN_RIGHT:
-		deltay = 1;
+		deltay = 3;
 		break;
 		
 	default:
-		exit(-1);
+		exit(-2);
 
 		break;
 

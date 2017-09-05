@@ -40,10 +40,10 @@ void levelObj::AdvanceLevelByOne()
 		break;
 	case 5:
 	
-		exit(-1);
+		exit(-3);
 		break;
 	default:
-		exit(-1);
+		exit(-4);
 		break;
 
 	}

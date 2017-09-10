@@ -28,10 +28,10 @@ void asteroid::MoveAsteroid()
 
 
 	//anAsteroid.move(sf::Vector2f(deltax, deltay));
-	vectorposition.x = vectorposition.x + deltax;
-	vectorposition.y = vectorposition.y + deltay;
-	vectorprevposition.x = vectorposition.x;
-	vectorprevposition.y = vectorposition.y;
+	Vectorposition.x = Vectorposition.x + deltax;
+	Vectorposition.y = Vectorposition.y + deltay;
+	Vectorprevposition.x = Vectorposition.x;
+	Vectorprevposition.y = Vectorposition.y;
 
 
 }
@@ -66,20 +66,20 @@ void asteroid::SetInitialAsteroid(int fromthisborder) {
 	{
 		
 		//if x is the maximum amount plus one than object starts behind the edge by its width
-		vectorposition.x = rand() % G_SCREEN_WIDTH;
+		Vectorposition.x = rand() % G_SCREEN_WIDTH;
 		
-		if (vectorposition.x > G_SCREEN_WIDTH - width)
+		if (Vectorposition.x > G_SCREEN_WIDTH - width)
 		{
-			vectorposition.x = G_SCREEN_WIDTH - width;
+			Vectorposition.x = G_SCREEN_WIDTH - width;
 		}
 
 
-		vectorposition.y = 0;
+		Vectorposition.y = 0;
 
 
 		
-		vectorprevposition.y = vectorposition.y;
-		vectorprevposition.x = vectorposition.x;
+		Vectorprevposition.y = Vectorposition.y;
+		Vectorprevposition.x = Vectorposition.x;
 		
 
 
@@ -87,17 +87,17 @@ void asteroid::SetInitialAsteroid(int fromthisborder) {
 	//from right border
 	else if (fromthisborder == 1)
 	{
-		vectorposition.x = G_SCREEN_WIDTH - width;
+		Vectorposition.x = G_SCREEN_WIDTH - width;
 		//if y is the maximum amount plus one start the object one height behind the top
-		vectorposition.y = rand() % G_SCREEN_HEIGHT;
-		if (vectorposition.y > (G_SCREEN_HEIGHT - height))
+		Vectorposition.y = rand() % G_SCREEN_HEIGHT;
+		if (Vectorposition.y > (G_SCREEN_HEIGHT - height))
 		{
-			vectorposition.y = G_SCREEN_HEIGHT - height;
+			Vectorposition.y = G_SCREEN_HEIGHT - height;
 		}
 
 
-		vectorprevposition.y = vectorposition.y;
-		vectorprevposition.x = vectorposition.x;
+		Vectorprevposition.y = Vectorposition.y;
+		Vectorprevposition.x = Vectorposition.x;
 
 
 	}
@@ -105,17 +105,17 @@ void asteroid::SetInitialAsteroid(int fromthisborder) {
 	else if (fromthisborder == 2)
 	{
 		//if x is the maximum amount plus one than object starts behind the edge by its width
-		vectorposition.x = rand() % G_SCREEN_WIDTH;
-		if (vectorposition.x > G_SCREEN_WIDTH - width )
+		Vectorposition.x = rand() % G_SCREEN_WIDTH;
+		if (Vectorposition.x > G_SCREEN_WIDTH - width )
 		{
-			vectorposition.x = G_SCREEN_WIDTH - width;
+			Vectorposition.x = G_SCREEN_WIDTH - width;
 		}
 		
 
-		vectorposition.y = G_SCREEN_HEIGHT - height;
+		Vectorposition.y = G_SCREEN_HEIGHT - height;
 
-		vectorprevposition.y = vectorposition.y;
-		vectorprevposition.x = vectorposition.x;
+		Vectorprevposition.y = Vectorposition.y;
+		Vectorprevposition.x = Vectorposition.x;
 
 
 
@@ -124,18 +124,18 @@ void asteroid::SetInitialAsteroid(int fromthisborder) {
 	else if (fromthisborder == 3) 
 	{
 		//makes image just off the screen.
-		vectorposition.x = 0;
+		Vectorposition.x = 0;
 		//if y is the maximum amount plus one start the object one height behind the top
-		vectorposition.y = std::rand() % G_SCREEN_HEIGHT;
-		if (vectorposition.y > (G_SCREEN_HEIGHT - height))
+		Vectorposition.y = std::rand() % G_SCREEN_HEIGHT;
+		if (Vectorposition.y > (G_SCREEN_HEIGHT - height))
 		{
-			vectorposition.y = G_SCREEN_HEIGHT - height;
+			Vectorposition.y = G_SCREEN_HEIGHT - height;
 		}
 
 
 
-		vectorprevposition.y = vectorposition.y;
-		vectorprevposition.x = vectorposition.x;
+		Vectorprevposition.y = Vectorposition.y;
+		Vectorprevposition.x = Vectorposition.x;
 
 	}
 

@@ -349,7 +349,7 @@ int shoot()
 				float centerBulletWidth = .5* bulletIndex.GetWidth();
 				
 
-				int y = shipObject.GetX();
+				
 				//bullet positioned at  center of ship horizontally
 				bulletIndex.SetX(shipObject.GetX() + centerShipWidth - centerBulletWidth);
 				
@@ -807,12 +807,7 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 
 	
 
-	//asteroidCollection[indexNextSmallerAsteroid1].SetX(400);
-	//asteroidCollection[indexNextSmallerAsteroid1].SetY(400);
-
-	//asteroidCollection[indexNextSmallerAsteroid2].SetX(300);
-	//asteroidCollection[indexNextSmallerAsteroid2].SetY(300);
-
+	
 
 
 	//initializations for setposition right below.

@@ -12,8 +12,8 @@ extern void shutdown(int exitValue);
 //the other mentioned cpps have the texture passed in as a refernce
 ship::ship(int positionx, int positiony, theDirection  shipdirection) 
 {
-	vectorposition.x = positionx;
-	vectorposition.y = positiony;
+	Vectorposition.x = positionx;
+	Vectorposition.y = positiony;
 	//these are the dimensions for all of the images of ther ship in different facing directions
 	height = 64;
 	width = 64;

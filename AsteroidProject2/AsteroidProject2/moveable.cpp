@@ -16,46 +16,46 @@ moveableObject::moveableObject()
 }
 //checks for collision of two moveable objects by calling intersectsWithRectangles function. Returns
 //bool value for if collides
-bool moveableObject::Intersects(moveableObject & other)
+bool moveableObject::Intersects(moveableObject & Other)
 {
-	thisrect.left = vectorposition.x;
-	thisrect.top = vectorposition.y;
-	thisrect.right = vectorposition.x + width;
-	thisrect.bottom = vectorposition.y + height;
+	thisrect.left = Vectorposition.x;
+	thisrect.top = Vectorposition.y;
+	thisrect.right = Vectorposition.x + width;
+	thisrect.bottom = Vectorposition.y + height;
 
-	otherrect.left = other.vectorposition.x;
-	otherrect.top = other.vectorposition.y;
-	otherrect.right = other.vectorposition.x + other.width;
-	otherrect.bottom = other.vectorposition.y + other.height;
-	bool isIntersected = IntersectsWithRectangles(thisrect, otherrect);
-	return isIntersected;
+	otherrect.left = Other.Vectorposition.x;
+	otherrect.top = Other.Vectorposition.y;
+	otherrect.right = Other.Vectorposition.x + Other.width;
+	otherrect.bottom = Other.Vectorposition.y + Other.height;
+	bool isintersected = IntersectsWithRectangles(thisrect, otherrect);
+	return isintersected;
 }
 //returns boolean if intersected or not, called from either moveableObject::intersects or 
 //moveableObject::screenIntersects 
 bool moveableObject::IntersectsWithRectangles(RECT & thisrectangle, RECT & otherrectangle)
 {
-	int objectOneLeft = thisrectangle.left;
-	int objectOneTop = thisrectangle.top;
-	int objectOneRight = thisrectangle.right;
-	int objectOneBottom = thisrectangle.bottom;
-	int objectTwoLeft = otherrectangle.left;
-	int objectTwoTop = otherrectangle.top;
-	int objectTwoRight = otherrectangle.right;
-	int objectTwoBottom = otherrectangle.bottom;
+	int objectoneleft = thisrectangle.left;
+	int objectonetop = thisrectangle.top;
+	int objectoneright = thisrectangle.right;
+	int objectonebottom = thisrectangle.bottom;
+	int objecttwoleft = otherrectangle.left;
+	int objecttwotop = otherrectangle.top;
+	int objecttworight = otherrectangle.right;
+	int objecttwobottom = otherrectangle.bottom;
 	//clever check for non intersection with rectangles
-	if (objectOneLeft > objectTwoRight)
+	if (objectoneleft > objecttworight)
 	{
 		return false;
 	}
-	if (objectOneTop > objectTwoBottom)
+	if (objectonetop > objecttwobottom)
 	{
 		return false;
 	}
-	if (objectOneRight < objectTwoLeft)
+	if (objectoneright < objecttwoleft)
 	{
 		return false;
 	}
-	if (objectOneBottom < objectTwoTop)
+	if (objectonebottom < objecttwotop)
 	{
 		return false;
 	}
@@ -64,15 +64,15 @@ bool moveableObject::IntersectsWithRectangles(RECT & thisrectangle, RECT & other
 bool moveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
 {
 	//moveable object
-	thisrect.left = vectorposition.x;
-	thisrect.top = vectorposition.y;
-	thisrect.right = vectorposition.x + width;
-	thisrect.bottom = vectorposition.y + height;
+	thisrect.left = Vectorposition.x;
+	thisrect.top = Vectorposition.y;
+	thisrect.right = Vectorposition.x + width;
+	thisrect.bottom = Vectorposition.y + height;
 
 	//screen Rectangle the next two changes are to make sure that the object is totally off the screen
 	//the left and top edge "of the screen" is when the moveable object is located so it's edge is
 	//on zero.
-	otherrect.left = 0 ;
+	otherrect.left = 0;
 	otherrect.top = 0;
 
 	//allows for one space past border to be part of rectangle to work 
@@ -88,37 +88,37 @@ bool moveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
 void moveableObject::SetVector(sf::Vector2f  invector)
 {
 
-	vectorposition.x = invector.x;
-	vectorposition.y = invector.y;
+	Vectorposition.x = invector.x;
+	Vectorposition.y = invector.y;
 }
 
 void moveableObject::SetPrevVector(sf::Vector2f  invector)
 {
-	vectorprevposition.x = invector.x;
-	vectorprevposition.y = invector.y;
+	Vectorprevposition.x = invector.x;
+	Vectorprevposition.y = invector.y;
 
 }
 
 //sets x position for those objects that inherit from moveable
 void moveableObject::SetX(int  inx)
 {
-	vectorposition.x = inx;
+	Vectorposition.x = inx;
 	
 }
 //sets y positio for those objects that inherit from moveable
 void moveableObject::SetY(int iny)
 {
-	vectorposition.y = iny;
+	Vectorposition.y = iny;
 }
 
 //these two set functions hold the prev x and y postions so that the main loop can interpolate correctly 
 void moveableObject::SetPrevX(int inprevx)
 {
-	vectorprevposition.x = inprevx;
+	Vectorprevposition.x = inprevx;
 }
 void moveableObject::SetPrevY(int inprevy)
 {
-	vectorprevposition.y = inprevy;
+	Vectorprevposition.y = inprevy;
 
 }
 //deltaX is the change in x after each key press and cycle in main

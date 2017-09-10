@@ -17,7 +17,7 @@ public:
 	moveableObject();
 
 
-	bool Intersects(moveableObject & theotherobject);
+	bool Intersects(moveableObject & Theotherobject);
 	bool IntersectsWithRectangles(RECT & thisrect , RECT & otherrect);
 	bool IntersectsWithScreenRect(int displaywidth, int displayheight);
 	
@@ -31,15 +31,15 @@ public:
 
 	void SetPrevX(int inprevx);
 	void SetPrevY(int inprevy);
-	void SetVector(sf::Vector2f  invector);
-	void SetPrevVector(sf::Vector2f  invector);
+	void SetVector(sf::Vector2f  Invector);
+	void SetPrevVector(sf::Vector2f  Invector);
 
 
 
 	//inlines
-	float GetX(){return vectorposition.x;}
+	float GetX(){return Vectorposition.x;}
 	
-	float GetY(){return vectorposition.y;}
+	float GetY(){return Vectorposition.y;}
 	
 	int GetDeltaY(){return deltay;}
 	
@@ -49,16 +49,16 @@ public:
 
 	int GetWidth(){return width;}
 
-	float GetPrevX(){return vectorprevposition.x;}
-	float GetPrevY(){return vectorprevposition.y;}
-	sf::Vector2f  GetVectorPosition(){return vectorposition;}
-	sf::Vector2f   GetVectorPrevPosition(){return vectorprevposition;}
+	float GetPrevX(){return Vectorprevposition.x;}
+	float GetPrevY(){return Vectorprevposition.y;}
+	sf::Vector2f  GetVectorPosition(){return Vectorposition;}
+	sf::Vector2f   GetVectorPrevPosition(){return Vectorprevposition;}
 
 
 protected:
 
-	sf::Vector2f  vectorposition;
-	sf::Vector2f  vectorprevposition;
+	sf::Vector2f  Vectorposition;
+	sf::Vector2f  Vectorprevposition;
 
 	
 
@@ -72,11 +72,7 @@ protected:
 
 	int height;
 	
-	//int x;
-	//int y;
 	
-	//int prevx;
-	//int prevy;
 
 	
 };

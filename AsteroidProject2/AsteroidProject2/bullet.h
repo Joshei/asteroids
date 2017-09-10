@@ -12,9 +12,9 @@ public:
 	
 		
 		
-		bullet(sf::Texture & textureBullet, int bulletheight, int bulletwidth);
+		bullet(sf::Texture & Texturebullet, int bulletheight, int bulletwidth);
 		
-		void SetIsactive(bool activateFlag); 
+		void SetIsactive(bool activateflag); 
 
 		void SetDirection(theDirection inDirection);
 

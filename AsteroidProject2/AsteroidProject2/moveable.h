@@ -2,7 +2,9 @@
 #define MOVEABLEOBJECT_H
 #include <windows.h>
 #include "enumeration.h"
- 
+#include <SFML/Graphics.hpp>
+
+
 //class asteroid and class bullet inherit from this
 class moveableObject 
 {
@@ -29,14 +31,15 @@ public:
 
 	void SetPrevX(int inprevx);
 	void SetPrevY(int inprevy);
-
+	void SetVector(sf::Vector2f  invector);
+	void SetPrevVector(sf::Vector2f  invector);
 
 
 
 	//inlines
-	int GetX(){return x;}
+	float GetX(){return vectorposition.x;}
 	
-	int GetY(){return y;}
+	float GetY(){return vectorposition.y;}
 	
 	int GetDeltaY(){return deltay;}
 	
@@ -46,10 +49,18 @@ public:
 
 	int GetWidth(){return width;}
 
-	int GetPrevX(){return prevx;}
-	int GetPrevY(){return prevy;}
+	float GetPrevX(){return vectorprevposition.x;}
+	float GetPrevY(){return vectorprevposition.y;}
+	sf::Vector2f  GetVectorPosition(){return vectorposition;}
+	sf::Vector2f   GetVectorPrevPosition(){return vectorprevposition;}
+
 
 protected:
+
+	sf::Vector2f  vectorposition;
+	sf::Vector2f  vectorprevposition;
+
+	
 
 	//used for intercept of moveable objects or screen and moveable (not intercept)
 	RECT thisrect;
@@ -61,11 +72,11 @@ protected:
 
 	int height;
 	
-	int x;
-	int y;
+	//int x;
+	//int y;
 	
-	int prevx;
-	int prevy;
+	//int prevx;
+	//int prevy;
 
 	
 };

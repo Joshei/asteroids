@@ -14,12 +14,14 @@ levelObj::levelObj()
 
 void levelObj::AdvanceLevelByOne()
 {
+
+	
 	levelnumber++;
 
 	switch (levelnumber) {
 
 	case 1:
-		numoflargeasteroids = 3;
+		numoflargeasteroids = 1;
 		numofsmallasteroids = numoflargeasteroids * 2;
 		
 		break;

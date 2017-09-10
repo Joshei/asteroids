@@ -1,13 +1,16 @@
 #include "moveable.h"
 
 
+
 moveableObject::moveableObject()
-	: width(0), height(0), x(0), y(0), deltax(0), deltay(0)
+	: width(0), height(0), deltax(0), deltay(0)
 {
 	//used for collision functions for checking for itersects with moveable objects and 
 	//also screen non intercept
 	thisrect = { 0,0,0,0 };
 	otherrect = { 0,0,0,0 };
+	
+
 	//prevx = 500;
 	//prevy = 500;
 }
@@ -15,15 +18,15 @@ moveableObject::moveableObject()
 //bool value for if collides
 bool moveableObject::Intersects(moveableObject & other)
 {
-	thisrect.left = x;
-	thisrect.top = y;
-	thisrect.right = x + width;
-	thisrect.bottom = y + height;
+	thisrect.left = vectorposition.x;
+	thisrect.top = vectorposition.y;
+	thisrect.right = vectorposition.x + width;
+	thisrect.bottom = vectorposition.y + height;
 
-	otherrect.left = other.x;
-	otherrect.top = other.y;
-	otherrect.right = other.x + other.width;
-	otherrect.bottom = other.y + other.height;
+	otherrect.left = other.vectorposition.x;
+	otherrect.top = other.vectorposition.y;
+	otherrect.right = other.vectorposition.x + other.width;
+	otherrect.bottom = other.vectorposition.y + other.height;
 	bool isIntersected = IntersectsWithRectangles(thisrect, otherrect);
 	return isIntersected;
 }
@@ -61,10 +64,10 @@ bool moveableObject::IntersectsWithRectangles(RECT & thisrectangle, RECT & other
 bool moveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
 {
 	//moveable object
-	thisrect.left = x;
-	thisrect.top = y;
-	thisrect.right = x + width;
-	thisrect.bottom = y + height;
+	thisrect.left = vectorposition.x;
+	thisrect.top = vectorposition.y;
+	thisrect.right = vectorposition.x + width;
+	thisrect.bottom = vectorposition.y + height;
 
 	//screen Rectangle the next two changes are to make sure that the object is totally off the screen
 	//the left and top edge "of the screen" is when the moveable object is located so it's edge is
@@ -81,15 +84,42 @@ bool moveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
 
 
 }
+
+void moveableObject::SetVector(sf::Vector2f  invector)
+{
+
+	vectorposition.x = invector.x;
+	vectorposition.y = invector.y;
+}
+
+void moveableObject::SetPrevVector(sf::Vector2f  invector)
+{
+	vectorprevposition.x = invector.x;
+	vectorprevposition.y = invector.y;
+
+}
+
 //sets x position for those objects that inherit from moveable
 void moveableObject::SetX(int  inx)
 {
-	x = inx;
+	vectorposition.x = inx;
+	
 }
 //sets y positio for those objects that inherit from moveable
 void moveableObject::SetY(int iny)
 {
-	y = iny;
+	vectorposition.y = iny;
+}
+
+//these two set functions hold the prev x and y postions so that the main loop can interpolate correctly 
+void moveableObject::SetPrevX(int inprevx)
+{
+	vectorprevposition.x = inprevx;
+}
+void moveableObject::SetPrevY(int inprevy)
+{
+	vectorprevposition.y = inprevy;
+
 }
 //deltaX is the change in x after each key press and cycle in main
 void moveableObject::SetDeltaX(int  indeltax)
@@ -113,13 +143,3 @@ void moveableObject::SetHeight(int inheight)
 	height = inheight;
 }
 
-//these two set functions hold the prev x and y postions so that the main loop can interpolate correctly 
-void moveableObject::SetPrevX(int inprevx)
-{
-	prevx = inprevx;
-}
-void moveableObject::SetPrevY(int inprevy)
-{
-	prevy = inprevy;
-
-}

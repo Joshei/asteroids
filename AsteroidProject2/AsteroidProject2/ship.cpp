@@ -12,8 +12,8 @@ extern void shutdown(int exitValue);
 //the other mentioned cpps have the texture passed in as a refernce
 ship::ship(int positionx, int positiony, theDirection  shipdirection) 
 {
-	x = positionx;
-	y = positiony;
+	vectorposition.x = positionx;
+	vectorposition.y = positiony;
 	//these are the dimensions for all of the images of ther ship in different facing directions
 	height = 64;
 	width = 64;
@@ -38,7 +38,7 @@ ship::ship(int positionx, int positiony, theDirection  shipdirection)
 	SelectTexture(shipdirection);
 	
 	//sets the position of the ship with x and y coordinates
-	shipImage.setPosition(sf::Vector2f(positionx, positiony));
+	shipImage.setPosition(sf::Vector2f(shipImage.getPosition()));
 
 }
 

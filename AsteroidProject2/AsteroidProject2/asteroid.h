@@ -47,22 +47,22 @@ public:
 	
 
 	
-	asteroid( int thewidth, int theheight, sf::Texture & largerTextureForAsteroid, asteroidType type);
+	asteroid( int thewidth, int theheight, sf::Texture & Largertextureforasteroid, asteroidType Type);
 	
 	void MoveAsteroid();
 	void SetInitialAsteroid(int i);
 	void SetActivate(int activateflag);
-	void SetWhichDirection(asteroidMovement direction);
-	void SetType(asteroidType thetype);
-	void SetTexture(sf::Texture & theTexture);
-	void SetDeltaWithDirection(asteroidMovement & direction);
+	void SetWhichDirection(asteroidMovement Direction);
+	void SetType(asteroidType Thetype);
+	void SetTexture(sf::Texture & Thetexture);
+	void SetDeltaWithDirection(asteroidMovement & Direction);
 	
 	//inlines
 	int GetActivate(){return activated;}
 
 	int GetFromThisBorder(){return fromthisborder;}
 
-	asteroidMovement GetWhichDirection(){return whichDirection;}
+	asteroidMovement GetWhichDirection(){return Whichdirection;}
 
 	asteroidType GetAsteroidType(){return type;}
 
@@ -74,7 +74,7 @@ private:
 	//sfml object passed a texture uses a pointer
 	sf::Sprite anAsteroid;
 
-	asteroidMovement whichDirection;
+	asteroidMovement Whichdirection;
 
 	int activated;
 	

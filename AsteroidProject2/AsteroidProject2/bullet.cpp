@@ -8,12 +8,12 @@
 
 
 
-bullet::bullet( sf::Texture & textureBullet, int bulwidth, int bulheight )
+bullet::bullet( sf::Texture & Texturebullet, int bulwidth, int bulheight )
 {
 	height = bulheight;
 	width =  bulwidth;
 	isactive = false;
-	bulletImage.setTexture(textureBullet);
+	Bulletimage.setTexture(Texturebullet);
 	
 
 

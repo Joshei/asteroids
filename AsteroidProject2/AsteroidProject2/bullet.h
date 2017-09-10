@@ -16,9 +16,9 @@ public:
 		
 		void SetIsactive(bool activateflag); 
 
-		void SetDirection(theDirection inDirection);
+		void SetDirection(theDirection Indirection);
 
-		sf::Sprite  & GetBulletImage(){return bulletImage;}
+		sf::Sprite  & GetBulletImage(){return Bulletimage;}
 		
 		
 		int GetIsactive(){return isactive;}
@@ -31,7 +31,7 @@ private:
 
 		theDirection direction;
 
-		sf::Sprite bulletImage;
+		sf::Sprite Bulletimage;
 
 		bool isactive;
 	

@@ -8,17 +8,17 @@
 
 
 
-asteroid::asteroid(int thewidth, int theheight, sf::Texture & largerTextureForAsteroid, asteroidType theasteroidtype)
+asteroid::asteroid(int thewidth, int theheight, sf::Texture & Largertextureforasteroid, asteroidType Theasteroidtype)
 {
 
 	activated = instantiated;
 	height = theheight;
 	width = thewidth;
-	anAsteroid.setTexture(largerTextureForAsteroid);
+	anAsteroid.setTexture(Largertextureforasteroid);
 	//initialized, no -1 available, so set to down.  Smaller asteroids won't use this setting.
-	whichDirection = asteroidMovement::DOWN;
+	Whichdirection = asteroidMovement::DOWN;
 	fromthisborder = -1;
-	type = theasteroidtype;
+	type = Theasteroidtype;
 
 	
 }
@@ -52,9 +52,9 @@ void asteroid::SetInitialAsteroid(int fromthisborder) {
 	//set to onscreen so they are ready to be checked for collisions now.
 	SetActivate(onscreen);
 	//uses enum class object declared in asteroid.h (on top of header file)
-	whichDirection = directions[fromthisborder][std::rand() % 3];
+	Whichdirection = directions[fromthisborder][std::rand() % 3];
 	//sets the deltax and deltay from this random direction
-	SetDeltaWithDirection(whichDirection);
+	SetDeltaWithDirection(Whichdirection);
 	
 	
 	//sets the initial x and y for each asteroid according to what border the image is behind
@@ -156,7 +156,7 @@ void asteroid::SetActivate(int activateflag)
 void asteroid::SetWhichDirection(asteroidMovement direction)
 {
 	
-	whichDirection = direction;
+	Whichdirection = direction;
 
 }
 

@@ -10,7 +10,7 @@ extern void shutdown(int exitValue);
 //this function is a bit different from : asteroid.cpp, bullet.cpp
 //the loadFromFile  is in the constructor.  Ship.cpp uses the passed in Font as a reference.
 //the other mentioned cpps have the texture passed in as a refernce
-ship::ship(int positionx, int positiony, theDirection  Shipdirection) 
+Ship::Ship(int positionx, int positiony, theDirection  Shipdirection) 
 {
 	Vectorposition.x = positionx;
 	Vectorposition.y = positiony;
@@ -44,7 +44,7 @@ ship::ship(int positionx, int positiony, theDirection  Shipdirection)
 
 
 //press m - rotates ship clockwise.
-void ship::RotateShipClock() 
+void Ship::RotateShipClock() 
 {
 
 	//add one to the direction to rotate clockwise
@@ -54,7 +54,7 @@ void ship::RotateShipClock()
 	
 }
 //press n - rotates ship counter clockwise.
-void ship::RotateShipCClock() 
+void Ship::RotateShipCClock() 
 {
 	//add a full rotation (4) before subtracting one to avoid negative numbers and use modulus
 	theDirection Newdirection = static_cast<theDirection>((3 + GetDirection()) % 4);
@@ -64,7 +64,7 @@ void ship::RotateShipCClock()
 
 }
 
-void ship::SelectTexture(theDirection Direction)
+void Ship::SelectTexture(theDirection Direction)
 {
 	if (Direction == up)
 	{
@@ -92,7 +92,7 @@ void ship::SelectTexture(theDirection Direction)
 //two asteroids are created upon destruction of larger.
 //also could be used later if a "wrapping effect" is needed for the asteroids from
 //border to border
-void ship::SetDirection(theDirection Indirection)
+void Ship::SetDirection(theDirection Indirection)
 {
 	Direction = Indirection;
 }

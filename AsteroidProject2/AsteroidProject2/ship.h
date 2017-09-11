@@ -8,7 +8,7 @@
 
 
 
-class ship : public MoveableObject
+class Ship : public MoveableObject
 {
 
 public:
@@ -17,7 +17,7 @@ public:
 	
 	
 
-	ship(int positionx, int positiony, theDirection Direction);
+	Ship(int positionx, int positiony, theDirection Direction);
 	
 	void RotateShipClock();
 	void RotateShipCClock();

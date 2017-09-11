@@ -6,7 +6,7 @@
 
 
 
-score::score(int xpos, int ypos )
+Score::Score(int xpos, int ypos )
 :scoreamount(0)
 {
 	Scoreposition.x = xpos;
@@ -14,7 +14,7 @@ score::score(int xpos, int ypos )
 }
 
 
-void score::SetFont(sf::Font & theFont)
+void Score::SetFont(sf::Font & theFont)
 {
 	Textmessage.setFont(theFont);
 
@@ -22,24 +22,24 @@ void score::SetFont(sf::Font & theFont)
 	
 }
 
-void score::SetScore(int score)
+void Score::SetScore(int score)
 {
 	scoreamount = score;
 }
 
-void score::SetXForScore(int x)
+void Score::SetXForScore(int x)
 {
 	Scoreposition.x = x;
 
 }
-void score::SetYForScore(int y)
+void Score::SetYForScore(int y)
 {
 	Scoreposition.y = y;
 }
 
 
 //draws the score of the parameter and sets the scoreAmount variable
-void  score::DrawScore(int score)
+void Score::DrawScore(int score)
 {
 
 	std::string Scorestring("Score :  ");
@@ -57,7 +57,7 @@ void  score::DrawScore(int score)
 }
 
 //draws the current score (used after addToScore)
-void score::DrawScore()
+void Score::DrawScore()
 {
 	DrawScore(scoreamount);
 	
@@ -65,7 +65,7 @@ void score::DrawScore()
 
 
 
-void score::AddToScore(int addamount)
+void Score::AddToScore(int addamount)
 {
 	scoreamount += addamount;
 
@@ -75,7 +75,7 @@ void score::AddToScore(int addamount)
 
 
 
-void score::ResetScore()
+void Score::ResetScore()
 {
 
 	scoreamount = 0;

@@ -5,13 +5,13 @@
 
 
 
-class score {
+class Score {
 
 public:
 
 	
 	
-	score(int xpos, int ypos);
+	Score(int xpos, int ypos);
 	void SetFont(sf::Font & Thefont);
 	void SetScore(int scorein);
 	void SetXForScore(int xdimension);

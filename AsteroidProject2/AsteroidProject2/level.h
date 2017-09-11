@@ -1,7 +1,7 @@
-class levelObj {
+class LevelObj {
 
 public:
-	levelObj();
+	LevelObj();
 	
 	
 	static int Maxbullets;

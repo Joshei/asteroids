@@ -60,15 +60,15 @@ sf::Texture texturebullet;
 sf::Font fontForScore;
 
 //initialized of the vectors for asteroids
-std::vector<asteroid> asteroidCollection;
+std::vector<Asteroid> asteroidCollection;
 std::vector <Bullet> bullets;
-score theScore(10, 10);
+Score theScore(10, 10);
 sf::Event event;
 sf::RenderWindow window(sf::VideoMode(G_SCREEN_WIDTH, G_SCREEN_HEIGHT), "Asteroids!");
 
 //global ship pbject
-ship shipObject(500, 500, up);
-levelObj levelObject;
+Ship shipObject(500, 500, up);
+LevelObj levelObject;
 
 
 
@@ -234,7 +234,7 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 			continue;
 		}
 
-		for (int i = 0; i < levelObj::GetMaxNumBullets(); i++)
+		for (int i = 0; i < LevelObj::GetMaxNumBullets(); i++)
 		{
 
 
@@ -311,7 +311,7 @@ int shoot()
 	
 
 		//static function
- 		for (int i = 0; i < levelObj::GetMaxNumBullets(); i++)
+ 		for (int i = 0; i < LevelObj::GetMaxNumBullets(); i++)
 		{
 
 			//if bullet already active go to for loop at next index
@@ -484,7 +484,7 @@ void movebullets()
 	bool returnValue = false;
 
 	//static function
-	for (int i = 0; i < levelObj::GetMaxNumBullets(); i++)
+	for (int i = 0; i < LevelObj::GetMaxNumBullets(); i++)
 	{
 
 		if (bullets[i].GetIsactive()) 
@@ -519,7 +519,7 @@ void PositionBulletsAndDraw(int interpolation)
 	bool returnValue = false;
 
 	//static function
-	for (int i = 0; i < levelObj::GetMaxNumBullets(); i++)
+	for (int i = 0; i < LevelObj::GetMaxNumBullets(); i++)
 	{
 
 		if (bullets[i].GetIsactive())
@@ -682,7 +682,7 @@ void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType as
 		//function
 		if (asterType == smaller)
 		{
-			asteroidCollection.push_back(asteroid(width, height, texture, smaller));
+			asteroidCollection.push_back(Asteroid(width, height, texture, smaller));
 			//readies for onscreen usage in createSmallerAsteroid which sets deltax and deltay and whichdirection
 			asteroidCollection[i].SetActivate(initialized);
 		}
@@ -691,7 +691,7 @@ void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType as
 			//generated is 0 through three for starting direction on screen : top, right, bottom, left
 			int j = rand() % 4;
 			//asteroid now calls constructor 
-			asteroidCollection.push_back(asteroid(width, height, texture, larger));
+			asteroidCollection.push_back(Asteroid(width, height, texture, larger));
 			//sets deltax and deltay and which direction, and activation
 			asteroidCollection[i].SetInitialAsteroid(j);
 		}
@@ -1479,7 +1479,7 @@ double nextTick = mainClock.restart().asMilliseconds();
 
 
 		//interpolate all the bullets
-		for (int i = 0; i < levelObj::GetMaxNumBullets(); i++)
+		for (int i = 0; i < LevelObj::GetMaxNumBullets(); i++)
 		{
 
 			if (bullets[i].GetIsactive())
@@ -1527,7 +1527,7 @@ void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aste
 		for (int i = 0; i < numAsteroidsToCreate; i++)
 		{
 			//create the new additional asteroids 
-			asteroidCollection.push_back(asteroid(Width, Height, texture, larger));
+			asteroidCollection.push_back(Asteroid(Width, Height, texture, larger));
 			g_TotalNumAllAsteroids++;
 		}
 		for (std::size_t i = 0; i < asteroidCollection.size(); i++)
@@ -1546,7 +1546,7 @@ void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aste
 		for (int i = 0; i < numAsteroidsToCreate; i++)
 		{
 				//creates extra small asteroids
-				asteroidCollection.push_back(asteroid(Width, Height, texture, smaller));
+				asteroidCollection.push_back(Asteroid(Width, Height, texture, smaller));
 				g_TotalNumAllAsteroids++;
 		}
 		//reinitalizes the old and new asteroids with the new activation so that they

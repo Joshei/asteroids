@@ -2,9 +2,9 @@
 #include "level.h"
 
 
-int levelObj::Maxbullets = 10;
+int LevelObj::Maxbullets = 10;
 
-levelObj::levelObj()
+LevelObj::LevelObj()
 {
 	levelnumber = 0;
 	numoflargeasteroids = 0;
@@ -12,7 +12,7 @@ levelObj::levelObj()
 }
 
 
-void levelObj::AdvanceLevelByOne()
+void LevelObj::AdvanceLevelByOne()
 {
 
 	

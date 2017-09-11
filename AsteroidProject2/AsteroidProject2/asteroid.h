@@ -38,7 +38,7 @@ const int G_SCREEN_WIDTH = 1000;
 const int G_SCREEN_HEIGHT = 700;
 
 
-class asteroid : public MoveableObject 
+class Asteroid : public MoveableObject 
 {
 
 
@@ -47,7 +47,7 @@ public:
 	
 
 	
-	asteroid( int thewidth, int theheight, sf::Texture & Largertextureforasteroid, asteroidType Type);
+	Asteroid( int thewidth, int theheight, sf::Texture & Largertextureforasteroid, asteroidType Type);
 	
 	void MoveAsteroid();
 	void SetInitialAsteroid(int i);

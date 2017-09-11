@@ -8,7 +8,7 @@
 
 
 
-asteroid::asteroid(int thewidth, int theheight, sf::Texture & Largertextureforasteroid, asteroidType Theasteroidtype)
+Asteroid::Asteroid(int thewidth, int theheight, sf::Texture & Largertextureforasteroid, asteroidType Theasteroidtype)
 {
 
 	activated = instantiated;
@@ -24,7 +24,7 @@ asteroid::asteroid(int thewidth, int theheight, sf::Texture & Largertextureforas
 	
 }
 
-void asteroid::MoveAsteroid()
+void Asteroid::MoveAsteroid()
 {
 
 
@@ -46,7 +46,7 @@ void asteroid::MoveAsteroid()
 //appears on the screen than as an onscreen activation but it will use 
 //this function when the asteroid goes off screen and it's activation is
 //set to offscreen.
-void asteroid::SetInitialAsteroid(int fromthisborder) {
+void Asteroid::SetInitialAsteroid(int fromthisborder) {
 
 	
 	//technically these asteroids are behind the border by their width or height but they've been
@@ -145,7 +145,7 @@ void asteroid::SetInitialAsteroid(int fromthisborder) {
 }
 
 //takes an enumeration of stateofassteroid
-void asteroid::SetActivate(int activateflag) 
+void Asteroid::SetActivate(int activateflag) 
 {
 
 	activated = activateflag;
@@ -153,20 +153,20 @@ void asteroid::SetActivate(int activateflag)
 }
 
 
-void asteroid::SetWhichDirection(asteroidMovement direction)
+void Asteroid::SetWhichDirection(asteroidMovement direction)
 {
 	
 	Whichdirection = direction;
 
 }
 
-void asteroid::SetType(asteroidType theType)
+void Asteroid::SetType(asteroidType theType)
 {
 	Type = theType;
 
 }
 
-void::asteroid::SetTexture(sf::Texture & Texture)
+void::Asteroid::SetTexture(sf::Texture & Texture)
 {
 	Anasteroid.setTexture(Texture);
 }
@@ -174,7 +174,7 @@ void::asteroid::SetTexture(sf::Texture & Texture)
 
 
 //called twice, first higher than lower
-void asteroid::SetDeltaWithDirection(asteroidMovement & thedirection)
+void Asteroid::SetDeltaWithDirection(asteroidMovement & thedirection)
 {
 
 	//sets the change in x and the change in y (delta) for computing movement.  Of course x is horizonatl andh y

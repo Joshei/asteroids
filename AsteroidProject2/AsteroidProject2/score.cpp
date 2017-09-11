@@ -9,8 +9,8 @@
 score::score(int xpos, int ypos )
 :scoreamount(0)
 {
-	scoreposition.x = xpos;
-	scoreposition.y = ypos;
+	Scoreposition.x = xpos;
+	Scoreposition.y = ypos;
 }
 
 
@@ -29,12 +29,12 @@ void score::SetScore(int score)
 
 void score::SetXForScore(int x)
 {
-	scoreposition.x = x;
+	Scoreposition.x = x;
 
 }
 void score::SetYForScore(int y)
 {
-	scoreposition.y = y;
+	Scoreposition.y = y;
 }
 
 

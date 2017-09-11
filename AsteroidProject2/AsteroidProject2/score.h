@@ -21,8 +21,8 @@ public:
 	void AddToScore(int addamount);
 	void ResetScore();
 	int GetScore(){return scoreamount;}
-	int GetXForScore(){return scoreposition.x;}
-	int GetYforScore(){return scoreposition.y;}
+	int GetXForScore(){return Scoreposition.x;}
+	int GetYforScore(){return Scoreposition.y;}
 	
 
 	sf::Text & getTextMessage(){return Textmessage;}
@@ -46,7 +46,7 @@ private:
 	struct{
 		int x;
 		int y;
-	}scoreposition;
+	}Scoreposition;
 	
 	
 

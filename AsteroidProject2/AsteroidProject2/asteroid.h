@@ -6,7 +6,7 @@
 #include "moveable.h"
 
 //these are the "states" of the asteroids created with the asteroid class
-enum stateofasteroid { instantiated, destroyed, initialized, onscreen, offscreen };
+enum stateOfAsteroid { instantiated, destroyed, initialized, onscreen, offscreen };
 enum asteroidType {smaller, larger};
 
 enum class asteroidMovement

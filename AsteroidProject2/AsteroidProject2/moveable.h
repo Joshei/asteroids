@@ -6,7 +6,7 @@
 
 
 //class asteroid and class bullet inherit from this
-class moveableObject 
+class MoveableObject 
 {
 
 public:
@@ -14,10 +14,10 @@ public:
 	
 
 
-	moveableObject();
+	MoveableObject();
 
 
-	bool Intersects(moveableObject & Theotherobject);
+	bool Intersects(MoveableObject & Theotherobject);
 	bool IntersectsWithRectangles(RECT & Thisrect , RECT & Otherrect);
 	bool IntersectsWithScreenRect(int displaywidth, int displayheight);
 	

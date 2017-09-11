@@ -8,7 +8,7 @@
 
 
 
-class ship : public moveableObject
+class ship : public MoveableObject
 {
 
 public:

@@ -38,7 +38,7 @@ const int G_SCREEN_WIDTH = 1000;
 const int G_SCREEN_HEIGHT = 700;
 
 
-class asteroid : public moveableObject 
+class asteroid : public MoveableObject 
 {
 
 

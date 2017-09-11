@@ -61,7 +61,7 @@ sf::Font fontForScore;
 
 //initialized of the vectors for asteroids
 std::vector<asteroid> asteroidCollection;
-std::vector <bullet> bullets;
+std::vector <Bullet> bullets;
 score theScore(10, 10);
 sf::Event event;
 sf::RenderWindow window(sf::VideoMode(G_SCREEN_WIDTH, G_SCREEN_HEIGHT), "Asteroids!");
@@ -335,7 +335,7 @@ int shoot()
 
 
 		//to make all the following member function simpler, uses bulletIndex instead
-		bullet & bulletIndex = bullets[numOfBulletIndex];
+		Bullet & bulletIndex = bullets[numOfBulletIndex];
 			
 		//pre condition : bullet is smaller in width and height than asteroid
 		//up key pressed direction of bullet will be upwards.  creates a bullet the same amount 
@@ -983,7 +983,7 @@ void fillBulletVector (int numOfBullets, sf::Texture & texture)
 	for (int i = 0; i < numOfBullets  ; i++)
 	{
 		///height than width
-		bullets.push_back( bullet(texture, 16, 16));
+		bullets.push_back( Bullet(texture, 16, 16));
 	
 	}
 

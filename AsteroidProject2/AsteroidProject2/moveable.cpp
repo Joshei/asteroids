@@ -2,7 +2,7 @@
 
 
 
-moveableObject::moveableObject()
+MoveableObject::MoveableObject()
 	: width(0), height(0), deltax(0), deltay(0)
 {
 	//used for collision functions for checking for itersects with moveable objects and 
@@ -15,7 +15,7 @@ moveableObject::moveableObject()
 }
 //checks for collision of two moveable objects by calling intersectsWithRectangles function. Returns
 //bool value for if collides
-bool moveableObject::Intersects(moveableObject & Other)
+bool MoveableObject::Intersects(MoveableObject & Other)
 {
 	Thisrect.left = Vectorposition.x;
 	Thisrect.top = Vectorposition.y;
@@ -31,7 +31,7 @@ bool moveableObject::Intersects(moveableObject & Other)
 }
 //returns boolean if intersected or not, called from either moveableObject::intersects or 
 //moveableObject::screenIntersects 
-bool moveableObject::IntersectsWithRectangles(RECT & Thisrectangle, RECT & Otherrectangle)
+bool MoveableObject::IntersectsWithRectangles(RECT & Thisrectangle, RECT & Otherrectangle)
 {
 	int objectoneleft = Thisrectangle.left;
 	int objectonetop = Thisrectangle.top;
@@ -60,7 +60,7 @@ bool moveableObject::IntersectsWithRectangles(RECT & Thisrectangle, RECT & Other
 	}
 	return true;
 }
-bool moveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
+bool MoveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
 {
 	//moveable object
 	Thisrect.left = Vectorposition.x;
@@ -84,14 +84,14 @@ bool moveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
 
 }
 
-void moveableObject::SetVector(sf::Vector2f  Invector)
+void MoveableObject::SetVector(sf::Vector2f  Invector)
 {
 
 	Vectorposition.x = Invector.x;
 	Vectorposition.y = Invector.y;
 }
 
-void moveableObject::SetPrevVector(sf::Vector2f  Invector)
+void MoveableObject::SetPrevVector(sf::Vector2f  Invector)
 {
 	Vectorprevposition.x = Invector.x;
 	Vectorprevposition.y = Invector.y;
@@ -99,45 +99,45 @@ void moveableObject::SetPrevVector(sf::Vector2f  Invector)
 }
 
 //sets x position for those objects that inherit from moveable
-void moveableObject::SetX(int  inx)
+void MoveableObject::SetX(int  inx)
 {
 	Vectorposition.x = inx;
 	
 }
 //sets y positio for those objects that inherit from moveable
-void moveableObject::SetY(int iny)
+void MoveableObject::SetY(int iny)
 {
 	Vectorposition.y = iny;
 }
 
 //these two set functions hold the prev x and y postions so that the main loop can interpolate correctly 
-void moveableObject::SetPrevX(int inprevx)
+void MoveableObject::SetPrevX(int inprevx)
 {
 	Vectorprevposition.x = inprevx;
 }
-void moveableObject::SetPrevY(int inprevy)
+void MoveableObject::SetPrevY(int inprevy)
 {
 	Vectorprevposition.y = inprevy;
 
 }
 //deltaX is the change in x after each key press and cycle in main
-void moveableObject::SetDeltaX(int  indeltax)
+void MoveableObject::SetDeltaX(int  indeltax)
 {
 	deltax = indeltax;
 }
 //deltaY is the change in x after each key press and cycle in main
-void moveableObject::SetDeltaY(int indeltay)
+void MoveableObject::SetDeltaY(int indeltay)
 {
 	deltay = indeltay;
 }
 
 //this allows each object to have its own width
-void moveableObject::SetWidth(int inwidth)
+void MoveableObject::SetWidth(int inwidth)
 {
 	width = inwidth;
 }
 //this allow each object to have its own height
-void moveableObject::SetHeight(int inheight)
+void MoveableObject::SetHeight(int inheight)
 {
 	height = inheight;
 }

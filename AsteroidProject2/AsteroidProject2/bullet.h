@@ -4,7 +4,7 @@
 #include "moveable.h"
 
 
-class bullet : public moveableObject
+class Bullet : public MoveableObject
 {
 
 public:
@@ -12,7 +12,7 @@ public:
 	
 		
 		
-		bullet(sf::Texture & Texturebullet, int bulletheight, int bulletwidth);
+		Bullet(sf::Texture & Texturebullet, int bulletheight, int bulletwidth);
 		
 		void SetIsactive(bool activateflag); 
 

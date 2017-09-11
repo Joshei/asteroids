@@ -12,8 +12,8 @@ public:
 	
 	
 	score(int xpos, int ypos);
-	void SetFont(sf::Font & theFont);
-	void SetScore(int scoreIn);
+	void SetFont(sf::Font & Thefont);
+	void SetScore(int scorein);
 	void SetXForScore(int xdimension);
 	void SetYForScore(int ydimension);
 	void DrawScore(int score);
@@ -25,7 +25,7 @@ public:
 	int GetYforScore(){return scoreposition.y;}
 	
 
-	sf::Text & getTextMessage(){return textMessage;}
+	sf::Text & getTextMessage(){return Textmessage;}
 
 	
 	
@@ -39,7 +39,7 @@ private:
 	
 	
 	//sfml object:  holds the score message and the sf::Font is passed in to it from outside class
-	sf::Text textMessage;
+	sf::Text Textmessage;
 
 	int scoreamount;
 	//these two positions are for the upper left hand corner of the text

@@ -4,7 +4,7 @@ public:
 	levelObj();
 	
 	
-	static int maxbullets;
+	static int Maxbullets;
 	
 	void AdvanceLevelByOne();
 	
@@ -12,7 +12,7 @@ public:
 
 	int GetNumSmallAsteroids(){return numofsmallasteroids;}
 
-	static int GetMaxNumBullets(){return maxbullets;}
+	static int GetMaxNumBullets(){return Maxbullets;}
 
 
 private:

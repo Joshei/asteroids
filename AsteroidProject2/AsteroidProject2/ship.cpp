@@ -10,35 +10,35 @@ extern void shutdown(int exitValue);
 //this function is a bit different from : asteroid.cpp, bullet.cpp
 //the loadFromFile  is in the constructor.  Ship.cpp uses the passed in Font as a reference.
 //the other mentioned cpps have the texture passed in as a refernce
-ship::ship(int positionx, int positiony, theDirection  shipdirection) 
+ship::ship(int positionx, int positiony, theDirection  Shipdirection) 
 {
 	Vectorposition.x = positionx;
 	Vectorposition.y = positiony;
 	//these are the dimensions for all of the images of ther ship in different facing directions
 	height = 64;
 	width = 64;
-	direction = shipdirection;
+	Direction = Shipdirection;
 
-	if (!textureShipNorth.loadFromFile("shipNorth.png"))
+	if (!Textureshipnorth.loadFromFile("shipNorth.png"))
 	{
 		shutdown(-10);
 	}
-	if (!textureShipEast.loadFromFile("shipEast.png")) 
+	if (!Textureshipeast.loadFromFile("shipEast.png")) 
 	{
 		shutdown(-11);
 	}
-	if (!textureShipSouth.loadFromFile("shipSouth.png")) 
+	if (!Textureshipsouth.loadFromFile("shipSouth.png")) 
 	{
 		shutdown(-12);
 	}
-	if (!textureShipWest.loadFromFile("shipWest.png")) 
+	if (!Textureshipwest.loadFromFile("shipWest.png")) 
 	{
 		shutdown(-13);
 	}
-	SelectTexture(shipdirection);
+	SelectTexture(Shipdirection);
 	
 	//sets the position of the ship with x and y coordinates
-	shipImage.setPosition(sf::Vector2f(shipImage.getPosition()));
+	Shipimage.setPosition(sf::Vector2f(Shipimage.getPosition()));
 
 }
 
@@ -48,39 +48,39 @@ void ship::RotateShipClock()
 {
 
 	//add one to the direction to rotate clockwise
-	theDirection NewDirection = static_cast<theDirection>((1 + GetDirection()) % 4);
-	SetDirection(NewDirection);
-	SelectTexture(NewDirection);
+	theDirection Newdirection = static_cast<theDirection>((1 + GetDirection()) % 4);
+	SetDirection(Newdirection);
+	SelectTexture(Newdirection);
 	
 }
 //press n - rotates ship counter clockwise.
 void ship::RotateShipCClock() 
 {
 	//add a full rotation (4) before subtracting one to avoid negative numbers and use modulus
-	theDirection NewDirection = static_cast<theDirection>((3 + GetDirection()) % 4);
-	SetDirection(NewDirection);
-	SelectTexture(NewDirection);
+	theDirection Newdirection = static_cast<theDirection>((3 + GetDirection()) % 4);
+	SetDirection(Newdirection);
+	SelectTexture(Newdirection);
 
 
 }
 
-void ship::SelectTexture(theDirection direction)
+void ship::SelectTexture(theDirection Direction)
 {
-	if (direction == up)
+	if (Direction == up)
 	{
-		shipImage.setTexture(textureShipNorth);
+		Shipimage.setTexture(Textureshipnorth);
 	}
-	if (direction == right)
+	if (Direction == right)
 	{
-		shipImage.setTexture(textureShipEast);
+		Shipimage.setTexture(Textureshipeast);
 	}
-	if (direction == down)
+	if (Direction == down)
 	{
-		shipImage.setTexture(textureShipSouth);
+		Shipimage.setTexture(Textureshipsouth);
 	}
-	if (direction == left)
+	if (Direction == left)
 	{
-		shipImage.setTexture(textureShipWest);
+		Shipimage.setTexture(Textureshipwest);
 	}
 
 
@@ -92,7 +92,7 @@ void ship::SelectTexture(theDirection direction)
 //two asteroids are created upon destruction of larger.
 //also could be used later if a "wrapping effect" is needed for the asteroids from
 //border to border
-void ship::SetDirection(theDirection inDirection)
+void ship::SetDirection(theDirection Indirection)
 {
-	direction = inDirection;
+	Direction = Indirection;
 }

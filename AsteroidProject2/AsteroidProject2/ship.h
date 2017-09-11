@@ -17,26 +17,26 @@ public:
 	
 	
 
-	ship(int positionx, int positiony, theDirection direction);
+	ship(int positionx, int positiony, theDirection Direction);
 	
 	void RotateShipClock();
 	void RotateShipCClock();
-	void SelectTexture(theDirection direction);
-	void SetDirection(theDirection inDirection);
-	theDirection GetDirection(){return direction;}
-	sf::Sprite & GetShipImage(){return shipImage;}
+	void SelectTexture(theDirection Direction);
+	void SetDirection(theDirection Indirection);
+	theDirection GetDirection(){return Direction;}
+	sf::Sprite & GetShipImage(){return Shipimage;}
 
 
 private:
 
 	
-	theDirection direction;
+	theDirection Direction;
 	//sfml objects
-	sf::Sprite shipImage;
-	sf::Texture textureShipNorth;
-	sf::Texture textureShipEast;
-	sf::Texture textureShipSouth;
-	sf::Texture textureShipWest;
+	sf::Sprite Shipimage;
+	sf::Texture Textureshipnorth;
+	sf::Texture Textureshipeast;
+	sf::Texture Textureshipsouth;
+	sf::Texture Textureshipwest;
 
 };
 

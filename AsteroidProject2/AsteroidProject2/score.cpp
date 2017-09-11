@@ -16,7 +16,7 @@ score::score(int xpos, int ypos )
 
 void score::SetFont(sf::Font & theFont)
 {
-	textMessage.setFont(theFont);
+	Textmessage.setFont(theFont);
 
 
 	
@@ -42,15 +42,15 @@ void score::SetYForScore(int y)
 void  score::DrawScore(int score)
 {
 
-	std::string scoreString("Score :  ");
-	std::string thisString = std::to_string(score);
-	scoreString = scoreString + thisString;
-	textMessage.setCharacterSize(24);
-	textMessage.setFillColor(sf::Color::Red);
-	textMessage.setStyle(sf::Text::Bold);
-	textMessage.setPosition(10, 50);
+	std::string Scorestring("Score :  ");
+	std::string Thisstring = std::to_string(score);
+	Scorestring = Scorestring + Thisstring;
+	Textmessage.setCharacterSize(24);
+	Textmessage.setFillColor(sf::Color::Red);
+	Textmessage.setStyle(sf::Text::Bold);
+	Textmessage.setPosition(10, 50);
 	scoreamount = score;
-	textMessage.setString(scoreString);
+	Textmessage.setString(Scorestring);
 
 	
 

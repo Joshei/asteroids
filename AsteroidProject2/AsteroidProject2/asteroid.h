@@ -64,15 +64,15 @@ public:
 
 	asteroidMovement GetWhichDirection(){return Whichdirection;}
 
-	asteroidType GetAsteroidType(){return type;}
+	asteroidType GetAsteroidType(){return Type;}
 
-	sf::Sprite &  GetSprite(){return anAsteroid;}
+	sf::Sprite &  GetSprite(){return Anasteroid;}
 	
 	
 private:
 
 	//sfml object passed a texture uses a pointer
-	sf::Sprite anAsteroid;
+	sf::Sprite Anasteroid;
 
 	asteroidMovement Whichdirection;
 
@@ -80,7 +80,7 @@ private:
 	
 	int fromthisborder;
 
-	asteroidType type;
+	asteroidType Type;
 
 
 };

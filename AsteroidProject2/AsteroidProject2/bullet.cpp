@@ -30,5 +30,5 @@ void bullet::SetIsactive(bool activateflag) { isactive = activateflag; }
 //border to border
 void bullet::SetDirection(theDirection indirection)
 {
-	direction = indirection;
+	Direction = indirection;
 }

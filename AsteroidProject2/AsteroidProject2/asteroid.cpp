@@ -14,11 +14,12 @@ asteroid::asteroid(int thewidth, int theheight, sf::Texture & Largertextureforas
 	activated = instantiated;
 	height = theheight;
 	width = thewidth;
-	anAsteroid.setTexture(Largertextureforasteroid);
+	Anasteroid.setTexture(Largertextureforasteroid);
 	//initialized, no -1 available, so set to down.  Smaller asteroids won't use this setting.
 	Whichdirection = asteroidMovement::DOWN;
 	fromthisborder = -1;
-	type = Theasteroidtype;
+	
+	Type = Theasteroidtype;
 
 	
 }
@@ -139,8 +140,7 @@ void asteroid::SetInitialAsteroid(int fromthisborder) {
 
 	}
 
-	//sets the image at the coordinates
-	//anAsteroid.setPosition(sf::Vector2f(GetVectorPosition()));
+	
 	
 }
 
@@ -162,13 +162,13 @@ void asteroid::SetWhichDirection(asteroidMovement direction)
 
 void asteroid::SetType(asteroidType theType)
 {
-	type = theType;
+	Type = theType;
 
 }
 
-void::asteroid::SetTexture(sf::Texture & texture)
+void::asteroid::SetTexture(sf::Texture & Texture)
 {
-	anAsteroid.setTexture(texture);
+	Anasteroid.setTexture(Texture);
 }
 
 

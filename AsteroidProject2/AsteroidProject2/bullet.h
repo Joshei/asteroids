@@ -24,12 +24,12 @@ public:
 		int GetIsactive(){return isactive;}
 	
 
-		theDirection GetDirection(){return direction;}
+		theDirection GetDirection(){return Direction;}
 		
 
 private:
 
-		theDirection direction;
+		theDirection Direction;
 
 		sf::Sprite Bulletimage;
 

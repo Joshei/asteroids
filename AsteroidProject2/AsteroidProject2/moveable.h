@@ -18,7 +18,7 @@ public:
 
 
 	bool Intersects(moveableObject & Theotherobject);
-	bool IntersectsWithRectangles(RECT & thisrect , RECT & otherrect);
+	bool IntersectsWithRectangles(RECT & Thisrect , RECT & Otherrect);
 	bool IntersectsWithScreenRect(int displaywidth, int displayheight);
 	
 	void SetX(int inx);
@@ -63,8 +63,8 @@ protected:
 	
 
 	//used for intercept of moveable objects or screen and moveable (not intercept)
-	RECT thisrect;
-	RECT otherrect;
+	RECT Thisrect;
+	RECT Otherrect;
 	int deltax;
 	int deltay;
 	int width;

@@ -7,41 +7,40 @@ moveableObject::moveableObject()
 {
 	//used for collision functions for checking for itersects with moveable objects and 
 	//also screen non intercept
-	thisrect = { 0,0,0,0 };
-	otherrect = { 0,0,0,0 };
+	Thisrect = { 0,0,0,0 };
+	Otherrect = { 0,0,0,0 };
 	
 
-	//prevx = 500;
-	//prevy = 500;
+	
 }
 //checks for collision of two moveable objects by calling intersectsWithRectangles function. Returns
 //bool value for if collides
 bool moveableObject::Intersects(moveableObject & Other)
 {
-	thisrect.left = Vectorposition.x;
-	thisrect.top = Vectorposition.y;
-	thisrect.right = Vectorposition.x + width;
-	thisrect.bottom = Vectorposition.y + height;
+	Thisrect.left = Vectorposition.x;
+	Thisrect.top = Vectorposition.y;
+	Thisrect.right = Vectorposition.x + width;
+	Thisrect.bottom = Vectorposition.y + height;
 
-	otherrect.left = Other.Vectorposition.x;
-	otherrect.top = Other.Vectorposition.y;
-	otherrect.right = Other.Vectorposition.x + Other.width;
-	otherrect.bottom = Other.Vectorposition.y + Other.height;
-	bool isintersected = IntersectsWithRectangles(thisrect, otherrect);
+	Otherrect.left = Other.Vectorposition.x;
+	Otherrect.top = Other.Vectorposition.y;
+	Otherrect.right = Other.Vectorposition.x + Other.width;
+	Otherrect.bottom = Other.Vectorposition.y + Other.height;
+	bool isintersected = IntersectsWithRectangles(Thisrect, Otherrect);
 	return isintersected;
 }
 //returns boolean if intersected or not, called from either moveableObject::intersects or 
 //moveableObject::screenIntersects 
-bool moveableObject::IntersectsWithRectangles(RECT & thisrectangle, RECT & otherrectangle)
+bool moveableObject::IntersectsWithRectangles(RECT & Thisrectangle, RECT & Otherrectangle)
 {
-	int objectoneleft = thisrectangle.left;
-	int objectonetop = thisrectangle.top;
-	int objectoneright = thisrectangle.right;
-	int objectonebottom = thisrectangle.bottom;
-	int objecttwoleft = otherrectangle.left;
-	int objecttwotop = otherrectangle.top;
-	int objecttworight = otherrectangle.right;
-	int objecttwobottom = otherrectangle.bottom;
+	int objectoneleft = Thisrectangle.left;
+	int objectonetop = Thisrectangle.top;
+	int objectoneright = Thisrectangle.right;
+	int objectonebottom = Thisrectangle.bottom;
+	int objecttwoleft = Otherrectangle.left;
+	int objecttwotop = Otherrectangle.top;
+	int objecttworight = Otherrectangle.right;
+	int objecttwobottom = Otherrectangle.bottom;
 	//clever check for non intersection with rectangles
 	if (objectoneleft > objecttworight)
 	{
@@ -64,38 +63,38 @@ bool moveableObject::IntersectsWithRectangles(RECT & thisrectangle, RECT & other
 bool moveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
 {
 	//moveable object
-	thisrect.left = Vectorposition.x;
-	thisrect.top = Vectorposition.y;
-	thisrect.right = Vectorposition.x + width;
-	thisrect.bottom = Vectorposition.y + height;
+	Thisrect.left = Vectorposition.x;
+	Thisrect.top = Vectorposition.y;
+	Thisrect.right = Vectorposition.x + width;
+	Thisrect.bottom = Vectorposition.y + height;
 
 	//screen Rectangle the next two changes are to make sure that the object is totally off the screen
 	//the left and top edge "of the screen" is when the moveable object is located so it's edge is
 	//on zero.
-	otherrect.left = 0;
-	otherrect.top = 0;
+	Otherrect.left = 0;
+	Otherrect.top = 0;
 
 	//allows for one space past border to be part of rectangle to work 
 	//when the object is readied with onscreen status
-	otherrect.right = screenwidth ;
-	otherrect.bottom = screenheight;
+	Otherrect.right = screenwidth ;
+	Otherrect.bottom = screenheight;
 	
-	return(IntersectsWithRectangles(thisrect, otherrect));
+	return(IntersectsWithRectangles(Thisrect, Otherrect));
 
 
 }
 
-void moveableObject::SetVector(sf::Vector2f  invector)
+void moveableObject::SetVector(sf::Vector2f  Invector)
 {
 
-	Vectorposition.x = invector.x;
-	Vectorposition.y = invector.y;
+	Vectorposition.x = Invector.x;
+	Vectorposition.y = Invector.y;
 }
 
-void moveableObject::SetPrevVector(sf::Vector2f  invector)
+void moveableObject::SetPrevVector(sf::Vector2f  Invector)
 {
-	Vectorprevposition.x = invector.x;
-	Vectorprevposition.y = invector.y;
+	Vectorprevposition.x = Invector.x;
+	Vectorprevposition.y = Invector.y;
 
 }
 

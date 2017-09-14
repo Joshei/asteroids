@@ -8,13 +8,13 @@
 
 
 
-Asteroid::Asteroid(int thewidth, int theheight, sf::Texture & Largertextureforasteroid, asteroidType Theasteroidtype)
+Asteroid::Asteroid(int thewidth, int theheight, sf::Texture & Textureforasteroid, asteroidType Theasteroidtype)
 {
 
 	activated = instantiated;
 	height = theheight;
 	width = thewidth;
-	Anasteroid.setTexture(Largertextureforasteroid);
+	Anasteroid.setTexture(Textureforasteroid);
 	//initialized, no -1 available, so set to down.  Smaller asteroids won't use this setting.
 	Whichdirection = asteroidMovement::DOWN;
 	fromthisborder = -1;

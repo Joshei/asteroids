@@ -21,19 +21,19 @@ Ship::Ship(int positionx, int positiony, theDirection  Shipdirection)
 
 	if (!Textureshipnorth.loadFromFile("shipNorth.png"))
 	{
-		shutdown(-10);
+		shutdown(-6);
 	}
 	if (!Textureshipeast.loadFromFile("shipEast.png")) 
 	{
-		shutdown(-11);
+		shutdown(-7);
 	}
 	if (!Textureshipsouth.loadFromFile("shipSouth.png")) 
 	{
-		shutdown(-12);
+		shutdown(-8);
 	}
 	if (!Textureshipwest.loadFromFile("shipWest.png")) 
 	{
-		shutdown(-13);
+		shutdown(-9);
 	}
 	SelectTexture(Shipdirection);
 	

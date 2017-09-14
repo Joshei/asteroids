@@ -47,7 +47,7 @@ public:
 	
 
 	
-	Asteroid( int thewidth, int theheight, sf::Texture & Largertextureforasteroid, asteroidType Type);
+	Asteroid( int thewidth, int theheight, sf::Texture & Thetextureforasteroid, asteroidType Type);
 	
 	void MoveAsteroid();
 	void SetInitialAsteroid(int i);

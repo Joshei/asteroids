@@ -26,43 +26,43 @@ int g_TotalNumAllAsteroids = 0;
 
 //the vector holds x an y
 bool checkForShipOnBorder(sf::Vector2f shipvector);
-bool checkkeyboard();
+bool checkKeyboard();
 bool checkAllAsteroidsDestroyed();
 int  moveShip(int amountForMovem, int keyPressed);
 int shoot();
-bool checkForBulletOffscreen(int index);
+void checkForBulletOffscreen(int index);
 
 
 void drawShip();
 int checkCollisionsShipWithAsteroids();
 void checkCollisionsaAllBulletsWithAnAsteroids();
-void movebullets();
+void moveBullets();
 void checkForAsteroidOffScreen();
 void shutdown(int exitNum);
 void fillAsteroidVector(int numOfAsteroid , int theWidth, int theHeight, asteroidType theAsteroidType, sf::Texture & theTexture);
-int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAstroid);
-void MoveAsteroids();
+int createSmallerAsteroids(int indexOfAsteroid);
+void moveAsteroids();
 void reinitializeOffscreenAsteroids();
 void fillBulletVector(int numberOfBullets, sf::Texture & textureOfBullet);
 void refillAsteroidVectors(int createThisManyAsteroids, int theWidth, int theHeight, asteroidType asteroidType, sf::Texture & theTexture);
 void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, asteroidMovement & smallAsteroidDirection1, asteroidMovement & smallAsteroidDirection2);
-void setallasteroidsprev();
-void PositionAsteroidsAndDraw(int theinterpolation);
-void PositionBulletsAndDraw(int interpolation);
-void SetAllBulletsPrev();
+void setAllAsteroidsPrev();
+void positionAsteroidsAndDraw(int theinterpolation);
+void positionBulletsAndDraw(int interpolation);
+void setAllBulletsPrev();
 /////////!!!!!!!!!!!!!!!!!!
 
 
 //put here together because smallerTextureAsteroid used in: checkCollisionsaAllBulletsWithAnAsteroid 
-sf::Texture largerTextureAsteroid;
-sf::Texture smallerTextureAsteroid;
-sf::Texture texturebullet;
-sf::Font fontForScore;
+sf::Texture Largertextureasteroid;
+sf::Texture Smallertextureasteroid;
+sf::Texture Texturebullet;
+sf::Font Fontforscore;
 
 //initialized of the vectors for asteroids
 std::vector<Asteroid> asteroidCollection;
 std::vector <Bullet> bullets;
-Score theScore(10, 10);
+Score Thescore(10, 10);
 sf::Event event;
 sf::RenderWindow window(sf::VideoMode(G_SCREEN_WIDTH, G_SCREEN_HEIGHT), "Asteroids!");
 
@@ -111,32 +111,20 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 
 		
 	//set the change in y and the change in x variables (meaning if delta)
-	int deltaX = shipObject.GetDeltaX();
-	int deltaY = shipObject.GetDeltaY();
+	int Deltax = shipObject.GetDeltaX();
+	int Deltay = shipObject.GetDeltaY();
 
 
 	//set the x and y using the delta (change of x or y) and updating the x and y values for checking 
-	//for collisions and off screen
-	//int x = shipObject.GetX();
-	//int y = shipObject.GetY();
-	//x = x + deltaX;
-	//y = y + deltaY;
-
+	
 
 	sf::Vector2f temp =  shipObject.GetVectorPosition();
-	temp.x = temp.x + deltaX;
-	temp.y = temp.y + deltaY;
+	temp.x = temp.x + Deltax;
+	temp.y = temp.y + Deltay;
 
 
 	
-	//int x = 0;
-	//int y = 0;
-	//x = x + deltaX;
-	//y = y + deltaY;
-
-	//shipObject.SetVector(temp);
-	//shipObject.SetPrevVector(temp);
-
+	
 	
 
 	//is off screen returns false
@@ -149,13 +137,10 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 
 
 	shipObject.SetVector(temp);
+	//set for interpolation
 	shipObject.SetPrevVector(temp);
 
-	//shipObject.SetX(temp1.x);
-	//shipObject.SetY(temp1.y);
-	//shipObject.SetPrevX(temp1.x);
-	//shipObject.SetPrevY(temp1.y);
-
+	
 	
 	
 	
@@ -163,7 +148,7 @@ int moveShip(int amountForMovement = -1,  int pressedKey = -1)
 }
 
 
-bool checkkeyboard() 
+bool checkKeyboard() 
 {
 
 	
@@ -173,7 +158,6 @@ bool checkkeyboard()
 	//bullets.  All together the asteroids, bullets, and ship speeds set up the relative 
 	//distance-by-movement.  (they can move at different speeds!)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))  { moveShip(-3, left); }
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) { exit(22); }
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) { moveShip(3, right); }
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))	 { moveShip(-3, up); }
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))  { moveShip(3, down ); }
@@ -267,19 +251,19 @@ void checkCollisionsaAllBulletsWithAnAsteroids( )
 				if (asteroidCollection[j].GetAsteroidType() == larger)
 				{
 					//passes in the index of the larger asteroid and than activates two small asteroids 
-					createSmallerAsteroids(j, smallerTextureAsteroid);
+					createSmallerAsteroids(j);
 
 					
 					
-					theScore.AddToScore(40);
-					theScore.DrawScore();
+					Thescore.AddToScore(40);
+					Thescore.DrawScore();
 
 				
 				}
 				else if (asteroidCollection[j].GetAsteroidType() == smaller)
 				{
-					theScore.AddToScore(60);
-					theScore.DrawScore();
+					Thescore.AddToScore(60);
+					Thescore.DrawScore();
 				}
 				
 				break;
@@ -304,10 +288,10 @@ int shoot()
 
 	
 
-	int i = 0;
 	
 	
- 	 int numOfBulletIndex = -1;
+	
+ 	 int Numofbulletindex = -1;
 	
 
 		//static function
@@ -320,7 +304,7 @@ int shoot()
 				continue;
 			}
 
-			numOfBulletIndex = i;
+			Numofbulletindex = i;
 
 			//bullet was inactive now is active (was off screen)
 			//bullets[i].SetIsactive(true);
@@ -328,14 +312,16 @@ int shoot()
 
 		}
 
-		if (numOfBulletIndex < 0)
+		if (Numofbulletindex < 0)
 		{
 			return(-1);
 		}
 
 
 		//to make all the following member function simpler, uses bulletIndex instead
-		Bullet & bulletIndex = bullets[numOfBulletIndex];
+		Bullet & bulletIndex = bullets[Numofbulletindex];
+
+
 			
 		//pre condition : bullet is smaller in width and height than asteroid
 		//up key pressed direction of bullet will be upwards.  creates a bullet the same amount 
@@ -345,13 +331,13 @@ int shoot()
 			{
 
 
-				float centerShipWidth = .5* shipObject.GetWidth();
-				float centerBulletWidth = .5* bulletIndex.GetWidth();
+				float Centershipwidth = .5* shipObject.GetWidth();
+				float Centerbulletwidth = .5* bulletIndex.GetWidth();
 				
 
 				
 				//bullet positioned at  center of ship horizontally
-				bulletIndex.SetX(shipObject.GetX() + centerShipWidth - centerBulletWidth);
+				bulletIndex.SetX(shipObject.GetX() + Centershipwidth - Centerbulletwidth);
 				
 				//bullet starts a bit under the ship
 				
@@ -383,14 +369,14 @@ int shoot()
 			{
 
 				
-				float centerShipHeight = .5* shipObject.GetHeight();
-				float centerBulletHeight = .5* bulletIndex.GetHeight();
+				float Centershipheight = .5* shipObject.GetHeight();
+				float Centerbulletheight = .5* bulletIndex.GetHeight();
 				
 
 				//bullet a bit under ship (horizontally)
 				bulletIndex.SetX(shipObject.GetX() + shipObject.GetWidth() - 10);
 				//bullet centered from ship vertically
-				bulletIndex.SetY(shipObject.GetY() + centerShipHeight - centerBulletHeight);
+				bulletIndex.SetY(shipObject.GetY() + Centershipheight - Centerbulletheight);
 
 				//bullet a bit under ship (horizontally)
 				bulletIndex.SetPrevX(bulletIndex.GetX());
@@ -415,12 +401,12 @@ int shoot()
 			else if (shipObject.GetDirection() == down) 
 			{
 
-				float centerShipWidth = .5* shipObject.GetWidth();
-				float centerBulletWidth = .5* bulletIndex.GetWidth();
+				float Centershipwidth = .5* shipObject.GetWidth();
+				float Centerbulletwidth = .5* bulletIndex.GetWidth();
 				
 
 				//bullet is centered on ship horizontally
-				bulletIndex.SetX(shipObject.GetX() + centerShipWidth - centerBulletWidth);
+				bulletIndex.SetX(shipObject.GetX() + Centershipwidth - Centerbulletwidth);
 				//bullet a bit under vertically
 				bulletIndex.SetY(shipObject.GetY() + shipObject.GetHeight() - 10 );
 				
@@ -447,13 +433,13 @@ int shoot()
 			{
 
 				
-				float centerShipHeight = .5* shipObject.GetHeight();
-				float centerBulletHeight = .5* bulletIndex.GetHeight();
+				float Centershipheight = .5* shipObject.GetHeight();
+				float Centerbulletheight = .5* bulletIndex.GetHeight();
 
 				//bullet a bit under horizontal of ship
 				bulletIndex.SetX(shipObject.GetX()  - 10 );
 				//bullet centered vertically on shiop
-				bulletIndex.SetY(shipObject.GetY() + centerShipHeight  - centerBulletHeight);
+				bulletIndex.SetY(shipObject.GetY() + Centershipheight  - Centerbulletheight);
 
 				//bullet a bit under horizontal of ship
 				bulletIndex.SetPrevX(bulletIndex.GetX());
@@ -478,11 +464,10 @@ int shoot()
 }
 
 //move the bullets and if still on screen draw them
-void movebullets() 
+void moveBullets() 
 {
 
-	bool returnValue = false;
-
+	
 	//static function
 	for (int i = 0; i < LevelObj::GetMaxNumBullets(); i++)
 	{
@@ -498,7 +483,7 @@ void movebullets()
 			bullets[i].SetPrevY(bullets[i].GetY());
 
 			
-			returnValue = checkForBulletOffscreen(i);
+			checkForBulletOffscreen(i);
 			
 		
 		}
@@ -513,10 +498,10 @@ void movebullets()
 ////////////////////////////////
 
 //move the bullets and if still on screen draw them - not used but still useful
-void PositionBulletsAndDraw(int interpolation)
+void positionBulletsAndDraw(int interpolation)
 {
 
-	bool returnValue = false;
+	
 
 	//static function
 	for (int i = 0; i < LevelObj::GetMaxNumBullets(); i++)
@@ -569,17 +554,17 @@ void PositionBulletsAndDraw(int interpolation)
 //The drawing function will check to see if the bullet is still active.  if the bullet
 //is offscreen than a return of -1 means that the bullet will not be drawn in the movebullets
 //function.  The screenWidth and screenHeight is used to check if the image is totally off the screen!
-bool checkForBulletOffscreen(int index) 
+void checkForBulletOffscreen(int index) 
 {
 	//is bullet not on screen?
 	if (!(bullets[index].IntersectsWithScreenRect(G_SCREEN_WIDTH, G_SCREEN_HEIGHT)))
 	{
 		//bullet is not on screen
 		bullets[index].SetIsactive(false);
-		return(true);
+		
 	}
 	//bullet is on screen
-	return(false);
+	
 }
 
 //The function checks if the asteroid is totally off the screen. If it is the asteroid 
@@ -605,12 +590,12 @@ void checkForAsteroidOffScreen()
 
 //checks if ship is at passed or on one of the four borders.  If it does, sets ship  to be at border's 
 //edge and returns a negative one which means no movement in the calling function : mopveShip(...)
-bool checkForShipOnBorder(sf::Vector2f tempvar)
+bool checkForShipOnBorder(sf::Vector2f Tempvar)
 {
 
 
 	//left
-	if (tempvar.x < 0 )
+	if (Tempvar.x < 0 )
 	{
 		shipObject.SetX(0);
 		shipObject.SetPrevX(0);
@@ -619,7 +604,7 @@ bool checkForShipOnBorder(sf::Vector2f tempvar)
 
 	}
 	//right
-	if (tempvar.x  > (G_SCREEN_WIDTH - shipObject.GetWidth())) 
+	if (Tempvar.x  > (G_SCREEN_WIDTH - shipObject.GetWidth())) 
 	{
 		shipObject.SetX(G_SCREEN_WIDTH - shipObject.GetWidth());
 		shipObject.SetPrevX(G_SCREEN_WIDTH - shipObject.GetWidth());
@@ -628,7 +613,7 @@ bool checkForShipOnBorder(sf::Vector2f tempvar)
 
 	}
 	//bottom
-	if (tempvar.y > (G_SCREEN_HEIGHT - shipObject.GetHeight()))
+	if (Tempvar.y > (G_SCREEN_HEIGHT - shipObject.GetHeight()))
 	{
 		shipObject.SetY(G_SCREEN_HEIGHT - shipObject.GetHeight());
 		shipObject.SetPrevY(G_SCREEN_HEIGHT - shipObject.GetHeight());
@@ -636,7 +621,7 @@ bool checkForShipOnBorder(sf::Vector2f tempvar)
 
 	}
 	//top
-	if (tempvar.y < 0 ) 
+	if (Tempvar.y < 0 ) 
 	{
 		shipObject.SetY(0);
 		shipObject.SetPrevY(0);
@@ -661,7 +646,7 @@ void shutdown(int exitNum)
 
 
 //fills the asteroid vector with initialized asteroids. asterType is the type of the asteroid.
-void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType asterType,  sf::Texture & texture) {
+void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType Astertype,  sf::Texture & Texture) {
 
 	// for random direction
 	
@@ -680,18 +665,18 @@ void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType as
 		//been created on the main monitor sceen (two for each large asteroid that is destroyed)
 		//they are initialized with 'initialized' and is changed to 'onscreen' in createSmallAsteroid
 		//function
-		if (asterType == smaller)
+		if (Astertype == smaller)
 		{
-			asteroidCollection.push_back(Asteroid(width, height, texture, smaller));
+			asteroidCollection.push_back(Asteroid(width, height, Texture, smaller));
 			//readies for onscreen usage in createSmallerAsteroid which sets deltax and deltay and whichdirection
 			asteroidCollection[i].SetActivate(initialized);
 		}
-		else if (asterType == larger)
+		else if (Astertype == larger)
 		{
 			//generated is 0 through three for starting direction on screen : top, right, bottom, left
 			int j = rand() % 4;
 			//asteroid now calls constructor 
-			asteroidCollection.push_back(Asteroid(width, height, texture, larger));
+			asteroidCollection.push_back(Asteroid(width, height, Texture, larger));
 			//sets deltax and deltay and which direction, and activation
 			asteroidCollection[i].SetInitialAsteroid(j);
 		}
@@ -705,14 +690,14 @@ void fillAsteroidVector(int numAsteroid,  int width, int height, asteroidType as
 // is being replaced on the screen with the two smaller asteroids that are to be activate
 // (onscree) here.  They were set to intialize in fillAsteroidVectors and refillAsteroidVectors.
 // Called from checkCollisionsaAllBulletsWithAnAsteroids.
-int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
+int createSmallerAsteroids(int indexOfAsteroid)
 {
 	
 	
 
-	int flagUnusedAsteroidIndexFound = 0;
-	int indexNextSmallerAsteroid1 = 0;
-	int indexNextSmallerAsteroid2 = 0;
+	int Flagunusedasteroidindexfound = 0;
+	int Indexnextsmallerasteroid1 = 0;
+	int Indexnextsmallerasteroid2 = 0;
 
 	//This fuction finds the first index for the small asteroid.  The assumption is that
 	//the second indexed asteroid created from a collission with a large asteroid and a bullet
@@ -730,8 +715,8 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 
 			//if this is two from these to for loops than two small asteroids have been found for
 			//using.  Because they were set as initalized
-			flagUnusedAsteroidIndexFound++;
-			indexNextSmallerAsteroid1 = i;
+			Flagunusedasteroidindexfound++;
+			Indexnextsmallerasteroid1 = i;
 			//their ready for moving and drawing
 			asteroidCollection[i].SetActivate(onscreen);
 			//unused asteroid found and breaking out of loop because of this variables amount!
@@ -749,8 +734,8 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 		{
 
 			//if this is two one for each for loop,  both small asteroids ready for movement
-			flagUnusedAsteroidIndexFound++;
-			indexNextSmallerAsteroid2 = j;
+			Flagunusedasteroidindexfound++;
+			Indexnextsmallerasteroid2 = j;
 
 			//their ready for moving and drawing
 			asteroidCollection[j].SetActivate(onscreen);
@@ -764,7 +749,7 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	
 	//somethings wrong, this function was called and there are no 2 new asteroids readied
 	//as initialized
-	if (flagUnusedAsteroidIndexFound != 2)
+	if (Flagunusedasteroidindexfound != 2)
 	{
 		exit(-5);
 	}
@@ -786,10 +771,10 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	int largeAsteroidWidth = asteroidCollection[indexOfAsteroid].GetWidth();
 	int largeAsteroidHeight = asteroidCollection[indexOfAsteroid].GetHeight();
 	int largeAsteroidTop = asteroidCollection[indexOfAsteroid].GetY();
-	int smallAsteroid1Height = (asteroidCollection[indexNextSmallerAsteroid1].GetHeight());
-	int smallAsteroid2Height = (asteroidCollection[indexNextSmallerAsteroid2].GetHeight());
-	int smallAsteroid1Width = (asteroidCollection[indexNextSmallerAsteroid1].GetWidth());
-	int smallAsteroid2Width = (asteroidCollection[indexNextSmallerAsteroid2].GetWidth());
+	int smallAsteroid1Height = (asteroidCollection[Indexnextsmallerasteroid1].GetHeight());
+	int smallAsteroid2Height = (asteroidCollection[Indexnextsmallerasteroid2].GetHeight());
+	int smallAsteroid1Width = (asteroidCollection[Indexnextsmallerasteroid1].GetWidth());
+	int smallAsteroid2Width = (asteroidCollection[Indexnextsmallerasteroid2].GetWidth());
 	
 	//For the next four assignments, the small asteroid's center is at the top horizontal tangent of the larger asteroid.
 	//The math here is interesting: the width of the larger asteroid minus the width of the smaller 
@@ -797,13 +782,13 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//We than divide this space by two to get the smaller asteroid positioned at the center horizontally.
 	//if needed, easier to draw out on paper.
 
-	asteroidCollection[indexNextSmallerAsteroid1].SetX(largeAsteroidLeft + ((largeAsteroidWidth - (smallAsteroid1Width / 2))));
-	asteroidCollection[indexNextSmallerAsteroid1].SetY(largeAsteroidTop  - (smallAsteroid1Height / 2));
+	asteroidCollection[Indexnextsmallerasteroid1].SetX(largeAsteroidLeft + ((largeAsteroidWidth - (smallAsteroid1Width / 2))));
+	asteroidCollection[Indexnextsmallerasteroid1].SetY(largeAsteroidTop  - (smallAsteroid1Height / 2));
 
 	
 	
-	asteroidCollection[indexNextSmallerAsteroid2].SetX(largeAsteroidLeft + ((largeAsteroidWidth - (smallAsteroid2Width / 2))));
-	asteroidCollection[indexNextSmallerAsteroid2].SetY(largeAsteroidTop + ((largeAsteroidHeight - (smallAsteroid2Height / 2))));
+	asteroidCollection[Indexnextsmallerasteroid2].SetX(largeAsteroidLeft + ((largeAsteroidWidth - (smallAsteroid2Width / 2))));
+	asteroidCollection[Indexnextsmallerasteroid2].SetY(largeAsteroidTop + ((largeAsteroidHeight - (smallAsteroid2Height / 2))));
 
 	
 
@@ -811,18 +796,18 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 
 
 	//initializations for setposition right below.
-	float x1 = asteroidCollection[indexNextSmallerAsteroid1].GetX();
-	float y1 = asteroidCollection[indexNextSmallerAsteroid1].GetY();
-	float x2 = asteroidCollection[indexNextSmallerAsteroid2].GetX();
-	float y2 = asteroidCollection[indexNextSmallerAsteroid2].GetY();
+	float x1 = asteroidCollection[Indexnextsmallerasteroid1].GetX();
+	float y1 = asteroidCollection[Indexnextsmallerasteroid1].GetY();
+	float x2 = asteroidCollection[Indexnextsmallerasteroid2].GetX();
+	float y2 = asteroidCollection[Indexnextsmallerasteroid2].GetY();
 	////sets the position of the asteroid with x and y coordinates
 
 
-	asteroidCollection[indexNextSmallerAsteroid1].SetPrevX(x1);
-	asteroidCollection[indexNextSmallerAsteroid1].SetPrevY(y1);
+	asteroidCollection[Indexnextsmallerasteroid1].SetPrevX(x1);
+	asteroidCollection[Indexnextsmallerasteroid1].SetPrevY(y1);
 
-	asteroidCollection[indexNextSmallerAsteroid2].SetPrevX(x2);
-	asteroidCollection[indexNextSmallerAsteroid2].SetPrevY(y2);
+	asteroidCollection[Indexnextsmallerasteroid2].SetPrevX(x2);
+	asteroidCollection[Indexnextsmallerasteroid2].SetPrevY(y2);
 
 
 
@@ -833,8 +818,8 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//get direction of large asteroid for use in determining small asteroids deltaX and deltaY
 	asteroidMovement majorDirection = asteroidCollection[indexOfAsteroid].GetWhichDirection();
 	//local objects for use of passing in below by reference
-	asteroidMovement newDirection1= directions[1][1];
-	asteroidMovement newDirection2 = directions[1][1];
+	asteroidMovement newDirection1= directions[0][0];
+	asteroidMovement newDirection2 = directions[0][0];
 	//calls with refernce so we can use the obtained direction in the following two functions
 	//The two remaing directions that arn't differentionated in this function
 	//by having either one up or one down are up and down which have two ups or two downs
@@ -848,8 +833,8 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 	//indexNextSmallerAsteroid1 is the index of the small asteroid position that is higher than
 	//indexNextSmallerAsteroid2.  This furthor indicates that newDirection1 is higher on screen
 	//than newDirection2.  
-	asteroidCollection[indexNextSmallerAsteroid1].SetDeltaWithDirection(newDirection1);
-	asteroidCollection[indexNextSmallerAsteroid2].SetDeltaWithDirection(newDirection2);
+	asteroidCollection[Indexnextsmallerasteroid1].SetDeltaWithDirection(newDirection1);
+	asteroidCollection[Indexnextsmallerasteroid2].SetDeltaWithDirection(newDirection2);
 	
 
 	
@@ -861,13 +846,13 @@ int createSmallerAsteroids(int indexOfAsteroid, sf::Texture smallerTextureAst)
 bool checkAllAsteroidsDestroyed()
 {
 
-	int asteroidCount = 0;
+	int Asteroidcount = 0;
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
 
 		if (asteroidCollection[i].GetActivate() == destroyed)
 		{
-			asteroidCount++;
+			Asteroidcount++;
 			
 		
 		}
@@ -877,7 +862,7 @@ bool checkAllAsteroidsDestroyed()
 		}
 
 	}
-	if (asteroidCount == g_TotalNumAllAsteroids)
+	if (Asteroidcount == g_TotalNumAllAsteroids)
 	{
 		return(true);
 	}
@@ -895,7 +880,7 @@ bool checkAllAsteroidsDestroyed()
 //It could also be on the screen ..."onscreen"
 //if it is a small asteroid it is onscreen if it has been created with :
 //createsmallasteroids.
-void MoveAsteroids()
+void moveAsteroids()
 {
 
 	
@@ -924,7 +909,7 @@ void MoveAsteroids()
 }
 
 //Not used anymore but still useful.
-void PositionAsteroidsAndDraw(int interpolation)
+void positionAsteroidsAndDraw(int interpolation)
 {
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
 	{
@@ -960,12 +945,12 @@ void reinitializeOffscreenAsteroids()
 		if (asteroidCollection[i].GetActivate() == offscreen)
 		{
 			
-			int randNum = rand() % 4;
+			int Randnum = rand() % 4;
 			//resets asteroid to onscreen for draw and move.
 			//this is used for both large and small asteroids and is not the same
 			//as when (two) asteroids are created in the createSmallerAsteroids called
 			//in checkCollisionsAllBullets...sets deltax, deltay, whichdirection, and activation
-			asteroidCollection[i].SetInitialAsteroid(randNum);
+			asteroidCollection[i].SetInitialAsteroid(Randnum);
 		}
 
 	}
@@ -975,7 +960,7 @@ void reinitializeOffscreenAsteroids()
 
 //fills vector with numOfBullets and fills the vector.  Lastly, sets 
 //the static variaable.
-void fillBulletVector (int numOfBullets, sf::Texture & texture)
+void fillBulletVector (int numOfBullets, sf::Texture & Texture)
 {
 
 	
@@ -983,7 +968,7 @@ void fillBulletVector (int numOfBullets, sf::Texture & texture)
 	for (int i = 0; i < numOfBullets  ; i++)
 	{
 		///height than width
-		bullets.push_back( Bullet(texture, 16, 16));
+		bullets.push_back( Bullet(Texture, 16, 16));
 	
 	}
 
@@ -992,7 +977,7 @@ void fillBulletVector (int numOfBullets, sf::Texture & texture)
 	
 }
 
-void setallasteroidsprev()
+void setAllAsteroidsPrev()
 {
 
 	for (std::size_t i = 0; i < asteroidCollection.size(); i++)
@@ -1124,11 +1109,7 @@ void main(int argc, char** agrv[]) {
 ///////////////////////////////
 
 
-const float ticksPerSecond = 30.f;
-const float skipTicks = 1000.f / ticksPerSecond;
-sf::Clock mainClock;
-int interpolation = 0;
-const float SKIP_TICKS = skipTicks;
+
 
 
 int main(void)
@@ -1137,6 +1118,12 @@ int main(void)
 
 
 //window.setVerticalSyncEnabled(true);
+
+
+const float Tickspersecond = 30.f;
+const float SKIP_TICKS = 1000.f / Tickspersecond;
+sf::Clock Mainclock;
+float Interpolation = 0;
 
 
 	
@@ -1150,31 +1137,30 @@ int main(void)
 std::srand(time(NULL));
 
 
-int tempFlagForTest = 0;
 FreeConsole();
 
 
-if (!largerTextureAsteroid.loadFromFile("largerasteroid.png"))
+if (!Largertextureasteroid.loadFromFile("largerasteroid.png"))
 {
-	shutdown(-6);
+	shutdown(-2);
 }
 
 
-if (!smallerTextureAsteroid.loadFromFile("smallerasteroid.png"))
+if (!Smallertextureasteroid.loadFromFile("smallerasteroid.png"))
 {
-	shutdown(-7);
+	shutdown(-3);
 }
 
 
-if (!texturebullet.loadFromFile("bullet.png"))
+if (!Texturebullet.loadFromFile("bullet.png"))
 {
-	shutdown(-8);
+	shutdown(-4);
 }
 
 
-if (!fontForScore.loadFromFile("ARIALBD.ttf"))
+if (!Fontforscore.loadFromFile("ARIALBD.ttf"))
 {
-	shutdown(-9);
+	shutdown(-5);
 }
 
 
@@ -1191,13 +1177,13 @@ levelObject.AdvanceLevelByOne();
 //Uses setInitialAsteroid. third and fourth argument is width an than height
 
 //creates vector with asteroids - order (large and small) is not important
-fillAsteroidVector(levelObject.GetNumLargeAsteroids(), 64, 64, larger, largerTextureAsteroid);
-fillAsteroidVector(levelObject.GetNumSmallAsteroids(), 32, 32, smaller, smallerTextureAsteroid);
+fillAsteroidVector(levelObject.GetNumLargeAsteroids(), 64, 64, larger, Largertextureasteroid);
+fillAsteroidVector(levelObject.GetNumSmallAsteroids(), 32, 32, smaller, Smallertextureasteroid);
 
 
 //this will set the vector to 10 bullets index  of 9 of course
-fillBulletVector(levelObject.GetMaxNumBullets(), texturebullet);
-theScore.SetFont(fontForScore);
+fillBulletVector(levelObject.GetMaxNumBullets(), Texturebullet);
+Thescore.SetFont(Fontforscore);
 
 //initial ship draw
 drawShip();
@@ -1206,7 +1192,7 @@ drawShip();
 
 
 
-double nextTick = mainClock.restart().asMilliseconds();
+double Nexttick = Mainclock.restart().asMilliseconds();
 
 	while (window.isOpen())
 	{
@@ -1252,14 +1238,14 @@ double nextTick = mainClock.restart().asMilliseconds();
 			}
 
 
-			while (mainClock.getElapsedTime().asMilliseconds() > nextTick)
+			while (Mainclock.getElapsedTime().asMilliseconds() > Nexttick)
 			{
 
 
 
 				// sets all position varibles to prevpostion for interpolation near end of main loop
-				setallasteroidsprev();
-				SetAllBulletsPrev();
+				setAllAsteroidsPrev();
+				setAllBulletsPrev();
 				shipObject.SetPrevX(shipObject.GetX());
 				shipObject.SetPrevY(shipObject.GetY());
 
@@ -1269,14 +1255,14 @@ double nextTick = mainClock.restart().asMilliseconds();
 
 			//checks keyboard and if pressed calls moveship with the deltas otherwise calls moveship
 			//with - 1 which causes sliding effect
-			if (checkkeyboard() == false)
+			if (checkKeyboard() == false)
 			{
 
 				
 				//also checks if movement would be beyond border is so returns -1
 				moveShip(-1);
 				
-				//window.draw(shipObject.GetShipImage());
+				
 			}
 
 			
@@ -1285,9 +1271,9 @@ double nextTick = mainClock.restart().asMilliseconds();
 			//if the asteroids are not on the screen they will not be moved
 			//put before collision checks so that new asteroids created will be a blit without movement
 
-			MoveAsteroids();
+			moveAsteroids();
 
-			movebullets();
+			moveBullets();
 
 			
 			
@@ -1317,8 +1303,8 @@ double nextTick = mainClock.restart().asMilliseconds();
 		{
 
 			//holds this levels value because they are changed in advanceLevelByOne for RefillAsteroidVector
-			int oldLevelsSmallAsteroidAmt = levelObject.GetNumSmallAsteroids();
-			int oldLevelsLargeAsteroidAmt = levelObject.GetNumLargeAsteroids();
+			int Oldlevelssmallasteroidamt = levelObject.GetNumSmallAsteroids();
+			int Oldlevelslargeasteroidamt = levelObject.GetNumLargeAsteroids();
 
 
 			//remove bullets from screen
@@ -1352,14 +1338,14 @@ double nextTick = mainClock.restart().asMilliseconds();
 			//fills one asteroid collection with two statements.
 			//oldLevels... getNumSmallAsteroids() and .getNumLargeAsteroids() are new levels values
 			//the new levels minus the old levels gives us the new asteroids to create
-			int createThisAmtAsteroids = (levelObject.GetNumLargeAsteroids() - oldLevelsLargeAsteroidAmt);
+			int createThisAmtAsteroids = (levelObject.GetNumLargeAsteroids() - Oldlevelslargeasteroidamt);
 			//creates the newly created asteroids with push_back and reinitializes the older asteroids
 			//with a new active setting - order (small and large not important)
-			refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, largerTextureAsteroid);
+			refillAsteroidVectors(createThisAmtAsteroids, 64, 64, larger, Largertextureasteroid);
 			//see right above
-			createThisAmtAsteroids = levelObject.GetNumSmallAsteroids() - oldLevelsSmallAsteroidAmt;
+			createThisAmtAsteroids = levelObject.GetNumSmallAsteroids() - Oldlevelssmallasteroidamt;
 			//same as above : just a smaller asteroid group for the collection
-			refillAsteroidVectors(createThisAmtAsteroids, 32, 32, smaller, smallerTextureAsteroid);
+			refillAsteroidVectors(createThisAmtAsteroids, 32, 32, smaller, Smallertextureasteroid);
 
 
 		}
@@ -1375,9 +1361,9 @@ double nextTick = mainClock.restart().asMilliseconds();
 
 		//initial score text is drawn here until there is a score and than set and drawm elsewhere
 		//(checkCollisionWithAllBullets...)
-		if (theScore.GetScore() == 0)
+		if (Thescore.GetScore() == 0)
 		{
-			theScore.DrawScore(0);
+			Thescore.DrawScore(0);
 		}
 
 
@@ -1403,7 +1389,7 @@ double nextTick = mainClock.restart().asMilliseconds();
 
 /////////////////////////////////////////
 
-		nextTick += skipTicks;
+		Nexttick += SKIP_TICKS;
 
 		
 
@@ -1417,19 +1403,14 @@ double nextTick = mainClock.restart().asMilliseconds();
 		
 		
 
-		float spx = shipObject.GetPrevX();
-		float spy = shipObject.GetPrevY();
-		float sx = shipObject.GetX();
-		float sy = shipObject.GetY();
-
-		
+			
 
 		window.clear();
-		window.draw(theScore.getTextMessage());
+		window.draw(Thescore.getTextMessage());
 
 
 
-		interpolation = float(((mainClock.getElapsedTime().asMilliseconds() + SKIP_TICKS) - (nextTick)) / (SKIP_TICKS));
+		Interpolation = float(((Mainclock.getElapsedTime().asMilliseconds() + SKIP_TICKS) - (Nexttick)) / (SKIP_TICKS));
 
 
 
@@ -1438,8 +1419,8 @@ double nextTick = mainClock.restart().asMilliseconds();
 		//shipObject.GetShipImage().setPosition(shipObject.GetX(), shipObject.GetY());//(shipObject.GetPrevY() + ((shipObject.GetY() - shipObject.GetPrevY()) * interpolation)));
 
 
-		shipObject.GetShipImage().setPosition(shipObject.GetPrevX()  + ((shipObject.GetX() - shipObject.GetPrevX())* interpolation),
-		shipObject.GetPrevY() + ((shipObject.GetY() - shipObject.GetPrevY()) * interpolation));
+		shipObject.GetShipImage().setPosition(shipObject.GetPrevX()  + ((shipObject.GetX() - shipObject.GetPrevX())*Interpolation),
+		shipObject.GetPrevY() + ((shipObject.GetY() - shipObject.GetPrevY()) * Interpolation));
 
 
 		
@@ -1455,12 +1436,12 @@ double nextTick = mainClock.restart().asMilliseconds();
 			{
 
 
-				interpolation = float(((mainClock.getElapsedTime().asMilliseconds() + SKIP_TICKS) - (nextTick)) / (SKIP_TICKS));
+				Interpolation = float(((Mainclock.getElapsedTime().asMilliseconds() + SKIP_TICKS) - (Nexttick)) / (SKIP_TICKS));
 				
 
 				
-				asteroidCollection[i].GetSprite().setPosition(asteroidCollection[i].GetPrevX() + ((asteroidCollection[i].GetX() - asteroidCollection[i].GetPrevX())* interpolation),
-				asteroidCollection[i].GetPrevY() + ((asteroidCollection[i].GetY() - asteroidCollection[i].GetPrevY()) * interpolation));
+				asteroidCollection[i].GetSprite().setPosition(asteroidCollection[i].GetPrevX() + ((asteroidCollection[i].GetX() - asteroidCollection[i].GetPrevX())* Interpolation),
+				asteroidCollection[i].GetPrevY() + ((asteroidCollection[i].GetY() - asteroidCollection[i].GetPrevY()) * Interpolation));
 
 				//asteroidCollection[i].GetSprite().setPosition(sf::Vector2f(asteroidCollection[i].GetX(), asteroidCollection[i].GetY()));
 
@@ -1485,10 +1466,10 @@ double nextTick = mainClock.restart().asMilliseconds();
 			if (bullets[i].GetIsactive())
 			{
 
-				interpolation = float(((mainClock.getElapsedTime().asMilliseconds() + SKIP_TICKS) - (nextTick)) / (SKIP_TICKS));
+				Interpolation = float(((Mainclock.getElapsedTime().asMilliseconds() + SKIP_TICKS) - (Nexttick)) / (SKIP_TICKS));
 
-				bullets[i].GetBulletImage().setPosition(bullets[i].GetPrevX() + ((bullets[i].GetX() - bullets[i].GetPrevX())* interpolation),
-					bullets[i].GetPrevY() + ((bullets[i].GetY() - bullets[i].GetPrevY()) * interpolation));
+				bullets[i].GetBulletImage().setPosition(bullets[i].GetPrevX() + ((bullets[i].GetX() - bullets[i].GetPrevX())* Interpolation),
+					bullets[i].GetPrevY() + ((bullets[i].GetY() - bullets[i].GetPrevY()) * Interpolation));
 
 				window.draw(bullets[i].GetBulletImage());
 
@@ -1519,15 +1500,15 @@ double nextTick = mainClock.restart().asMilliseconds();
 //pushes the new asteroids for the new level if either small or large
 //than reinitializes their deltax and deltay and their direction and x and y
 //in setInitialAsteroid
-void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, asteroidType type , sf::Texture & texture)
+void refillAsteroidVectors(int numAsteroidsToCreate, int width, int height, asteroidType Type , sf::Texture & Texture)
 {
 	
-	if (type == larger)
+	if (Type == larger)
 	{
 		for (int i = 0; i < numAsteroidsToCreate; i++)
 		{
 			//create the new additional asteroids 
-			asteroidCollection.push_back(Asteroid(Width, Height, texture, larger));
+			asteroidCollection.push_back(Asteroid(width, height, Texture, larger));
 			g_TotalNumAllAsteroids++;
 		}
 		for (std::size_t i = 0; i < asteroidCollection.size(); i++)
@@ -1541,12 +1522,12 @@ void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aste
 		}
 
 	}
-	else if (type == smaller)
+	else if (Type == smaller)
 	{
 		for (int i = 0; i < numAsteroidsToCreate; i++)
 		{
 				//creates extra small asteroids
-				asteroidCollection.push_back(Asteroid(Width, Height, texture, smaller));
+				asteroidCollection.push_back(Asteroid(width, height, Texture, smaller));
 				g_TotalNumAllAsteroids++;
 		}
 		//reinitalizes the old and new asteroids with the new activation so that they
@@ -1569,48 +1550,48 @@ void refillAsteroidVectors(int numAsteroidsToCreate, int Width, int Height, aste
 
 
 //Takes one direction from a large asteroid and returns the two new directions of small asteroid by reference
-void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, asteroidMovement & smallAsteroidDirection1, asteroidMovement & smallAsteroidDirection2)
+void getTwoDirectionsFromMajorDirection(asteroidMovement & Themajordirection, asteroidMovement & Smallasteroiddirection1, asteroidMovement & Smallasteroiddirection2)
 {
 
 	//the smallasteroiddirectio1 is always higher than the smallasteroidirection2
 	//it is passed in as newdirection1 and newdirectio2.  newdirection1 is also higher  
 	//than newDirection2 on the screen.  Two remaining : up and down are alternated so that
 	//it is like being rotated correctly when small asteroids are drawn out.
-	switch (theMajorDirection) {
+	switch (Themajordirection) {
 
 
 	case asteroidMovement::UP:
-		smallAsteroidDirection1 = asteroidMovement::UP_RIGHT;
-		smallAsteroidDirection2 = asteroidMovement::UP_LEFT;
+		Smallasteroiddirection1 = asteroidMovement::UP_RIGHT;
+		Smallasteroiddirection2 = asteroidMovement::UP_LEFT;
 		break;
 	case asteroidMovement::DOWN:
-		smallAsteroidDirection1 = asteroidMovement::DOWN_LEFT;
-		smallAsteroidDirection2 = asteroidMovement::DOWN_RIGHT;
+		Smallasteroiddirection1 = asteroidMovement::DOWN_LEFT;
+		Smallasteroiddirection2 = asteroidMovement::DOWN_RIGHT;
 		break;
 	case asteroidMovement::LEFT:
-		smallAsteroidDirection1 = asteroidMovement::UP_LEFT;
-		smallAsteroidDirection2 = asteroidMovement::DOWN_LEFT;
+		Smallasteroiddirection1 = asteroidMovement::UP_LEFT;
+		Smallasteroiddirection2 = asteroidMovement::DOWN_LEFT;
 		break;
 	case asteroidMovement::UP_LEFT:
-		smallAsteroidDirection1 = asteroidMovement::UP;
-		smallAsteroidDirection2 = asteroidMovement::LEFT;
+		Smallasteroiddirection1 = asteroidMovement::UP;
+		Smallasteroiddirection2 = asteroidMovement::LEFT;
 		break;
 	case asteroidMovement::DOWN_LEFT:
-		smallAsteroidDirection1 = asteroidMovement::DOWN;
-		smallAsteroidDirection2 = asteroidMovement::LEFT;
+		Smallasteroiddirection1 = asteroidMovement::DOWN;
+		Smallasteroiddirection2 = asteroidMovement::LEFT;
 		break;
 	case asteroidMovement::RIGHT:
-		smallAsteroidDirection1 = asteroidMovement::UP_RIGHT;
-		smallAsteroidDirection2 = asteroidMovement::DOWN_RIGHT;
+		Smallasteroiddirection1 = asteroidMovement::UP_RIGHT;
+		Smallasteroiddirection2 = asteroidMovement::DOWN_RIGHT;
 
 		break;
 	case asteroidMovement::UP_RIGHT:
-		smallAsteroidDirection1 = asteroidMovement::UP;
-		smallAsteroidDirection2 = asteroidMovement::RIGHT;
+		Smallasteroiddirection1 = asteroidMovement::UP;
+		Smallasteroiddirection2 = asteroidMovement::RIGHT;
 		break;
 	case asteroidMovement::DOWN_RIGHT:
-		smallAsteroidDirection1 = asteroidMovement::DOWN;
-		smallAsteroidDirection2 = asteroidMovement::RIGHT;
+		Smallasteroiddirection1 = asteroidMovement::DOWN;
+		Smallasteroiddirection2 = asteroidMovement::RIGHT;
 		break;
 
 	default:
@@ -1618,7 +1599,7 @@ void getTwoDirectionsFromMajorDirection(asteroidMovement & theMajorDirection, as
 	}
 }
 
-void SetAllBulletsPrev()
+void setAllBulletsPrev()
 {
 
 	for (std::size_t i = 0; i < bullets.size(); i++)

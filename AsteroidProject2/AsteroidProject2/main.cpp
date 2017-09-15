@@ -976,7 +976,7 @@ void fillBulletVector (int numOfBullets, sf::Texture & Texture)
 
 	
 }
-
+//set all asteroids for interpolation in main loop
 void setAllAsteroidsPrev()
 {
 
@@ -1001,110 +1001,7 @@ void setAllAsteroidsPrev()
 
 
 
-//////////////////////////////
-/*
 
-#include <SFML/Graphics.hpp>
-
-void main(int argc, char** agrv[]) {
-
-
-
-	// Create Main Window
-	sf::RenderWindow mainWindow(sf::VideoMode(1024, 768), "Test Game", sf::Style::Close);
-
-
-	mainWindow.setVerticalSyncEnabled(true);
-
-	// Timer for 30 INPUT LOGIC UPDATES PER SECOND
-	const float ticksPerSecond = 30.f;
-	const float skipTicks = 1000.f / ticksPerSecond;
-
-	sf::Clock mainClock;
-	double nextTick = mainClock.restart().asMilliseconds();
-
-	float interpolation = 0.f;
-
-	bool toggleInterpolation = false;
-
-	// Sprite
-	sf::Sprite testSprite;
-	sf::Texture testTexture;
-	testTexture.loadFromFile("a.png");
-	testSprite.setTexture(testTexture);
-	sf::Vector2f testSpritePos;
-	sf::Vector2f testSpritePosPrev;
-	int testSpriteSpeed = 10;
-
-	// SET POS
-	testSpritePos.x = 0;
-	testSpritePos.y = 0;
-
-	while (mainWindow.isOpen()) {
-
-		// Event Processing
-		sf::Event event;
-
-		while (mainWindow.pollEvent(event)) {
-			// Closing Window
-			if (event.type == sf::Event::Closed) {
-				mainWindow.close();
-			}
-
-			if (event.type == sf::Event::KeyPressed) {
-				if (event.key.code == sf::Keyboard::Space) {
-					toggleInterpolation = !toggleInterpolation;
-				}
-			}
-		}
-
-		while (mainClock.getElapsedTime().asMilliseconds() > nextTick) {
-
-			// Updates - LOGIC
-			testSpritePosPrev = testSpritePos;
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-				testSpritePos.y -= testSpriteSpeed;
-			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-				testSpritePos.y += testSpriteSpeed;
-			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-				testSpritePos.x -= testSpriteSpeed;
-			}
-
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-				testSpritePos.x += testSpriteSpeed;
-			}
-
-			nextTick += skipTicks;
-		}
-
-		interpolation = float(((mainClock.getElapsedTime().asMilliseconds() + skipTicks) - nextTick)) / (skipTicks);
-
-		if (toggleInterpolation == true) {
-			testSprite.setPosition(testSpritePosPrev.x + ((testSpritePos.x - testSpritePosPrev.x) * interpolation), testSpritePosPrev.y + ((testSpritePos.y - testSpritePosPrev.y) * interpolation));
-		}
-		else {
-			testSprite.setPosition(testSpritePos.x, testSpritePos.y);
-		}
-
-		// Clear Window
-		mainWindow.clear();
-
-		// Draw to Window
-		mainWindow.draw(testSprite);
-
-		// Display
-		mainWindow.display();
-	}
-}
-
-
-
-*/
 
 ///////////////////////////////
 
@@ -1599,6 +1496,7 @@ void getTwoDirectionsFromMajorDirection(asteroidMovement & Themajordirection, as
 	}
 }
 
+//sets bullets for interpolation in main loop
 void setAllBulletsPrev()
 {
 

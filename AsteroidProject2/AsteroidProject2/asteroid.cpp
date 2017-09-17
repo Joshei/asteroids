@@ -10,13 +10,16 @@
 
 Asteroid::Asteroid(int thewidth, int theheight, sf::Texture & Textureforasteroid, asteroidType Theasteroidtype)
 {
-
+	//hasn't been initialized yet.. happens upon creation with createsmall...
 	activated = instantiated;
 	height = theheight;
 	width = thewidth;
 	Anasteroid.setTexture(Textureforasteroid);
 	//initialized, no -1 available, so set to down.  Smaller asteroids won't use this setting.
 	Whichdirection = asteroidMovement::DOWN;
+	
+	//which border asteroid starts behind, remember small asteroids start on the screen after
+	//a destroyed large asteroid
 	fromthisborder = -1;
 	
 	Type = Theasteroidtype;
@@ -27,8 +30,8 @@ Asteroid::Asteroid(int thewidth, int theheight, sf::Texture & Textureforasteroid
 void Asteroid::MoveAsteroid()
 {
 
-
-	//anAsteroid.move(sf::Vector2f(deltax, deltay));
+	//sets asteroid for new move, but drawing takes place in main loop.
+	
 	Vectorposition.x = Vectorposition.x + deltax;
 	Vectorposition.y = Vectorposition.y + deltay;
 	Vectorprevposition.x = Vectorposition.x;
@@ -39,7 +42,8 @@ void Asteroid::MoveAsteroid()
 
 //creates a large or small asteroid that is at one of the four sides of the screens
 //at a random position and a random (one of 12) direction.  The asteroid's
-//x and y have been set so that the image is just off the screen (next pixel)
+//x and y have been set so that the image is against the border to its top, bottom, 
+//left, or right.
 //The astroid is set to onscreen so that it can be drawn and moved.
 //The function is used by all asteroids, but it is important to remember
 //that a small asteroid is created when a large asteroid is destroyed and 
@@ -49,36 +53,41 @@ void Asteroid::MoveAsteroid()
 void Asteroid::SetInitialAsteroid(int fromthisborder) {
 
 	
-	//technically these asteroids are behind the border by their width or height but they've been
+	
 	//set to onscreen so they are ready to be checked for collisions now.
 	SetActivate(onscreen);
 	//uses enum class object declared in asteroid.h (on top of header file)
 	Whichdirection = directions[fromthisborder][std::rand() % 3];
-	//sets the deltax and deltay from this random direction
+	//sets the deltax and deltay (change in x, change in y) from this random direction
 	SetDeltaWithDirection(Whichdirection);
 	
 	
 	//sets the initial x and y for each asteroid according to what border the image is behind
 	
-	//the initial placement for x and y is totally off the screen.  that means for left and top
-	//there must be subtraction of width of heigh from zero on the screen rectangle
+	
+	
 	//from top border
 	if (fromthisborder == 0)
 	{
 		
-		//if x is the maximum amount plus one than object starts behind the edge by its width
+		
+
 		Vectorposition.x = rand() % G_SCREEN_WIDTH;
 		
+
+		//if x position greater than width away form screen width than just set it to width 
+		//away from screen width, so there will be no partial displays of asteroid.  no partial displey.
+
 		if (Vectorposition.x > G_SCREEN_WIDTH - width)
 		{
 			Vectorposition.x = G_SCREEN_WIDTH - width;
 		}
 
-
+		//no partial display
 		Vectorposition.y = 0;
 
 
-		
+		//for interpolation main loop
 		Vectorprevposition.y = Vectorposition.y;
 		Vectorprevposition.x = Vectorposition.x;
 		
@@ -88,15 +97,20 @@ void Asteroid::SetInitialAsteroid(int fromthisborder) {
 	//from right border
 	else if (fromthisborder == 1)
 	{
+		//flush against border, no partial display
 		Vectorposition.x = G_SCREEN_WIDTH - width;
-		//if y is the maximum amount plus one start the object one height behind the top
+		
+		
+		
+		//if asteroid is passed it's heigt on bottom of screen than its just set 
+		//to one height away.
 		Vectorposition.y = rand() % G_SCREEN_HEIGHT;
 		if (Vectorposition.y > (G_SCREEN_HEIGHT - height))
 		{
 			Vectorposition.y = G_SCREEN_HEIGHT - height;
 		}
 
-
+		//for interpolation main loop
 		Vectorprevposition.y = Vectorposition.y;
 		Vectorprevposition.x = Vectorposition.x;
 
@@ -105,16 +119,21 @@ void Asteroid::SetInitialAsteroid(int fromthisborder) {
 	//from bottom border
 	else if (fromthisborder == 2)
 	{
-		//if x is the maximum amount plus one than object starts behind the edge by its width
+		
 		Vectorposition.x = rand() % G_SCREEN_WIDTH;
+		
+		
+		//if x position is less than one width away than just set the asteroid
+		//to one width away (no partial display)
 		if (Vectorposition.x > G_SCREEN_WIDTH - width )
 		{
 			Vectorposition.x = G_SCREEN_WIDTH - width;
 		}
 		
-
+		//no partial display
 		Vectorposition.y = G_SCREEN_HEIGHT - height;
 
+		//set for interplation.
 		Vectorprevposition.y = Vectorposition.y;
 		Vectorprevposition.x = Vectorposition.x;
 
@@ -124,9 +143,11 @@ void Asteroid::SetInitialAsteroid(int fromthisborder) {
 	//from left border
 	else if (fromthisborder == 3) 
 	{
-		//makes image just off the screen.
+		//against left border (not partial display)
 		Vectorposition.x = 0;
-		//if y is the maximum amount plus one start the object one height behind the top
+		
+		//if y value is less than height away from border than just put it one height away from the 
+		//bottom
 		Vectorposition.y = std::rand() % G_SCREEN_HEIGHT;
 		if (Vectorposition.y > (G_SCREEN_HEIGHT - height))
 		{
@@ -134,7 +155,7 @@ void Asteroid::SetInitialAsteroid(int fromthisborder) {
 		}
 
 
-
+		//for interpolation
 		Vectorprevposition.y = Vectorposition.y;
 		Vectorprevposition.x = Vectorposition.x;
 
@@ -144,7 +165,7 @@ void Asteroid::SetInitialAsteroid(int fromthisborder) {
 	
 }
 
-//takes an enumeration of stateofassteroid
+//takes an enumeration of stateofasteroid
 void Asteroid::SetActivate(int activateflag) 
 {
 
@@ -160,6 +181,7 @@ void Asteroid::SetWhichDirection(asteroidMovement direction)
 
 }
 
+//Set to large or small
 void Asteroid::SetType(asteroidType theType)
 {
 	Type = theType;

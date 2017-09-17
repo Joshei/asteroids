@@ -9,11 +9,12 @@
 Score::Score(int xpos, int ypos )
 :scoreamount(0)
 {
+	//x and y of score to be displayed
 	Scoreposition.x = xpos;
 	Scoreposition.y = ypos;
 }
 
-
+//font of score
 void Score::SetFont(sf::Font & theFont)
 {
 	Textmessage.setFont(theFont);

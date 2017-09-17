@@ -74,8 +74,7 @@ bool MoveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
 	Otherrect.left = 0;
 	Otherrect.top = 0;
 
-	//allows for one space past border to be part of rectangle to work 
-	//when the object is readied with onscreen status
+	//used for checking for off screen
 	Otherrect.right = screenwidth ;
 	Otherrect.bottom = screenheight;
 	
@@ -84,6 +83,7 @@ bool MoveableObject::IntersectsWithScreenRect(int screenwidth, int screenheight)
 
 }
 
+//simplified setting of x and y with one call when needed
 void MoveableObject::SetVector(sf::Vector2f  Invector)
 {
 
@@ -91,6 +91,7 @@ void MoveableObject::SetVector(sf::Vector2f  Invector)
 	Vectorposition.y = Invector.y;
 }
 
+//for interpolation (smooth movement)
 void MoveableObject::SetPrevVector(sf::Vector2f  Invector)
 {
 	Vectorprevposition.x = Invector.x;
@@ -104,7 +105,7 @@ void MoveableObject::SetX(int  inx)
 	Vectorposition.x = inx;
 	
 }
-//sets y positio for those objects that inherit from moveable
+//sets y position for those objects that inherit from moveable
 void MoveableObject::SetY(int iny)
 {
 	Vectorposition.y = iny;
@@ -131,12 +132,12 @@ void MoveableObject::SetDeltaY(int indeltay)
 	deltay = indeltay;
 }
 
-//this allows each object to have its own width
+
 void MoveableObject::SetWidth(int inwidth)
 {
 	width = inwidth;
 }
-//this allow each object to have its own height
+
 void MoveableObject::SetHeight(int inheight)
 {
 	height = inheight;

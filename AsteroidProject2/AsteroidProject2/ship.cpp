@@ -19,6 +19,7 @@ Ship::Ship(int positionx, int positiony, theDirection  Shipdirection)
 	width = 64;
 	Direction = Shipdirection;
 
+	//loads all the images for use by shipObject
 	if (!Textureshipnorth.loadFromFile("shipNorth.png"))
 	{
 		shutdown(-6);
@@ -64,6 +65,7 @@ void Ship::RotateShipCClock()
 
 }
 
+//sets the image by the direction.
 void Ship::SelectTexture(theDirection Direction)
 {
 	if (Direction == up)

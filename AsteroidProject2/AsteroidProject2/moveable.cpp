@@ -121,12 +121,12 @@ void MoveableObject::SetPrevY(int inprevy)
 	Vectorprevposition.y = inprevy;
 
 }
-//deltaX is the change in x after each key press and cycle in main
+//deltaX is the change in x after each key press or cycle in main with an unpressed key
 void MoveableObject::SetDeltaX(int  indeltax)
 {
 	deltax = indeltax;
 }
-//deltaY is the change in x after each key press and cycle in main
+//deltaY is the change in x after each key press or cycle in main with an unpressed key
 void MoveableObject::SetDeltaY(int indeltay)
 {
 	deltay = indeltay;

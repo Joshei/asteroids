@@ -12,6 +12,7 @@ LevelObj::LevelObj()
 }
 
 
+//controls the level's new large and small amount of asteroids.
 void LevelObj::AdvanceLevelByOne()
 {
 

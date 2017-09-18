@@ -166,7 +166,7 @@ void Asteroid::SetInitialAsteroid(int fromthisborder) {
 }
 
 //takes an enumeration of stateofasteroid
-void Asteroid::SetActivate(int activateflag) 
+void Asteroid::SetActivate(stateOfAsteroid activateflag)
 {
 
 	activated = activateflag;
@@ -181,7 +181,7 @@ void Asteroid::SetWhichDirection(asteroidMovement direction)
 
 }
 
-//Set to large or small
+//set to large or small
 void Asteroid::SetType(asteroidType theType)
 {
 	Type = theType;

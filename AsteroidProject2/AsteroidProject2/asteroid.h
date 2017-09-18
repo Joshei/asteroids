@@ -9,6 +9,8 @@
 enum stateOfAsteroid { instantiated, destroyed, initialized, onscreen, offscreen };
 enum asteroidType {smaller, larger};
 
+
+//these hold the asteroids movement
 enum class asteroidMovement
 {
 	UP,
@@ -23,7 +25,7 @@ enum class asteroidMovement
 
 static const asteroidMovement directions[4][3] =
 {
-	//top, right bottom left
+	
 	{ asteroidMovement::DOWN, asteroidMovement::DOWN_LEFT, asteroidMovement::DOWN_RIGHT },
 	{ asteroidMovement::UP_LEFT, asteroidMovement::DOWN_LEFT, asteroidMovement::LEFT },
 	{ asteroidMovement::UP, asteroidMovement::UP_LEFT, asteroidMovement::UP_RIGHT },
@@ -51,7 +53,7 @@ public:
 	
 	void MoveAsteroid();
 	void SetInitialAsteroid(int i);
-	void SetActivate(int activateflag);
+	void SetActivate(stateOfAsteroid activateflag);
 	void SetWhichDirection(asteroidMovement Direction);
 	void SetType(asteroidType Thetype);
 	void SetTexture(sf::Texture & Thetexture);
@@ -76,7 +78,7 @@ private:
 
 	asteroidMovement Whichdirection;
 
-	int activated;
+	stateOfAsteroid activated;
 	
 	int fromthisborder;
 

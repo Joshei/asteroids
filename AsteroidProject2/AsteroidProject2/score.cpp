@@ -19,7 +19,7 @@ void Score::SetFont(sf::Font & theFont)
 {
 	Textmessage.setFont(theFont);
 
-
+	
 	
 }
 
